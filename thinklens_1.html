@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thinklens Consulting LLP — Data Excellence for Global Partners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --black:    #000;
+  --ink:      #111;
+  --dark:     #1c1c1e;
+  --card-bg:  #161618;
+  --border-d: rgba(255,255,255,0.09);
+  --border-l: rgba(0,0,0,0.09);
+  --g700:     #3a3a3c;
+  --g600:     #48484a;
+  --g500:     #636366;
+  --g400:     #8d8d92;
+  --g300:     #aeaeb2;
+  --g200:     #c7c7cc;
+  --g100:     #e5e5ea;
+  --g50:      #f2f2f7;
+  --g30:      #f8f8fa;
+  --white:    #fff;
+  --ease:     cubic-bezier(.25,.1,.25,1);
+  --spring:   cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ─────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--white);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ─────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────── */
+.wrap     { max-width:1080px;margin:0 auto;padding:0 32px }
+.wrap-xl  { max-width:1240px;margin:0 auto;padding:0 32px }
+.wrap-sm  { max-width:720px; margin:0 auto;padding:0 32px }
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:56px;
+  display:flex;align-items:center;
+  background:rgba(255,255,255,0.78);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid var(--border-l);
+  transition:background .3s var(--ease);
+}
+#nav.scrolled{background:rgba(255,255,255,0.92)}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;max-width:1240px;margin:0 auto;padding:0 32px;
+}
+.nav-brand{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;
+  color:var(--black);letter-spacing:-.02em;
+}
+.nav-menu{display:flex;gap:32px;list-style:none}
+.nav-menu a{
+  font-size:.8rem;font-weight:500;color:var(--g500);
+  letter-spacing:-.01em;transition:color .2s;
+}
+.nav-menu a:hover{color:var(--black)}
+.nav-btn{
+  font-size:.8rem;font-weight:600;
+  background:var(--black);color:var(--white);
+  padding:9px 20px;border-radius:100px;
+  transition:opacity .2s,transform .2s var(--spring);
+}
+.nav-btn:hover{opacity:.85;transform:scale(1.03)}
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 32px 100px;
+  background:var(--white);
+  position:relative;overflow:hidden;
+}
+/* Subtle mesh background */
+#hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%,  rgba(0,0,0,.04) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,0,0,.03) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 70%, rgba(0,0,0,.03) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--g500);
+  margin-bottom:28px;
+  opacity:0;animation:up .8s .1s var(--ease) forwards;
+}
+.hero-tag-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--g300);
+  animation:pulse 2.5s infinite;
+}
+#hero h1{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2.8rem,7vw,6.6rem);
+  font-weight:800;line-height:1.01;
+  letter-spacing:-.04em;
+  color:var(--black);
+  max-width:900px;
+  opacity:0;animation:up .9s .2s var(--ease) forwards;
+}
+#hero h1 .muted{color:var(--g300)}
+.hero-deck{
+  margin-top:28px;
+  font-size:1.1rem;font-weight:400;line-height:1.75;
+  color:var(--g500);max-width:520px;
+  opacity:0;animation:up .9s .35s var(--ease) forwards;
+}
+.hero-ctas{
+  margin-top:44px;
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  opacity:0;animation:up .9s .48s var(--ease) forwards;
+}
+.cta-primary{
+  font-size:.9rem;font-weight:600;
+  background:var(--black);color:var(--white);
+  padding:15px 32px;border-radius:100px;
+  transition:opacity .2s,transform .2s var(--spring);
+}
+.cta-primary:hover{opacity:.85;transform:translateY(-2px)}
+.cta-secondary{
+  font-size:.9rem;font-weight:600;
+  background:var(--g50);color:var(--ink);
+  padding:15px 32px;border-radius:100px;
+  border:1px solid var(--g100);
+  transition:background .2s,transform .2s var(--spring);
+}
+.cta-secondary:hover{background:var(--g100);transform:translateY(-2px)}
+.hero-scroll{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:1px;height:88px;
+  background:linear-gradient(to bottom,transparent,var(--g200));
+  opacity:0;animation:fadeIn 1s .9s forwards;
+}
+
+/* ─────────────────────────────────────────
+   COMPLIANCE BAND
+───────────────────────────────────────── */
+#compliance{
+  background:var(--ink);
+  border-top:1px solid var(--border-d);
+}
+.comp-wrap{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 32px;gap:24px;flex-wrap:wrap;
+  max-width:1240px;margin:0 auto;
+}
+.comp-label{
+  font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--g500);
+  white-space:nowrap;
+}
+.comp-items{display:flex;gap:8px;flex-wrap:wrap;flex:1;justify-content:center}
+.comp-item{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  color:var(--g200);
+  font-size:.74rem;font-weight:500;
+  padding:7px 15px;border-radius:100px;
+  transition:background .2s;
+}
+.comp-item:hover{background:rgba(255,255,255,.1)}
+.comp-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--g400);flex-shrink:0;
+}
+.comp-note{
+  font-size:.72rem;color:var(--g600);
+  font-style:italic;text-align:right;white-space:nowrap;
+}
+
+/* ─────────────────────────────────────────
+   STATS
+───────────────────────────────────────── */
+#stats{
+  background:var(--white);
+  border-bottom:1px solid var(--g100);
+}
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  max-width:860px;margin:0 auto;
+}
+.stat{
+  padding:72px 24px;text-align:center;
+  position:relative;
+}
+.stat+.stat::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  height:48px;width:1px;background:var(--g100);
+}
+.stat-num{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2.8rem,5vw,4.2rem);
+  font-weight:800;letter-spacing:-.04em;
+  color:var(--black);line-height:1;
+}
+.stat-cap{
+  margin-top:10px;
+  font-size:.78rem;font-weight:500;color:var(--g400);
+  letter-spacing:.02em;
+}
+
+/* ─────────────────────────────────────────
+   SECTION LABELS (reusable)
+───────────────────────────────────────── */
+.eyebrow{
+  font-size:.7rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--g400);
+  margin-bottom:18px;display:block;
+}
+.eyebrow-light{color:var(--g600)}
+
+/* ─────────────────────────────────────────
+   ABOUT
+───────────────────────────────────────── */
+#about{
+  background:var(--black);
+  padding:140px 32px;
+}
+.about-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:100px;align-items:start;
+  max-width:1080px;margin:0 auto;
+}
+#about h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2rem,4vw,3.4rem);
+  font-weight:800;letter-spacing:-.04em;
+  line-height:1.08;color:var(--white);
+  position:sticky;top:88px;
+}
+#about h2 .soft{color:var(--g500)}
+.about-body>*+*{margin-top:22px}
+.about-p{
+  font-size:1rem;font-weight:400;line-height:1.85;
+  color:var(--g300);
+}
+.about-p b{color:var(--white);font-weight:600}
+.about-pull{
+  margin-top:36px !important;
+  padding:28px 28px;
+  background:rgba(255,255,255,.05);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.09);
+  font-size:1rem;font-weight:500;
+  color:var(--g200);line-height:1.75;
+  font-style:italic;
+}
+
+/* ─────────────────────────────────────────
+   SECTORS
+───────────────────────────────────────── */
+#sectors{
+  background:var(--g30);
+  padding:120px 32px;
+}
+.sectors-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;margin-bottom:56px;
+  max-width:1080px;margin-left:auto;margin-right:auto;
+}
+.sectors-head h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;letter-spacing:-.04em;line-height:1.1;
+  max-width:500px;
+}
+.sectors-note{
+  font-size:.88rem;font-weight:400;color:var(--g400);
+  max-width:280px;line-height:1.7;
+}
+.sector-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  max-width:1080px;margin:0 auto;
+}
+.sector-card{
+  background:var(--white);
+  border-radius:20px;padding:40px 32px 36px;
+  border:1px solid var(--g100);
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--spring),box-shadow .35s var(--ease);
+}
+.sector-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:3px;background:var(--black);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s var(--ease);
+}
+.sector-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.1)}
+.sector-card:hover::after{transform:scaleX(1)}
+.sector-num{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:2.4rem;font-weight:800;
+  color:var(--g100);letter-spacing:-.04em;
+  line-height:1;margin-bottom:28px;
+}
+.sector-icon-row{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.s-icon{
+  width:42px;height:42px;border-radius:11px;
+  background:var(--black);display:grid;place-items:center;
+  font-size:1.1rem;flex-shrink:0;
+}
+.sector-title{
+  font-size:1.05rem;font-weight:700;
+  color:var(--black);letter-spacing:-.02em;line-height:1.25;
+}
+.sector-body{
+  font-size:.88rem;font-weight:400;color:var(--g500);
+  line-height:1.78;margin-top:12px;
+}
+
+/* ─────────────────────────────────────────
+   SERVICES
+───────────────────────────────────────── */
+#services{
+  background:var(--white);
+  padding:120px 32px;
+}
+.services-head{margin-bottom:72px}
+.services-head h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;letter-spacing:-.04em;line-height:1.1;
+  max-width:540px;
+}
+.svc-table{border-top:1px solid var(--g100)}
+.svc-row{
+  display:grid;grid-template-columns:56px 1.1fr 1fr auto;
+  gap:0;align-items:start;
+  border-bottom:1px solid var(--g100);
+  padding:0;
+  transition:background .2s var(--ease);
+  cursor:default;
+}
+.svc-row:hover{background:var(--g30)}
+.svc-row>*{padding:40px 28px}
+.svc-row>*:first-child{padding-left:16px}
+.svc-n{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:.72rem;font-weight:700;color:var(--g200);
+  padding-top:44px !important;letter-spacing:.04em;
+}
+.svc-name{
+  font-size:1.15rem;font-weight:700;
+  color:var(--black);letter-spacing:-.025em;
+  line-height:1.3;margin-bottom:12px;
+}
+.svc-chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  font-size:.68rem;font-weight:600;color:var(--g500);
+  background:var(--g50);padding:5px 12px;
+  border-radius:100px;letter-spacing:.01em;
+  border:1px solid var(--g100);
+}
+.svc-desc{
+  font-size:.92rem;font-weight:400;color:var(--g500);
+  line-height:1.82;
+}
+.svc-arrow{
+  display:flex;align-items:center;justify-content:center;
+  padding:40px 32px 40px 0 !important;
+  opacity:0;
+  transition:opacity .2s,transform .2s var(--spring);
+}
+.svc-row:hover .svc-arrow{opacity:1;transform:translateX(4px)}
+.arrow-circle{
+  width:36px;height:36px;border-radius:50%;
+  border:1.5px solid var(--g200);
+  display:grid;place-items:center;
+  font-size:.9rem;color:var(--g400);
+}
+
+/* ─────────────────────────────────────────
+   WHY PARTNER
+───────────────────────────────────────── */
+#why{
+  background:var(--dark);
+  padding:140px 32px;
+}
+.why-head{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:end;
+  margin-bottom:72px;
+  max-width:1080px;margin-left:auto;margin-right:auto;
+}
+#why h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2rem,4vw,3.4rem);
+  font-weight:800;letter-spacing:-.04em;
+  line-height:1.08;color:var(--white);
+}
+#why h2 .soft{color:var(--g600)}
+.why-intro{
+  font-size:.95rem;font-weight:400;line-height:1.8;color:var(--g400);
+  align-self:end;
+}
+.why-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:2px;
+  background:var(--g700);
+  border-radius:24px;overflow:hidden;
+  max-width:1080px;margin:0 auto;
+}
+.why-cell{
+  background:var(--card-bg);
+  padding:52px 48px;
+  transition:background .25s var(--ease);
+  position:relative;
+}
+.why-cell:hover{background:#1e1e20}
+.why-ic{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.09);
+  display:grid;place-items:center;
+  font-size:1.35rem;margin-bottom:24px;
+}
+.why-title{
+  font-size:1.05rem;font-weight:700;
+  color:var(--white);letter-spacing:-.02em;
+  margin-bottom:12px;line-height:1.3;
+}
+.why-body{
+  font-size:.9rem;font-weight:400;color:var(--g400);
+  line-height:1.82;
+}
+
+/* ─────────────────────────────────────────
+   COMPLIANCE DEEP DIVE
+───────────────────────────────────────── */
+#trust{
+  background:var(--white);
+  padding:120px 32px;
+}
+.trust-layout{
+  display:grid;grid-template-columns:1fr 1.6fr;
+  gap:80px;align-items:center;
+  max-width:1080px;margin:0 auto;
+}
+#trust h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:800;letter-spacing:-.04em;
+  line-height:1.1;color:var(--black);
+  margin-bottom:20px;
+}
+.trust-sub{
+  font-size:.95rem;font-weight:400;color:var(--g500);
+  line-height:1.8;margin-bottom:32px;
+}
+.trust-link{
+  font-size:.9rem;font-weight:600;color:var(--black);
+  display:inline-flex;align-items:center;gap:8px;
+  border-bottom:1.5px solid var(--black);
+  padding-bottom:2px;
+  transition:opacity .2s;
+}
+.trust-link:hover{opacity:.6}
+.trust-badges{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.tbadge{
+  background:var(--g30);border-radius:16px;
+  padding:28px 28px;
+  border:1px solid var(--g100);
+  transition:transform .3s var(--spring),box-shadow .3s var(--ease);
+}
+.tbadge:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.07)}
+.tbadge-icon{font-size:1.5rem;margin-bottom:12px}
+.tbadge-title{font-size:.9rem;font-weight:700;color:var(--black);margin-bottom:5px}
+.tbadge-desc{font-size:.8rem;font-weight:400;color:var(--g500);line-height:1.6}
+
+/* ─────────────────────────────────────────
+   CONTACT
+───────────────────────────────────────── */
+#contact{
+  background:var(--black);
+  padding:140px 32px;
+}
+.contact-layout{
+  display:grid;grid-template-columns:1fr 1.3fr;
+  gap:100px;align-items:start;
+  max-width:1080px;margin:0 auto;
+}
+#contact h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2rem,4vw,3.4rem);
+  font-weight:800;letter-spacing:-.04em;
+  line-height:1.08;color:var(--white);
+  margin-bottom:20px;
+}
+#contact h2 .soft{color:var(--g600)}
+.contact-deck{
+  font-size:.95rem;font-weight:400;line-height:1.8;
+  color:var(--g400);margin-bottom:40px;
+}
+.contact-meta{display:flex;flex-direction:column;gap:10px}
+.cmeta{
+  display:flex;flex-direction:column;gap:4px;
+  padding:20px 22px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  transition:background .2s;
+}
+.cmeta:hover{background:rgba(255,255,255,.07)}
+.cmeta-label{
+  font-size:.64rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--g600);
+}
+.cmeta-val{font-size:.88rem;font-weight:500;color:var(--g200)}
+/* Form */
+.cform{display:flex;flex-direction:column;gap:12px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg label{
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--g600);
+}
+.fg input,.fg select,.fg textarea{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:14px 16px;
+  font-family:'Inter',sans-serif;
+  font-size:.9rem;font-weight:400;color:var(--white);
+  outline:none;width:100%;
+  transition:border-color .2s,background .2s,box-shadow .2s;
+  appearance:none;
+}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--g600)}
+.fg select option{background:#1c1c1e;color:var(--white)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.09);
+  box-shadow:0 0 0 3px rgba(255,255,255,.05);
+}
+.fg textarea{min-height:110px;resize:vertical}
+.fsub{
+  width:100%;margin-top:4px;
+  background:var(--white);color:var(--black);
+  border:none;border-radius:100px;
+  padding:16px 32px;
+  font-family:'Inter',sans-serif;
+  font-size:.9rem;font-weight:700;
+  letter-spacing:-.01em;cursor:pointer;
+  transition:opacity .2s,transform .2s var(--spring);
+}
+.fsub:hover{opacity:.9;transform:scale(1.01)}
+.fsub.ok{background:var(--g200);color:var(--g700)}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+#footer{
+  background:var(--ink);
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:48px 32px 40px;
+}
+.foot-inner{
+  max-width:1240px;margin:0 auto;
+  display:grid;grid-template-columns:200px 1fr auto;
+  gap:40px;align-items:center;flex-wrap:wrap;
+}
+.foot-brand{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:.9rem;font-weight:700;color:var(--white);
+  letter-spacing:-.02em;
+}
+.foot-brand span{color:var(--g500);font-weight:400}
+.foot-nav{
+  display:flex;gap:28px;justify-content:center;flex-wrap:wrap;
+}
+.foot-nav a{
+  font-size:.78rem;font-weight:500;color:var(--g500);
+  transition:color .2s;
+}
+.foot-nav a:hover{color:var(--g200)}
+.foot-copy{
+  font-size:.72rem;font-weight:400;color:var(--g600);
+  text-align:right;line-height:1.6;
+}
+
+/* ─────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────── */
+@keyframes up{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{
+  0%,100%{opacity:1}50%{opacity:.35}
+}
+.r{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease);
+}
+.r.vis{opacity:1;transform:none}
+.rd1{transition-delay:.08s}
+.rd2{transition-delay:.16s}
+.rd3{transition-delay:.24s}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media(max-width:900px){
+  .nav-menu{display:none}
+  .about-layout,.why-head,.trust-layout,.contact-layout{
+    grid-template-columns:1fr;gap:48px
+  }
+  #about h2{position:static}
+  .sector-grid{grid-template-columns:1fr}
+  .svc-row{grid-template-columns:1fr;gap:0}
+  .svc-row>*{padding:20px 20px}
+  .svc-row>*:first-child{padding-left:20px}
+  .svc-n{display:none}
+  .svc-arrow{display:none}
+  .why-grid{grid-template-columns:1fr}
+  .trust-badges{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr}
+  .stat+.stat::before{top:0;left:50%;transform:none;width:48px;height:1px}
+  .frow{grid-template-columns:1fr}
+  .foot-inner{grid-template-columns:1fr;text-align:center}
+  .foot-nav{justify-content:center}
+  .foot-copy{text-align:center}
+  .sectors-head{flex-direction:column;gap:12px}
+}
+@media(max-width:600px){
+  .wrap,.wrap-xl,.wrap-sm,
+  #hero,#compliance .comp-wrap,#stats,
+  #about,#sectors,#services,#why,#trust,#contact,#footer{
+    padding-left:20px;padding-right:20px;
+  }
+  #hero{padding-top:100px}
+  .why-cell{padding:36px 28px}
+  .sector-card{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">Thinklens</a>
+    <ul class="nav-menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#sectors">Sectors</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Partnership</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-btn">Partner With Us</a>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <span class="hero-tag">
+    <span class="hero-tag-dot"></span>
+    Global Sub-Contracting Partner · India
+  </span>
+  <h1>Your On-Shore Partner<br>for <span class="muted">Offshore Excellence.</span></h1>
+  <p class="hero-deck">Fully-compliant data expertise for global IT staffing agencies. We handle the technical heavy lifting — you keep the client relationship.</p>
+  <div class="hero-ctas">
+    <a href="#contact" class="cta-primary">Get a Master Service Agreement</a>
+    <a href="#services" class="cta-secondary">View Our Services ↓</a>
+  </div>
+  <div class="hero-scroll"></div>
+</section>
+
+<!-- ══════════ COMPLIANCE BAND ══════════ -->
+<div id="compliance">
+  <div class="comp-wrap">
+    <span class="comp-label">Compliance</span>
+    <div class="comp-items">
+      <div class="comp-item"><span class="comp-dot"></span>GST Registered</div>
+      <div class="comp-item"><span class="comp-dot"></span>PAN Verified</div>
+      <div class="comp-item"><span class="comp-dot"></span>IEC Holder</div>
+      <div class="comp-item"><span class="comp-dot"></span>LLP Act Compliant</div>
+      <div class="comp-item"><span class="comp-dot"></span>Audit-Ready Invoicing</div>
+    </div>
+    <span class="comp-note">Authorized for international<br>trade in services.</span>
+  </div>
+</div>
+
+<!-- ══════════ STATS ══════════ -->
+<div id="stats">
+  <div class="stats-row">
+    <div class="stat r"><div class="stat-num">2025</div><div class="stat-cap">Year Founded</div></div>
+    <div class="stat r rd1"><div class="stat-num">3+</div><div class="stat-cap">Fortune 500 Sectors Served</div></div>
+    <div class="stat r rd2"><div class="stat-num">100%</div><div class="stat-cap">Compliance Rate</div></div>
+  </div>
+</div>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about">
+  <div class="about-layout">
+    <div>
+      <span class="eyebrow eyebrow-light r">Our Story</span>
+      <h2 class="r">Built on<br>precision.<br><span class="soft">Proven in<br>high-stakes<br>industries.</span></h2>
+    </div>
+    <div class="about-body">
+      <p class="about-p r">Founded in 2025, <b>Thinklens Consulting LLP</b> was established to bridge the gap between complex data needs and seamless offshore execution. We don't just "staff" projects — we provide a compliant, high-caliber extension to your technical team.</p>
+      <p class="about-p r">In our very first year, we became the trusted sub-contracting partner for projects at some of the world's largest organizations — spanning Aerospace &amp; Defense, Biomedical Devices, and Consumer Packaged Goods.</p>
+      <p class="about-p r">We are a fully registered Indian LLP, IEC-authorized for international service trade, making us the ideal silent partner for overseas staffing agencies looking to scale delivery capacity without administrative overhead.</p>
+      <blockquote class="about-pull r">We specialize in the "messy" middle of data — cleanup, migration, and modernization — ensuring Fortune 500-level standards are met on every single engagement.</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTORS ══════════ -->
+<section id="sectors">
+  <div class="sectors-head r">
+    <div>
+      <span class="eyebrow">Sector Expertise</span>
+      <h2>Trusted in the most<br>regulated industries.</h2>
+    </div>
+    <p class="sectors-note">Our first year delivered for the world's largest names in three demanding verticals.</p>
+  </div>
+  <div class="sector-grid">
+    <div class="sector-card r">
+      <div class="sector-num">01</div>
+      <div class="sector-icon-row">
+        <div class="s-icon">✈️</div>
+        <div class="sector-title">Aerospace &amp; Defense</div>
+      </div>
+      <p class="sector-body">Complex data governance and technical business analysis for the world's largest aerospace organizations. Precision, compliance, and zero tolerance for error — every time.</p>
+    </div>
+    <div class="sector-card r rd1">
+      <div class="sector-num">02</div>
+      <div class="sector-icon-row">
+        <div class="s-icon">🧬</div>
+        <div class="sector-title">Biomedical &amp; Healthcare</div>
+      </div>
+      <p class="sector-body">Data quality and regulatory compliance for leading medical device innovators. Power BI and Tableau solutions built to the highest clinical and compliance standards.</p>
+    </div>
+    <div class="sector-card r rd2">
+      <div class="sector-num">03</div>
+      <div class="sector-icon-row">
+        <div class="s-icon">📦</div>
+        <div class="sector-title">Consumer Packaged Goods</div>
+      </div>
+      <p class="sector-body">Report modernization and data migration for global CPG giants. Driving efficiency and enterprise-scale insights across complex, multi-region product landscapes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SERVICES ══════════ -->
+<section id="services">
+  <div class="wrap-xl">
+    <div class="services-head r">
+      <span class="eyebrow">Core Specializations</span>
+      <h2>What we deliver<br>for your clients.</h2>
+    </div>
+    <div class="svc-table">
+      <div class="svc-row r">
+        <div class="svc-n">01</div>
+        <div>
+          <div class="svc-name">Data Governance &amp; Business Analysis</div>
+          <div class="svc-chips">
+            <span class="chip">BA</span>
+            <span class="chip">Governance</span>
+            <span class="chip">Migration Strategy</span>
+          </div>
+        </div>
+        <p class="svc-desc">Technical business analysis, migration strategy, and data governance frameworks. We define the rules that keep your client's data estate clean, consistent, and audit-ready across the enterprise.</p>
+        <div class="svc-arrow"><div class="arrow-circle">→</div></div>
+      </div>
+      <div class="svc-row r">
+        <div class="svc-n">02</div>
+        <div>
+          <div class="svc-name">BI &amp; Report Modernization</div>
+          <div class="svc-chips">
+            <span class="chip">Power BI</span>
+            <span class="chip">Tableau</span>
+            <span class="chip">Spotfire</span>
+          </div>
+        </div>
+        <p class="svc-desc">Legacy reporting transformed into interactive, decision-driving dashboards. We modernize Power BI, Tableau, and Spotfire environments to current best practices and modern BI standards.</p>
+        <div class="svc-arrow"><div class="arrow-circle">→</div></div>
+      </div>
+      <div class="svc-row r">
+        <div class="svc-n">03</div>
+        <div>
+          <div class="svc-name">Data Quality &amp; Cleanup</div>
+          <div class="svc-chips">
+            <span class="chip">Audit</span>
+            <span class="chip">Deduplication</span>
+            <span class="chip">Schema Alignment</span>
+          </div>
+        </div>
+        <p class="svc-desc">Short-term cleanup sprints to long-term data quality audits. From deduplication to schema alignment — we make your client's data trustworthy, governed, and production-grade.</p>
+        <div class="svc-arrow"><div class="arrow-circle">→</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ WHY PARTNER ══════════ -->
+<section id="why">
+  <div class="why-head r">
+    <h2>Why global agencies<br><span class="soft">choose Thinklens.</span></h2>
+    <p class="why-intro">Engineered from the ground up to be the ideal sub-contractor — invisible to your clients, indispensable to your delivery.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-cell r">
+      <div class="why-ic">🔌</div>
+      <div class="why-title">Plug-and-Play Engagement</div>
+      <p class="why-body">Time &amp; Material contracts for short-term bursts or long-term support. We integrate into your existing workflows with zero friction and no ramp-up complexity — ready when you are.</p>
+    </div>
+    <div class="why-cell r rd1">
+      <div class="why-ic">🏆</div>
+      <div class="why-title">Fortune 500 Track Record</div>
+      <p class="why-body">In year one, we delivered for the world's largest Aerospace, CPG, and Biomedical organizations. Every client receives the exact same rigor and standard — no exceptions, ever.</p>
+    </div>
+    <div class="why-cell r">
+      <div class="why-ic">🛡️</div>
+      <div class="why-title">The Compliance Guarantee</div>
+      <p class="why-body">Registered Indian LLP with GSTIN, PAN, and IEC. We own all Indian payroll, taxes, and legal obligations. You receive clean deliverables and transparent invoicing — nothing more to manage.</p>
+    </div>
+    <div class="why-cell r rd1">
+      <div class="why-ic">🤝</div>
+      <div class="why-title">The Silent Partner Promise</div>
+      <p class="why-body">An invisible extension of your team. Clear documentation, structured handovers, and a professional delivery model that never puts your end-client relationship at risk.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TRUST / COMPLIANCE DEEP ══════════ -->
+<section id="trust">
+  <div class="trust-layout">
+    <div class="r">
+      <span class="eyebrow">Fully Audit-Ready</span>
+      <h2>Every legal box, ticked.</h2>
+      <p class="trust-sub">Overseas partners can engage with complete confidence. We are a registered, internationally-authorized Indian LLP — purpose-built for cross-border service delivery.</p>
+      <a href="#contact" class="trust-link">Request our compliance pack →</a>
+    </div>
+    <div class="trust-badges">
+      <div class="tbadge r">
+        <div class="tbadge-icon">🏛️</div>
+        <div class="tbadge-title">GST Registration</div>
+        <div class="tbadge-desc">Fully registered for Indian Goods &amp; Services Tax — clean, compliant invoicing every time.</div>
+      </div>
+      <div class="tbadge r rd1">
+        <div class="tbadge-icon">🪪</div>
+        <div class="tbadge-title">PAN Verified</div>
+        <div class="tbadge-desc">Permanent Account Number verified — essential for financial transparency and tax compliance.</div>
+      </div>
+      <div class="tbadge r">
+        <div class="tbadge-icon">🌐</div>
+        <div class="tbadge-title">IEC Holder</div>
+        <div class="tbadge-desc">Import Export Code — the green flag that confirms we're authorized for international trade in services.</div>
+      </div>
+      <div class="tbadge r rd1">
+        <div class="tbadge-icon">⚖️</div>
+        <div class="tbadge-title">LLP Act Compliant</div>
+        <div class="tbadge-desc">Registered under the Indian LLP Act — a recognized, auditable legal structure for global partners.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section id="contact">
+  <div class="contact-layout">
+    <div>
+      <span class="eyebrow eyebrow-light r">Get In Touch</span>
+      <h2 class="r">Ready to expand your<br><span class="soft">delivery capacity?</span></h2>
+      <p class="contact-deck r">Whether it's a Master Service Agreement, a quick scope discussion, or a trial engagement — we're ready to move fast.</p>
+      <div class="contact-meta r">
+        <div class="cmeta">
+          <span class="cmeta-label">Email</span>
+          <span class="cmeta-val">thinklensconsulting@gmail.com</span>
+        </div>
+        <div class="cmeta">
+          <span class="cmeta-label">Delivery Base</span>
+          <span class="cmeta-val">India — Serving Global Partners</span>
+        </div>
+        <div class="cmeta">
+          <span class="cmeta-label">IEC Authorization</span>
+          <span class="cmeta-val">Approved for International Trade in Services</span>
+        </div>
+        <div class="cmeta">
+          <span class="cmeta-label">Engagement Types</span>
+          <span class="cmeta-val">T&amp;M · Fixed Scope · MSA Sub-Contracting</span>
+        </div>
+      </div>
+    </div>
+    <div class="cform r">
+      <div class="frow">
+        <div class="fg"><label>Name</label><input type="text" placeholder="John Smith"></div>
+        <div class="fg"><label>Company</label><input type="text" placeholder="Staffing Agency Inc."></div>
+      </div>
+      <div class="fg"><label>Business Email</label><input type="email" placeholder="john@company.com"></div>
+      <div class="fg">
+        <label>Region</label>
+        <select>
+          <option value="">Select your region…</option>
+          <option>United States</option>
+          <option>United Kingdom</option>
+          <option>Canada</option>
+          <option>Australia</option>
+          <option>Germany</option>
+          <option>Netherlands</option>
+          <option>Singapore</option>
+          <option>UAE / Middle East</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Enquiry Type</label>
+        <select>
+          <option value="">Select enquiry type…</option>
+          <option>Master Service Agreement (MSA)</option>
+          <option>Sub-Contracting Partnership</option>
+          <option>Data Governance / BA Project</option>
+          <option>BI Modernization Project</option>
+          <option>Data Quality / Cleanup Sprint</option>
+          <option>General Enquiry</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your pipeline, team size, or engagement scope…"></textarea>
+      </div>
+      <button class="fsub" onclick="handleSubmit(this)">Send Enquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer id="footer">
+  <div class="foot-inner">
+    <div class="foot-brand">Thinklens <span>Consulting LLP</span></div>
+    <nav class="foot-nav">
+      <a href="#about">About</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#services">Services</a>
+      <a href="#why">Partnership</a>
+      <a href="#trust">Compliance</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="foot-copy">© 2025 Thinklens Consulting LLP<br>India · All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+/* Scroll reveal */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.r').forEach(el => obs.observe(el));
+
+/* Nav on scroll */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 12);
+}, { passive: true });
+
+/* Form */
+function handleSubmit(btn) {
+  btn.textContent = 'Sending…'; btn.disabled = true;
+  setTimeout(() => {
+    btn.classList.add('ok');
+    btn.textContent = '✓ Enquiry sent — we\'ll be in touch shortly.';
+  }, 1200);
+}
+</script>
+</body>
+</html>
