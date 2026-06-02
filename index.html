@@ -721,8 +721,21 @@ button{font-family:inherit}
 }
 .foot-inner{
   max-width:1120px;margin:0 auto;
-  display:grid;grid-template-columns:220px 1fr auto;
+  display:grid;grid-template-columns:220px 1fr auto auto;
   gap:40px;align-items:center;position:relative;z-index:1;
+}
+.foot-social{display:flex;gap:10px;align-items:center}
+.foot-social a{
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--g400);
+  transition:background .25s,border-color .25s,color .25s,transform .25s var(--spring);
+}
+.foot-social a svg{width:16px;height:16px;fill:currentColor;display:block}
+.foot-social a:hover{
+  background:var(--accent);border-color:var(--accent);color:#fff;
+  transform:translateY(-2px);box-shadow:0 8px 20px var(--accent-glow);
 }
 .foot-logo{display:flex;align-items:center;line-height:0;transition:opacity .2s}
 .foot-logo:hover{opacity:.85}
@@ -765,8 +778,9 @@ button{font-family:inherit}
   .fg-grow{flex:none;min-height:0}
   .fg-grow textarea{flex:none;min-height:140px}
   .frow{grid-template-columns:1fr}
-  .foot-inner{grid-template-columns:1fr;text-align:center}
+  .foot-inner{grid-template-columns:1fr;text-align:center;gap:24px}
   .foot-nav{justify-content:center}
+  .foot-social{justify-content:center}
   .foot-copy{text-align:center}
   #kinetic{padding:100px 24px}
   #why,#trust,#contact,#sectors,#cta-section{padding-left:24px;padding-right:24px}
@@ -1382,6 +1396,13 @@ button{font-family:inherit}
       <a href="#services-banner">Services</a><a href="#why">Partnership</a>
       <a href="#trust">Compliance</a><a href="#contact">Contact</a>
     </nav>
+    <div class="foot-social">
+      <a href="https://www.linkedin.com/in/thinklens-ds-3a7b60400/" target="_blank" rel="noopener noreferrer" aria-label="Thinklens on LinkedIn" title="Thinklens on LinkedIn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+        </svg>
+      </a>
+    </div>
     <div class="foot-copy">© 2025 Thinklens Consulting LLP<br>India · All rights reserved.</div>
   </div>
 </footer>
