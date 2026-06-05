@@ -1,0 +1,9 @@
+{
+  "name": "thinklens-site",
+  "version": "1.0.0",
+  "description": "Thinklens marketing site — component-split static build (zero dependencies).",
+  "private": true,
+  "scripts": {
+    "build": "node build.js"
+  }
+}

@@ -1,0 +1,51 @@
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about">
+  <div class="about-split">
+    <div class="about-vis-col">
+      <svg class="about-vis-svg" viewBox="0 0 480 480">
+        <defs>
+          <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#007AFF"/>
+            <stop offset="100%" stop-color="#007AFF"/>
+          </radialGradient>
+        </defs>
+        <!-- Concentric rotating rings -->
+        <g style="transform-box:fill-box;transform-origin:center">
+          <circle class="ring r1" cx="240" cy="240" r="220" stroke-dasharray="2 8"/>
+          <circle class="ring r2" cx="240" cy="240" r="170" stroke-dasharray="1 14"/>
+          <circle class="ring r3" cx="240" cy="240" r="120" stroke-dasharray="4 4"/>
+        </g>
+        <!-- Static guide rings -->
+        <circle cx="240" cy="240" r="220" fill="none" stroke="rgba(255,255,255,.04)"/>
+        <circle cx="240" cy="240" r="170" fill="none" stroke="rgba(255,255,255,.04)"/>
+        <circle cx="240" cy="240" r="120" fill="none" stroke="rgba(255,255,255,.04)"/>
+        <!-- Orbiting dots -->
+        <g class="orbit-dot o1"><circle class="node" cx="240" cy="20" r="6"/></g>
+        <g class="orbit-dot o2"><circle class="node--white" cx="410" cy="240" r="5"/></g>
+        <g class="orbit-dot o3"><circle class="node" cx="240" cy="360" r="4"/></g>
+        <!-- Connecting nodes -->
+        <circle class="node" cx="120" cy="120" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/></circle>
+        <circle class="node" cx="360" cy="120" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.5s" repeatCount="indefinite" begin=".7s"/></circle>
+        <circle class="node" cx="120" cy="360" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.8s" repeatCount="indefinite" begin="1.4s"/></circle>
+        <circle class="node" cx="360" cy="360" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.2s" repeatCount="indefinite" begin="2.1s"/></circle>
+        <!-- Connecting lines -->
+        <g stroke="rgba(0,122,255,.3)" stroke-width="1" fill="none">
+          <line x1="120" y1="120" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite"/></line>
+          <line x1="360" y1="120" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="1s"/></line>
+          <line x1="120" y1="360" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="2s"/></line>
+          <line x1="360" y1="360" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="3s"/></line>
+        </g>
+        <!-- Core -->
+        <circle class="core" cx="240" cy="240" r="26" fill="url(#coreGlow)"/>
+        <circle cx="240" cy="240" r="14" fill="#fff" opacity=".9"/>
+      </svg>
+    </div>
+    <div class="about-text-col">
+      <span class="eyebrow r">Our Story</span>
+      <h2 class="section-h2 r">Built on <span class="a">precision.</span><br>Proven in the field.</h2>
+      <p class="body-text r">Founded in 2025, <b>Thinklens</b> bridges the gap between complex data needs and seamless offshore execution. We don't staff projects — we become a compliant, high-caliber extension of your team.</p>
+      <p class="body-text r">In our first year alone, we delivered for the world's largest organizations in Aerospace, Biomedical Devices, and Consumer Packaged Goods — sectors that demand precision, not approximation.</p>
+      <blockquote class="pull-quote r">We specialize in the "messy" middle of data — cleanup, migration, and modernization — at Fortune 500 standards, every engagement.</blockquote>
+    </div>
+  </div>
+</section>
