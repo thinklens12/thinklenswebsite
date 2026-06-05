@@ -1,0 +1,76 @@
+/* ═══════════ 404 PAGE ═══════════ */
+#notfound{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;background:var(--bg);padding:40px 24px;
+}
+.nf-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.nf-bg::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 45%, rgba(10,10,10,.2) 0%, rgba(10,10,10,.9) 100%);
+}
+.nf-content{position:relative;z-index:2;max-width:640px;margin:0 auto}
+
+/* Home logo, top-left */
+.nf-logo{
+  position:fixed;top:24px;left:40px;z-index:5;
+  display:flex;align-items:center;line-height:0;
+  transition:opacity .2s;
+}
+.nf-logo:hover{opacity:.85}
+.nf-logo svg .logo-dot{transform-origin:center;animation:logoPulse 3.2s var(--ease) infinite}
+.nf-logo svg .logo-dot--b{animation-delay:1.1s}
+.nf-logo svg .logo-dot--c{animation-delay:2.2s}
+
+/* Overline pill (reuses .hero-overline / .pulse-dot from styles.css) */
+.nf-content .hero-overline{margin-bottom:0}
+
+/* Giant 404 */
+.nf-code{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(6.5rem,24vw,15rem);
+  font-weight:800;line-height:.92;letter-spacing:-.05em;
+  color:var(--white);
+  display:flex;justify-content:center;align-items:center;gap:.04em;
+  margin:22px 0 8px;
+  opacity:0;animation:fadeUp .9s .15s var(--ease) forwards;
+}
+.nf-code .zero{
+  position:relative;color:var(--accent);
+  text-shadow:0 0 60px rgba(0,122,255,.45);
+}
+/* pulsing ring orbiting the middle 0, echoing the logo mark */
+.nf-code .zero::after{
+  content:'';position:absolute;inset:14% 6%;
+  border:3px solid rgba(0,122,255,.35);border-radius:50%;
+  animation:nfRing 3s ease-in-out infinite;
+}
+@keyframes nfRing{
+  0%,100%{transform:scale(1);opacity:.5}
+  50%{transform:scale(1.08);opacity:.9}
+}
+
+.nf-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(1.5rem,3.6vw,2.4rem);font-weight:800;
+  letter-spacing:-.03em;line-height:1.1;color:var(--white);
+  margin-bottom:16px;
+  opacity:0;animation:fadeUp .9s .3s var(--ease) forwards;
+}
+.nf-sub{
+  font-size:1rem;line-height:1.75;color:var(--g300);
+  max-width:440px;margin:0 auto 40px;
+  opacity:0;animation:fadeUp .9s .45s var(--ease) forwards;
+}
+.nf-actions{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .9s .6s var(--ease) forwards;
+}
+
+/* Centered constellation backdrop */
+.nf-constellation{position:absolute;inset:0;width:100%;height:100%;opacity:.6}
+
+@media(max-width:640px){
+  .nf-logo{left:24px;top:20px}
+  .nf-logo svg{height:28px;width:auto}
+}

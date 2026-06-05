@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* ── Nav scroll background ── */
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
+  if (nav) window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', scrollY > 20);
   }, {passive:true});
 

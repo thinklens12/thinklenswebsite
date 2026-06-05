@@ -49,3 +49,29 @@ const out = [
 
 fs.writeFileSync(path.join(ROOT, 'index.html'), out);
 console.log('Built index.html — ' + out.length + ' bytes from ' + SECTIONS.length + ' sections.');
+
+// ── 404 page ── (reuses the shared styles.css + main.js so it matches the
+// site exactly; GitHub Pages serves 404.html automatically for missing paths)
+const out404 = [
+  '<!DOCTYPE html>',
+  '<!-- GENERATED FILE — do not edit directly. Edit src/404*.* and run: node build.js -->',
+  '<html lang="en">',
+  '<head>',
+  read('src', '404-head.html'),
+  '<style>',
+  read('src', 'styles.css'),
+  read('src', '404.css'),
+  '</style>',
+  '</head>',
+  '<body>',
+  read('src', '404.html'),
+  '<script>',
+  read('src', 'main.js'),
+  '</script>',
+  '</body>',
+  '</html>',
+  '',
+].join('\n');
+
+fs.writeFileSync(path.join(ROOT, '404.html'), out404);
+console.log('Built 404.html   — ' + out404.length + ' bytes.');
