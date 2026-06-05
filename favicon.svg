@@ -1,6 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 144" fill="none">
-  <path d="M69.5 139.9c36.451 0 66-29.303 66-65.45s-29.549-65.45-66-65.45c-36.4508 0-66 29.303-66 65.45s29.5492 65.45 66 65.45z" stroke="#007AFF" stroke-width="7"/>
-  <circle cx="69.5" cy="75" r="38.5" fill="#007AFF"/>
-  <circle cx="25" cy="23.5" r="13.5" fill="#007AFF"/>
-  <circle cx="110" cy="127.5" r="13.5" fill="#007AFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 148" fill="none">
+  <!-- Logo centered in a square canvas (~5px padding) so Google accepts it -->
+  <g transform="translate(4.5, -0.5)">
+    <path d="M69.5 139.9c36.451 0 66-29.303 66-65.45s-29.549-65.45-66-65.45c-36.4508 0-66 29.303-66 65.45s29.5492 65.45 66 65.45z" stroke="#007AFF" stroke-width="7"/>
+    <circle cx="69.5" cy="75" r="38.5" fill="#007AFF"/>
+    <circle cx="25" cy="23.5" r="13.5" fill="#007AFF"/>
+    <circle cx="110" cy="127.5" r="13.5" fill="#007AFF"/>
+  </g>
 </svg>
