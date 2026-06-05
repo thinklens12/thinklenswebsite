@@ -169,6 +169,7 @@
   --g500:#636366;
   --g600:#48484a;
   --accent:#007AFF;        /* Apple iOS blue — the single source of truth */
+  --accent-deep:#006FE6;   /* slightly deeper blue, used only as a fill behind white text (WCAG AA 4.5:1) */
   --accent2:#1f86ff;       /* very slightly lighter for hover states only */
   --accent3:#4da2ff;       /* lighter tint — reserved for glows/blobs, never solid text */
   --accent-glow:rgba(0,122,255,.18);
@@ -241,7 +242,7 @@ button{font-family:inherit}
 .nav-cta{
   position:relative;overflow:hidden;
   font-size:.8rem;font-weight:600;color:var(--white);
-  background:var(--accent);padding:10px 22px;border-radius:100px;
+  background:var(--accent-deep);padding:10px 22px;border-radius:100px;
   transition:transform .25s var(--spring),box-shadow .3s;
 }
 .nav-cta::before{
@@ -308,17 +309,17 @@ body.menu-open .mm-links li:nth-child(4) a{transition-delay:.24s}
 body.menu-open .mm-links li:nth-child(5) a{transition-delay:.30s}
 .mm-cta{
   display:flex;align-items:center;justify-content:center;gap:10px;
-  background:var(--accent);color:#fff;
+  background:var(--accent-deep);color:#fff;
   font-size:1rem;font-weight:700;
   padding:18px 28px;border-radius:100px;
   opacity:0;transform:translateY(14px);
   transition:opacity .5s var(--ease) .36s,transform .5s var(--ease) .36s,background .25s;
 }
 body.menu-open .mm-cta{opacity:1;transform:none}
-.mm-cta:active{background:var(--accent2)}
+.mm-cta:active{background:var(--accent)}
 .mm-meta{
   margin-top:28px;display:flex;flex-direction:column;gap:6px;
-  font-size:.8rem;color:var(--g500);
+  font-size:.8rem;color:var(--g400);
   opacity:0;transition:opacity .5s var(--ease) .42s;
 }
 body.menu-open .mm-meta{opacity:1}
@@ -328,7 +329,7 @@ body.menu-open .mm-meta{opacity:1}
 .sticky-cta{
   position:fixed;right:24px;bottom:24px;z-index:850;
   display:inline-flex;align-items:center;gap:10px;
-  background:var(--accent);color:#fff;
+  background:var(--accent-deep);color:#fff;
   font-size:.85rem;font-weight:600;letter-spacing:.01em;
   padding:13px 20px;border-radius:100px;
   box-shadow:0 10px 34px rgba(0,122,255,.42);
@@ -337,7 +338,7 @@ body.menu-open .mm-meta{opacity:1}
   will-change:transform,opacity;
 }
 .sticky-cta.show{opacity:1;visibility:visible;transform:none}
-.sticky-cta:hover{background:var(--accent2);transform:translateY(-3px)}
+.sticky-cta:hover{background:var(--accent);transform:translateY(-3px)}
 .sticky-cta svg{width:18px;height:18px;stroke:#fff;stroke-width:2;fill:none;flex-shrink:0}
 .sticky-cta::before{
   content:'';position:absolute;inset:0;border-radius:100px;
@@ -446,7 +447,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .btn-white:hover{background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
 .btn-outline{background:transparent;color:var(--g200);border:1px solid var(--border)}
 .btn-outline:hover{border-color:var(--g400);color:var(--white);transform:translateY(-2px)}
-.btn-accent{background:var(--accent);color:var(--white)}
+.btn-accent{background:var(--accent-deep);color:var(--white)}
 .btn-accent:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 12px 28px var(--accent-glow)}
 
 /* Ripple effect (added via JS) */
@@ -488,14 +489,14 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   font-size:2.6rem;font-weight:800;letter-spacing:-.04em;
   color:var(--white);line-height:1;
 }
-.hstat-l{font-size:.72rem;font-weight:500;color:var(--g500);margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+.hstat-l{font-size:.72rem;font-weight:500;color:var(--g400);margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
 
 /* Scroll hint */
 .scroll-hint{
   position:absolute;bottom:130px;right:40px;z-index:3;
   display:flex;flex-direction:column;align-items:center;gap:10px;
   font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--g500);
+  color:var(--g400);
   opacity:0;animation:fadeIn 1s 1.5s var(--ease) forwards;
 }
 .scroll-hint .line{
@@ -530,7 +531,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   text-transform:uppercase;color:var(--bg);
   padding:0 40px;white-space:nowrap;
 }
-.marquee-sep{color:var(--accent);font-size:1rem}
+.marquee-sep{color:var(--accent-deep);font-size:1rem}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ═══════════ KINETIC TEXT ═══════════ */
@@ -540,7 +541,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .kinetic-inner{max-width:1000px;margin:0 auto;position:relative;z-index:2}
 .kinetic-label{
   font-size:.7rem;font-weight:600;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--g500);margin-bottom:40px;display:inline-block;
+  text-transform:uppercase;color:var(--g400);margin-bottom:40px;display:inline-block;
   position:relative;padding-left:32px;
 }
 .kinetic-label::before{
@@ -551,7 +552,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   font-family:'Plus Jakarta Sans',sans-serif;
   font-size:clamp(2rem,4.5vw,4rem);
   font-weight:800;line-height:1.15;letter-spacing:-.03em;
-  color:var(--g600);
+  color:var(--g500);
 }
 .kinetic-text .kw{
   display:inline;
@@ -756,7 +757,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .svc-item:first-child{border-top:1px solid var(--border)}
 .svc-item:hover{padding-left:8px}
 .svc-item-num{
-  font-size:.7rem;font-weight:700;color:var(--g600);
+  font-size:.7rem;font-weight:700;color:var(--g400);
   letter-spacing:.08em;width:28px;flex-shrink:0;transition:color .25s;
 }
 .svc-item:hover .svc-item-num{color:var(--accent)}
@@ -853,7 +854,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .tb-icon-wrap svg{width:20px;height:20px;stroke:var(--accent);stroke-width:1.8;fill:none}
 .tb-title{font-size:.92rem;font-weight:700;color:var(--white);margin-bottom:6px}
-.tb-desc{font-size:.78rem;color:var(--g500);line-height:1.65}
+.tb-desc{font-size:.78rem;color:var(--g400);line-height:1.65}
 
 /* ═══════════ CTA ═══════════ */
 #cta-section{
@@ -913,7 +914,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   cursor:default;
 }
 .cmeta:hover{border-color:var(--border-hi);background:var(--card-hi);transform:translateX(4px)}
-.cmeta-l{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g600);margin-bottom:4px}
+.cmeta-l{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g400);margin-bottom:4px}
 .cmeta-v{font-size:.9rem;font-weight:500;color:var(--g100)}
 
 /* Form */
@@ -924,7 +925,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .fg-grow textarea{flex:1;min-height:0}
 .fg label{
   font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--g500);transition:color .25s;
+  color:var(--g400);transition:color .25s;
 }
 .fg:focus-within label{color:var(--accent)}
 .fg input,.fg select,.fg textarea{
@@ -934,7 +935,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   color:var(--white);outline:none;width:100%;
   transition:border-color .25s,background .25s,box-shadow .25s;appearance:none;
 }
-.fg input::placeholder,.fg textarea::placeholder{color:var(--g600)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--g500)}
 .fg select option{background:var(--card);color:var(--white)}
 .fg input:focus,.fg select:focus,.fg textarea:focus{
   border-color:var(--accent);
@@ -951,7 +952,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .fsub:hover:not(:disabled){background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
 .fsub:active{transform:translateY(0)}
-.fsub.ok{background:var(--accent);color:var(--white)}
+.fsub.ok{background:var(--accent-deep);color:var(--white)}
 .fsub:disabled{opacity:.6;cursor:wait}
 #formMsg{display:none;margin-top:10px;font-size:.82rem;text-align:center}
 
@@ -982,7 +983,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .foot-logo:hover{opacity:.85}
 .foot-nav{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
 .foot-nav a{
-  font-size:.78rem;font-weight:500;color:var(--g500);
+  font-size:.78rem;font-weight:500;color:var(--g400);
   position:relative;transition:color .2s;
 }
 .foot-nav a::after{
@@ -991,7 +992,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .foot-nav a:hover{color:var(--g100)}
 .foot-nav a:hover::after{width:100%}
-.foot-copy{font-size:.72rem;color:var(--g600);text-align:right;line-height:1.6}
+.foot-copy{font-size:.72rem;color:var(--g400);text-align:right;line-height:1.6}
 
 /* ═══════════ ANIMATIONS ═══════════ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -1350,7 +1351,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     </div>
     <div class="sector-grid">
       <div class="sector-card" data-spotlight>
-        <div class="sc-num">01</div>
+        <div class="sc-num" aria-hidden="true">01</div>
         <div class="sc-icon-wrap">
           <!-- aerospace icon -->
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
@@ -1365,7 +1366,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         <p class="sc-body">Data governance and technical business analysis for the world's largest aerospace organizations. Zero tolerance for error, maximum standards for compliance.</p>
       </div>
       <div class="sector-card" data-spotlight>
-        <div class="sc-num">02</div>
+        <div class="sc-num" aria-hidden="true">02</div>
         <div class="sc-icon-wrap">
           <!-- biomedical / helix icon -->
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
@@ -1379,7 +1380,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         <p class="sc-body">Data quality and regulatory compliance for leading medical device innovators. Power BI and Tableau solutions built to clinical and compliance standards.</p>
       </div>
       <div class="sector-card" data-spotlight>
-        <div class="sc-num">03</div>
+        <div class="sc-num" aria-hidden="true">03</div>
         <div class="sc-icon-wrap">
           <!-- package icon -->
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
