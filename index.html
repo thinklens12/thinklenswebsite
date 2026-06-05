@@ -1041,46 +1041,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   will-change:transform;
 }
 
-/* ═══════════ KEYBOARD FOCUS STATES ═══════════ */
-/* Visible ring only for keyboard users (not mouse clicks) */
-a:focus-visible,
-button:focus-visible,
-.nav-cta:focus-visible,
-.nav-toggle:focus-visible,
-.btn:focus-visible,
-.mm-cta:focus-visible,
-.mm-links a:focus-visible,
-.sticky-cta:focus-visible,
-.trust-link:focus-visible,
-.foot-nav a:focus-visible,
-.foot-social a:focus-visible,
-[tabindex="0"]:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:3px;
-  border-radius:6px;
-}
-/* Form fields keep their fill+border focus, plus a keyboard ring */
-.fg input:focus-visible,
-.fg select:focus-visible,
-.fg textarea:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
-}
-/* Suppress the ring for pointer (mouse/touch) focus */
-:focus:not(:focus-visible){outline:none}
-
-/* ═══════════ SKIP TO CONTENT ═══════════ */
-.skip-link{
-  position:fixed;top:10px;left:10px;z-index:1002;
-  background:var(--accent);color:#fff;
-  font-size:.85rem;font-weight:600;
-  padding:11px 18px;border-radius:8px;
-  transform:translateY(-160%);
-  transition:transform .25s var(--ease);
-}
-.skip-link:focus{transform:none;outline:2px solid #fff;outline-offset:2px}
-#hero:focus{outline:none}
-
 /* ═══════════ CUSTOM CURSOR ═══════════ */
 @media(hover:hover) and (pointer:fine){
   *{cursor:none !important}
@@ -1130,9 +1090,6 @@ button:focus-visible,
 </style>
 </head>
 <body>
-
-<!-- Skip to content (first Tab reveals it) -->
-<a href="#hero" class="skip-link">Skip to content</a>
 
 <!-- Scroll progress bar -->
 <div id="scrollProgress" aria-hidden="true"></div>
@@ -1198,7 +1155,7 @@ button:focus-visible,
 </div>
 
 <!-- ══════════ HERO ══════════ -->
-<section id="hero" tabindex="-1">
+<section id="hero">
   <div class="hero-svg-bg">
     <div class="bg-grid"></div>
     <div class="hero-blob b1"></div>
