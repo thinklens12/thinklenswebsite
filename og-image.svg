@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="blueGlow" cx="80%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#007AFF" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#007AFF" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#007AFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="vignette" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0a0a0a" stop-opacity="0.9"/>
+      <stop offset="55%" stop-color="#0a0a0a" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0.1"/>
+    </linearGradient>
+    <pattern id="grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#FFFFFF" stroke-width="0.5" opacity="0.04"/>
+    </pattern>
+    <style>
+      .heading { font-family: 'Plus Jakarta Sans', 'Inter', Arial, sans-serif; font-weight: 800; letter-spacing: -0.04em; }
+      .body    { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
+      .overline{ font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#blueGlow)"/>
+  <rect width="1200" height="630" fill="url(#vignette)"/>
+
+  <!-- Constellation in the top-right -->
+  <g opacity="0.55">
+    <g stroke="#007AFF" stroke-width="1" fill="none" opacity="0.7">
+      <line x1="850" y1="120" x2="980" y2="180"/>
+      <line x1="980" y1="180" x2="1050" y2="320"/>
+      <line x1="850" y1="120" x2="950" y2="280"/>
+      <line x1="950" y1="280" x2="1050" y2="320"/>
+      <line x1="950" y1="280" x2="830" y2="430"/>
+      <line x1="830" y1="430" x2="1000" y2="500"/>
+    </g>
+    <g fill="#007AFF">
+      <circle cx="850" cy="120" r="4"/>
+      <circle cx="980" cy="180" r="5"/>
+      <circle cx="1050" cy="320" r="4"/>
+      <circle cx="950" cy="280" r="6"/>
+      <circle cx="830" cy="430" r="4"/>
+      <circle cx="1000" cy="500" r="5"/>
+    </g>
+  </g>
+
+  <!-- Logo mark + wordmark, top-left -->
+  <g transform="translate(80, 78)">
+    <!-- Logo mark -->
+    <g transform="scale(0.35)">
+      <path d="M69.5 139.9c36.451 0 66-29.303 66-65.45s-29.549-65.45-66-65.45c-36.4508 0-66 29.303-66 65.45s29.5492 65.45 66 65.45z" stroke="#FFFFFF" stroke-width="7" fill="none"/>
+      <circle cx="69.5" cy="75" r="38.5" fill="#007AFF"/>
+      <circle cx="25" cy="23.5" r="13.5" fill="#007AFF"/>
+      <circle cx="110" cy="127.5" r="13.5" fill="#007AFF"/>
+    </g>
+    <!-- Wordmark -->
+    <text x="62" y="40" class="heading" font-size="34" fill="#FFFFFF">Thinklens</text>
+  </g>
+
+  <!-- Overline pill -->
+  <g transform="translate(80, 218)">
+    <rect x="0" y="0" width="430" height="38" rx="19" fill="rgba(0,122,255,0.1)" stroke="rgba(0,122,255,0.3)" stroke-width="1"/>
+    <circle cx="20" cy="19" r="5" fill="#007AFF"/>
+    <text x="36" y="24" class="overline" font-size="13" fill="#C7C7CC">INDIA'S PREMIER OFFSHORE DATA PARTNER</text>
+  </g>
+
+  <!-- Main headline -->
+  <text x="80" y="360" class="heading" font-size="92" fill="#FFFFFF">Data Precision.</text>
+  <text x="80" y="450" class="heading" font-size="92" fill="#007AFF">Global Scale.</text>
+
+  <!-- Sub-copy -->
+  <text x="80" y="510" class="body" font-size="22" font-weight="400" fill="#AEAEB2">
+    Fully-compliant offshore data expertise
+  </text>
+  <text x="80" y="540" class="body" font-size="22" font-weight="400" fill="#AEAEB2">
+    for global IT staffing agencies.
+  </text>
+
+  <!-- Footer bar -->
+  <line x1="80" y1="580" x2="1120" y2="580" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="1"/>
+  <text x="80" y="603" class="body" font-size="14" font-weight="500" fill="#636366">
+    thinklens.in
+  </text>
+  <text x="1120" y="603" class="body" font-size="14" font-weight="500" fill="#636366" text-anchor="end">
+    Aerospace · Biomedical · CPG
+  </text>
+</svg>
