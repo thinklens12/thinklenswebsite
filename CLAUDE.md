@@ -26,9 +26,9 @@ src/
   head.html            <head> meta, Open Graph, JSON-LD, favicons, font preloads
   styles.css           ALL css  (inlined into <style>)
   main.js              ALL js   (inlined into <script>)
-  partials/*.html      15 body sections, ordered by SECTIONS[] in build.js:
+  partials/*.html      16 body sections, ordered by SECTIONS[] in build.js:
                        body-open, nav, mobile-menu, hero, marquee, kinetic, about,
-                       sectors, services, why, trust, cta, contact, footer, sticky-cta
+                       sectors, services, why, trust, faq, cta, contact, footer, sticky-cta
   404-head.html, 404.css, 404.html   → 404 page (reuses styles.css + main.js)
 build.js               src/ → index.html + 404.html (also injects the js-fade boot
                        script + a "GENERATED FILE" banner)

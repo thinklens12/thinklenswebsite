@@ -190,6 +190,84 @@
       }
     },
     {
+      "@type": "FAQPage",
+      "@id": "https://www.thinklens.in/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do you work as a sub-contractor under our MSA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Thinklens operates as a silent offshore delivery partner under your Master Service Agreement — you keep the client relationship, branding, and invoicing. We sub-contract on T&M, Fixed-Scope, or B2B Freelance Consultant arrangements depending on how your client is billed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What time-zone overlap do you offer for US, UK, and APAC clients?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our consultants run flexible shifts covering 3–5 hours of daily overlap with US Eastern, UK, and Singapore working hours. For critical delivery phases, sprint reviews, or production go-lives, we align fully with your client's working day."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which BI tools do you specialize in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enterprise delivery on Power BI, Tableau, and TIBCO Spotfire — dashboard development, report modernization, semantic modeling, performance tuning, and end-to-end Report QA. Most engagements also involve SQL-heavy data preparation and ETL Testing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you handle SAP and Workday data work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We support SAP S/4HANA, SAP ECC, SAP MM, and Workday Data — covering data stewardship, master data cleanup, migration testing, and downstream BI reporting. Typical engagements pair a Technical BA with a senior data engineer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does your ETL Testing and Report QA process cover?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "End-to-end ETL pipeline validation: source-to-target reconciliation, transformation logic, referential integrity, regression testing, and data-quality gates. For BI reports, we validate calculations, security models, drill-through paths, and visual accuracy across Power BI, Tableau, and Spotfire — typically reaching 95%+ test coverage before sign-off."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you provide a Technical Business Analyst (BA) for our project?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Our Technical BAs lead requirements gathering, source-system analysis, data-model design, and stakeholder workshops — with hands-on SQL and BI tool fluency so they can prototype and validate without waiting on engineering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's your delivery base and which compliance frameworks do you follow?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "India-based, authorized under the Indian Importer Exporter Code (IEC) for international trade in services. We align to client-side controls — including GDPR, HIPAA, and SOC 2 — and operate inside your secure VDI/VPN environment when required. Each engagement signs an NDA before kickoff."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are engagements priced — T&M, Fixed-Scope, or retainer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All three. We offer Time & Materials for evolving scopes, Fixed-Scope for well-defined deliverables, MSA Sub-Contracting for ongoing partnerships, and B2B Freelance Consultant arrangements for short engagements. Pricing is shared transparently in the first call."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How quickly can a consultant start on a new engagement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typically 1–2 weeks from signed SOW. For pre-vetted skill sets — Power BI, Tableau, SQL, ETL Testing, Technical BA — we can often start within 5 business days."
+          }
+        }
+      ]
+    },
+    {
       "@type": "WebSite",
       "@id": "https://www.thinklens.in/#website",
       "url": "https://www.thinklens.in/",
@@ -1176,6 +1254,55 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   }
 }
 
+/* ═══════════ FAQ ═══════════ */
+#faq{padding:120px 0;position:relative}
+.faq-head{max-width:760px;margin:0 auto 56px;text-align:center}
+.faq-head .eyebrow{padding-left:0}
+.faq-head .eyebrow::before{display:none}
+.faq-deck{font-size:1.05rem;line-height:1.7;color:var(--g300);margin-top:4px}
+.faq-list{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.faq-item{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  transition:border-color .25s var(--ease),background .25s var(--ease);
+}
+.faq-item[open]{border-color:var(--border-hi);background:var(--card-hi)}
+.faq-item:hover{border-color:var(--border-hi)}
+.faq-q{
+  list-style:none;cursor:pointer;
+  padding:22px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1.02rem;font-weight:600;letter-spacing:-.005em;
+  color:var(--white);
+  user-select:none;
+}
+.faq-q::-webkit-details-marker{display:none}
+.faq-q::after{
+  content:'';flex:0 0 18px;width:18px;height:18px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23007AFF' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+  background-repeat:no-repeat;background-position:center;background-size:contain;
+  transition:transform .3s var(--ease);
+}
+.faq-item[open] .faq-q::after{transform:rotate(180deg)}
+.faq-a{
+  padding:0 28px 24px;
+  font-size:.96rem;line-height:1.75;color:var(--g300);
+}
+.faq-a p{margin:0}
+.faq-a b{color:var(--g100);font-weight:600}
+@media(prefers-reduced-motion:reduce){
+  .faq-q::after,.faq-item{transition:none}
+}
+@media(max-width:640px){
+  #faq{padding:80px 0}
+  .faq-head{margin-bottom:36px}
+  .faq-q{padding:18px 20px;font-size:.98rem;gap:16px}
+  .faq-a{padding:0 20px 20px;font-size:.93rem}
+}
+
 /* ═══════════ PAGE TRANSITIONS ═══════════ */
 /* .js-fade is added to <html> by a tiny head script, so no-JS users are never
    left with a hidden page. Body fades in on load and out on internal nav. */
@@ -1671,6 +1798,81 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
           <div class="tb-desc">Registered under the Indian LLP Act — recognized, auditable legal structure.</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section id="faq" aria-labelledby="faqHeading">
+  <div class="wrap">
+    <div class="faq-head">
+      <span class="eyebrow r">Frequently Asked</span>
+      <h2 id="faqHeading" class="section-h2 r">Answers, before<br>you <span class="a">ask.</span></h2>
+      <p class="faq-deck r">Most common questions from staffing agency leaders evaluating Thinklens as an offshore delivery partner.</p>
+    </div>
+    <div class="faq-list r">
+      <details class="faq-item">
+        <summary class="faq-q">Do you work as a sub-contractor under our MSA?</summary>
+        <div class="faq-a">
+          <p>Yes. Thinklens operates as a silent offshore delivery partner under your Master Service Agreement — you keep the client relationship, branding, and invoicing. We sub-contract on T&amp;M, Fixed-Scope, or B2B Freelance Consultant arrangements depending on how your client is billed.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What time-zone overlap do you offer for US, UK, and APAC clients?</summary>
+        <div class="faq-a">
+          <p>Our consultants run flexible shifts covering 3–5 hours of daily overlap with US Eastern, UK, and Singapore working hours. For critical delivery phases, sprint reviews, or production go-lives, we align fully with your client's working day.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Which BI tools do you specialize in?</summary>
+        <div class="faq-a">
+          <p>Enterprise delivery on <b>Power BI</b>, <b>Tableau</b>, and <b>TIBCO Spotfire</b> — dashboard development, report modernization, semantic modeling, performance tuning, and end-to-end Report QA. Most engagements also involve SQL-heavy data preparation and ETL Testing.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Do you handle SAP and Workday data work?</summary>
+        <div class="faq-a">
+          <p>Yes. We support <b>SAP S/4HANA</b>, <b>SAP ECC</b>, <b>SAP MM</b>, and <b>Workday Data</b> — covering data stewardship, master data cleanup, migration testing, and downstream BI reporting. Typical engagements pair a Technical BA with a senior data engineer.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What does your ETL Testing and Report QA process cover?</summary>
+        <div class="faq-a">
+          <p>End-to-end ETL pipeline validation: source-to-target reconciliation, transformation logic, referential integrity, regression testing, and data-quality gates. For BI reports, we validate calculations, security models, drill-through paths, and visual accuracy across Power BI, Tableau, and Spotfire — typically reaching 95%+ test coverage before sign-off.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Can you provide a Technical Business Analyst (BA) for our project?</summary>
+        <div class="faq-a">
+          <p>Yes. Our Technical BAs lead requirements gathering, source-system analysis, data-model design, and stakeholder workshops — with hands-on SQL and BI tool fluency so they can prototype and validate without waiting on engineering.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What's your delivery base and which compliance frameworks do you follow?</summary>
+        <div class="faq-a">
+          <p>India-based, authorized under the Indian Importer Exporter Code (IEC) for international trade in services. We align to client-side controls — including GDPR, HIPAA, and SOC 2 — and operate inside your secure VDI/VPN environment when required. Each engagement signs an NDA before kickoff.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">How are engagements priced — T&amp;M, Fixed-Scope, or retainer?</summary>
+        <div class="faq-a">
+          <p>All three. We offer <b>Time &amp; Materials</b> for evolving scopes, <b>Fixed-Scope</b> for well-defined deliverables, <b>MSA Sub-Contracting</b> for ongoing partnerships, and <b>B2B Freelance Consultant</b> arrangements for short engagements. Pricing is shared transparently in the first call.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">How quickly can a consultant start on a new engagement?</summary>
+        <div class="faq-a">
+          <p>Typically 1–2 weeks from signed SOW. For pre-vetted skill sets — Power BI, Tableau, SQL, ETL Testing, Technical BA — we can often start within 5 business days.</p>
+        </div>
+      </details>
     </div>
   </div>
 </section>
