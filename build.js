@@ -20,7 +20,7 @@ const read = (...p) => fs.readFileSync(path.join(ROOT, ...p), 'utf8').replace(/\
 // Body sections, in render order.
 const SECTIONS = [
   'body-open', 'nav', 'mobile-menu', 'hero', 'marquee', 'kinetic', 'about',
-  'sectors', 'services', 'why', 'trust', 'cta', 'booking', 'contact', 'footer', 'sticky-cta',
+  'sectors', 'services', 'why', 'trust', 'cta', 'contact', 'footer', 'sticky-cta',
 ];
 
 // Runs before first paint so the page starts hidden only when JS is on

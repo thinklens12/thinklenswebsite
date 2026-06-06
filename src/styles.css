@@ -164,7 +164,6 @@ body.menu-open .mm-links li:nth-child(2) a{transition-delay:.12s}
 body.menu-open .mm-links li:nth-child(3) a{transition-delay:.18s}
 body.menu-open .mm-links li:nth-child(4) a{transition-delay:.24s}
 body.menu-open .mm-links li:nth-child(5) a{transition-delay:.30s}
-body.menu-open .mm-links li:nth-child(6) a{transition-delay:.36s}
 .mm-cta{
   display:flex;align-items:center;justify-content:center;gap:10px;
   background:var(--accent-deep);color:#fff;
@@ -813,37 +812,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .fsub.ok{background:var(--accent-deep);color:var(--white)}
 .fsub:disabled{opacity:.6;cursor:wait}
 #formMsg{display:none;margin-top:10px;font-size:.82rem;text-align:center}
-
-/* ═══════════ BOOKING (Cal.com inline) ═══════════ */
-#book{padding:120px 40px;background:var(--bg)}
-.book-head{max-width:640px;margin:0 auto 48px;text-align:center}
-.book-head .eyebrow{padding-left:0}
-.book-head .eyebrow::before{display:none}
-.book-h2{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;
-  color:var(--white);margin:14px 0 16px;
-}
-.book-h2 .a{color:var(--accent)}
-.book-deck{font-size:1rem;color:var(--g300);line-height:1.75}
-.cal-wrap{
-  max-width:1040px;margin:0 auto;position:relative;
-  border:1px solid var(--border);border-radius:18px;overflow:hidden;
-  background:var(--card);min-height:600px;
-}
-#cal-inline{width:100%;min-height:600px}
-#cal-inline iframe{width:100% !important;border:0;display:block}
-.cal-loading{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:12px;
-  color:var(--g400);font-size:.9rem;pointer-events:none;
-}
-.cal-spinner{
-  width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--accent);
-  border-radius:50%;animation:calSpin .8s linear infinite;
-}
-@keyframes calSpin{to{transform:rotate(360deg)}}
-.cal-fallback{padding:48px 24px;text-align:center;color:var(--g300);line-height:1.7}
-.cal-fallback a{color:var(--accent)}
 
 /* ═══════════ FOOTER ═══════════ */
 #footer{
