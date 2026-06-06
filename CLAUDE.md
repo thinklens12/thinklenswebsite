@@ -50,6 +50,10 @@ package.json           npm run build
   the heads. **No Google Fonts** — don't add the `<link>` back.
 - Brand spec: `Thinklens-Brand-Guidelines.docx` (Plus Jakarta Sans display, Inter body).
 - `prefers-reduced-motion` is respected; keep new animations behind it.
+- **Favicons are transparent** (alpha 0 background). The SVG is the source of truth; PNGs
+  + `.ico` are rasterized from it. If you regenerate them, keep the background transparent
+  — don't bake a white tile back in (iOS will mask the apple-touch icon to whatever
+  background it's pinned on).
 
 ## Behaviors (all in `src/main.js`, guarded so they no-op when absent)
 
@@ -67,12 +71,32 @@ ripple (`[data-ripple]`) · custom cursor (fine pointers only).
 - **Google Analytics (GA4)** → gtag.js, measurement ID `G-0L4LLVDPN7`. Lives in the
   `<head>` of BOTH `src/head.html` and `src/404-head.html` (so 404 landings are tracked too).
   Loaded `async`; it's in the head verbatim (not part of the inlined JS).
+- **Google Search Console** verified — keep `google5ea61d290b4d5cc5.html` in the repo root.
+
+## SEO
+
+Single-page site, so keywords need mutual reinforcement across **meta + JSON-LD + visible
+copy** — meta alone is keyword stuffing and Google ignores `<meta name="keywords">` anyway.
+The real entity-graph win is the JSON-LD in `src/head.html`:
+
+- `Organization.alternateName` — array form, includes positioning phrases.
+- `Organization.knowsAbout` — flat list of capabilities (Data Governance, Technical BA,
+  ETL Testing, Report QA, Data Stewardship, Power BI, Tableau, TIBCO Spotfire,
+  SAP S/4HANA / ECC / MM, Workday Data, SQL, B2B Freelance Consulting). Add new
+  capabilities here when claimed elsewhere on the page.
+- `ProfessionalService.hasOfferCatalog` — every claimed service has a corresponding
+  `Offer` entry. Keep it 1:1 with what the page actually advertises.
+
+Visible support lives in the **services chips** (`src/partials/services.html`) and the
+**engagement-types line** in contact. Don't add a capability to JSON-LD without a visible
+mention somewhere on the page — Google's helpful-content system demotes claims with no
+on-page evidence. And don't claim capabilities the business doesn't actually deliver.
 
 ## Root assets (served as-is)
 
-`CNAME` (www.thinklens.in), favicons (`favicon.*`, `apple-touch-icon.png`),
-`og-image.{png,jpg,svg}`, `sitemap.xml`, `robots.txt`, `site.webmanifest`,
-`google5ea61d290b4d5cc5.html` (Search Console — keep it).
+`CNAME` (www.thinklens.in), favicons (`favicon.*`, `apple-touch-icon.png` — all transparent
+PNG/ICO rasterized from `favicon.svg`), `og-image.{png,jpg,svg}`, `sitemap.xml`, `robots.txt`,
+`site.webmanifest`, `google5ea61d290b4d5cc5.html` (Search Console — keep it).
 
 ## Local preview
 
