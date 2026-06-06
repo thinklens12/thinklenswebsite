@@ -2,6 +2,7 @@
 <!-- GENERATED FILE — do not edit directly. Edit the components in src/ and run: node build.js -->
 <html lang="en">
 <head>
+<script>document.documentElement.classList.add('js-fade')</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0a0a0a">
@@ -179,7 +180,7 @@
   --slow-spring:cubic-bezier(.16,1,.3,1);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;font-size:16px}
+html{scroll-behavior:smooth;font-size:16px;background:var(--bg)}
 body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   background:var(--bg);color:var(--g200);
@@ -1089,6 +1090,16 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     scroll-behavior:auto !important;
   }
 }
+
+/* ═══════════ PAGE TRANSITIONS ═══════════ */
+/* .js-fade is added to <html> by a tiny head script, so no-JS users are never
+   left with a hidden page. Body fades in on load and out on internal nav. */
+.js-fade body{opacity:0;transition:opacity .5s var(--ease)}
+.js-fade body.page-ready{opacity:1}
+.js-fade body.page-leaving{opacity:0;transition:opacity .32s var(--ease)}
+@media(prefers-reduced-motion:reduce){
+  .js-fade body{opacity:1 !important}
+}
 </style>
 </head>
 <body>
@@ -1694,6 +1705,37 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 </a>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+  /* ── Page transitions: fade in on arrival, fade out on internal nav ── */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Reveal — double rAF so the opacity:0 state paints first, then transitions to 1
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('page-ready')));
+  // Restore visibility when returning via back/forward (bfcache)
+  window.addEventListener('pageshow', () => {
+    document.body.classList.remove('page-leaving');
+    document.body.classList.add('page-ready');
+  });
+  // Intercept only true internal page navigations (not in-page hashes/externals)
+  if (!reduceMotion) {
+    document.addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest('a');
+      if (!a) return;
+      const href = a.getAttribute('href');
+      if (!href) return;
+      if (a.target && a.target !== '_self') return;          // opens new tab/window
+      if (a.hasAttribute('download')) return;                // download
+      if (/^(mailto:|tel:|sms:|#)/i.test(href)) return;      // mail/tel/in-page hash
+      let url;
+      try { url = new URL(href, location.href); } catch (_) { return; }
+      if (url.origin !== location.origin) return;            // external
+      if (url.pathname === location.pathname) return;        // same page (hash/no change)
+      e.preventDefault();
+      document.body.classList.remove('page-ready');
+      document.body.classList.add('page-leaving');
+      setTimeout(() => { location.href = url.href; }, 320);
+    });
+  }
 
   /* ── Nav scroll background ── */
   const nav = document.getElementById('nav');

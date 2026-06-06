@@ -23,6 +23,10 @@ const SECTIONS = [
   'sectors', 'services', 'why', 'trust', 'cta', 'contact', 'footer', 'sticky-cta',
 ];
 
+// Runs before first paint so the page starts hidden only when JS is on
+// (no-JS users never see a blank page). Drives the fade-in/out transitions.
+const FADE_BOOT = "<script>document.documentElement.classList.add('js-fade')</script>";
+
 const body = SECTIONS.map((name) => read('src', 'partials', name + '.html')).join('\n\n');
 
 // Assemble with array-join (never template literals) so backticks / ${...}
@@ -32,6 +36,7 @@ const out = [
   '<!-- GENERATED FILE — do not edit directly. Edit the components in src/ and run: node build.js -->',
   '<html lang="en">',
   '<head>',
+  FADE_BOOT,
   read('src', 'head.html'),
   '<style>',
   read('src', 'styles.css'),
@@ -57,6 +62,7 @@ const out404 = [
   '<!-- GENERATED FILE — do not edit directly. Edit src/404*.* and run: node build.js -->',
   '<html lang="en">',
   '<head>',
+  FADE_BOOT,
   read('src', '404-head.html'),
   '<style>',
   read('src', 'styles.css'),

@@ -1,5 +1,36 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+  /* ── Page transitions: fade in on arrival, fade out on internal nav ── */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Reveal — double rAF so the opacity:0 state paints first, then transitions to 1
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('page-ready')));
+  // Restore visibility when returning via back/forward (bfcache)
+  window.addEventListener('pageshow', () => {
+    document.body.classList.remove('page-leaving');
+    document.body.classList.add('page-ready');
+  });
+  // Intercept only true internal page navigations (not in-page hashes/externals)
+  if (!reduceMotion) {
+    document.addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest('a');
+      if (!a) return;
+      const href = a.getAttribute('href');
+      if (!href) return;
+      if (a.target && a.target !== '_self') return;          // opens new tab/window
+      if (a.hasAttribute('download')) return;                // download
+      if (/^(mailto:|tel:|sms:|#)/i.test(href)) return;      // mail/tel/in-page hash
+      let url;
+      try { url = new URL(href, location.href); } catch (_) { return; }
+      if (url.origin !== location.origin) return;            // external
+      if (url.pathname === location.pathname) return;        // same page (hash/no change)
+      e.preventDefault();
+      document.body.classList.remove('page-ready');
+      document.body.classList.add('page-leaving');
+      setTimeout(() => { location.href = url.href; }, 320);
+    });
+  }
+
   /* ── Nav scroll background ── */
   const nav = document.getElementById('nav');
   if (nav) window.addEventListener('scroll', () => {
