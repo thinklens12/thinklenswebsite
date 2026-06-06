@@ -79,20 +79,56 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  /* ── Sticky "Talk to us" CTA — appears past hero, hides over contact ── */
+  /* ── Sticky "Talk to us" CTA — appears past hero, hides over booking/contact ── */
   const sticky = document.getElementById('stickyCta');
   const heroSec = document.getElementById('hero');
   const contactSec = document.getElementById('contact');
+  const bookSec = document.getElementById('book');
   if (sticky && heroSec && contactSec) {
+    const inView = (el) => {
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    };
     const updateSticky = () => {
       const heroPassed = heroSec.getBoundingClientRect().bottom < 0;
-      const cr = contactSec.getBoundingClientRect();
-      const contactInView = cr.top < window.innerHeight && cr.bottom > 0;
-      sticky.classList.toggle('show', heroPassed && !contactInView);
+      sticky.classList.toggle('show', heroPassed && !inView(contactSec) && !inView(bookSec));
     };
     window.addEventListener('scroll', updateSticky, {passive:true});
     window.addEventListener('resize', updateSticky, {passive:true});
     updateSticky();
+  }
+
+  /* ── Cal.com inline booking — lazy-loaded when the section nears the viewport ── */
+  const calEl = document.getElementById('cal-inline');
+  if (calEl) {
+    let calInit = false;
+    const initCal = () => {
+      if (calInit) return;
+      calInit = true;
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
+      window.Cal('init', { origin: 'https://cal.com' });
+      window.Cal('inline', {
+        elementOrSelector: '#cal-inline',
+        calLink: 'think-lens-consulting-kui4bb/30min',
+        layout: 'month_view',
+        config: { theme: 'dark' },
+      });
+      window.Cal('ui', {
+        theme: 'dark',
+        cssVarsPerTheme: { dark: { 'cal-brand': '#007AFF' } },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+      window.Cal('on', { action: 'linkReady', callback: () => {
+        const l = calEl.querySelector('.cal-loading');
+        if (l) l.style.display = 'none';
+      }});
+    };
+    const calObs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { initCal(); calObs.disconnect(); }
+    }, { rootMargin: '400px 0px' });
+    calObs.observe(calEl);
   }
 
   /* ── Count-up animation ── */
