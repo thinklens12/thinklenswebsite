@@ -64,6 +64,9 @@ ripple (`[data-ripple]`) · custom cursor (fine pointers only).
 - **Cal.com booking** → "Date & Time" field in the contact form (`#dtTrigger` reveals
   `#calForm`, lazy-loads inline `#cal-inline-form`). Link: `think-lens-consulting-kui4bb/30min`,
   dark theme, `cal-brand:#007AFF`. The container hugs the iframe (dark bg, no white space).
+- **Google Analytics (GA4)** → gtag.js, measurement ID `G-0L4LLVDPN7`. Lives in the
+  `<head>` of BOTH `src/head.html` and `src/404-head.html` (so 404 landings are tracked too).
+  Loaded `async`; it's in the head verbatim (not part of the inlined JS).
 
 ## Root assets (served as-is)
 
