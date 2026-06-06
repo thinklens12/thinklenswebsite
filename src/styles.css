@@ -756,7 +756,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 
 /* ═══════════ CONTACT ═══════════ */
 #contact{padding:140px 40px;background:var(--surface)}
-.contact-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:100px;align-items:stretch}
+.contact-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:100px;align-items:start}
 .contact-h2{
   font-family:'Plus Jakarta Sans',sans-serif;
   font-size:clamp(2rem,4vw,3.4rem);font-weight:800;letter-spacing:-.04em;line-height:1.08;color:var(--white);margin-bottom:16px;
@@ -775,11 +775,36 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .cmeta-v{font-size:.9rem;font-weight:500;color:var(--g100)}
 
 /* Form */
-.cform{display:flex;flex-direction:column;gap:14px;height:100%}
+.cform{display:flex;flex-direction:column;gap:14px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg{display:flex;flex-direction:column;gap:6px;position:relative}
-.fg-grow{flex:1;min-height:108px}
-.fg-grow textarea{flex:1;min-height:0}
+/* ── Date & Time field → Cal.com inline ── */
+.dt-trigger{
+  display:flex;align-items:center;gap:10px;width:100%;cursor:pointer;text-align:left;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;
+  font-family:'Inter',sans-serif;font-size:.92rem;font-weight:500;color:var(--g200);
+  transition:border-color .25s,background .25s,box-shadow .25s,color .25s;
+}
+.dt-trigger:hover{border-color:var(--border-hi);color:var(--white)}
+.dt-trigger.is-open{border-color:var(--accent);background:rgba(0,122,255,.04);box-shadow:0 0 0 4px rgba(0,122,255,.12)}
+.dt-cal-icon{width:18px;height:18px;flex-shrink:0;color:var(--accent);fill:none}
+.dt-trigger-text{flex:1}
+.dt-chevron{width:18px;height:18px;flex-shrink:0;color:var(--g400);fill:none;transition:transform .3s var(--ease)}
+.dt-trigger.is-open .dt-chevron{transform:rotate(180deg)}
+.cal-embed{margin-top:8px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
+.cal-embed[hidden]{display:none}
+#cal-inline-form{position:relative;width:100%;min-height:580px;background:var(--card)}
+.cal-embed.is-loaded #cal-inline-form{min-height:0}
+#cal-inline-form iframe{width:100% !important;border:0;display:block;background:transparent}
+.cal-loading{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:12px;
+  color:var(--g400);font-size:.9rem;pointer-events:none;
+}
+.cal-spinner{
+  width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--accent);
+  border-radius:50%;animation:calSpin .8s linear infinite;
+}
+@keyframes calSpin{to{transform:rotate(360deg)}}
 .fg label{
   font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   color:var(--g400);transition:color .25s;
@@ -875,9 +900,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   .trust-layout{grid-template-columns:1fr;gap:48px}
   .trust-grid{grid-template-columns:1fr}
   .contact-layout{grid-template-columns:1fr;gap:48px;align-items:start}
-  .cform{height:auto}
-  .fg-grow{flex:none;min-height:0}
-  .fg-grow textarea{flex:none;min-height:140px}
   .frow{grid-template-columns:1fr}
   .foot-inner{grid-template-columns:1fr;text-align:center;gap:24px}
   .foot-nav{justify-content:center}

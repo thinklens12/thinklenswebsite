@@ -95,14 +95,17 @@ document.addEventListener('DOMContentLoaded', function() {
     updateSticky();
   }
 
-  /* ── Cal.com booking popup — opened from CTAs ([data-book]), lazy-loaded ── */
-  const calTriggers = document.querySelectorAll('[data-book]');
-  if (calTriggers.length) {
+  /* ── "Date & Time" form field → reveal + lazy-load the Cal.com calendar ── */
+  const dtTrigger = document.getElementById('dtTrigger');
+  const calForm = document.getElementById('calForm');
+  const calMount = document.getElementById('cal-inline-form');
+  if (dtTrigger && calForm && calMount) {
     const CAL_LINK = 'think-lens-consulting-kui4bb/30min';
-    let calBooted = false;
-    const bootCal = () => {
-      if (calBooted) return;
-      calBooted = true;
+    let scriptReady = false, mounted = false;
+    // Load the embed script + preload data (safe to run before the container is shown)
+    const warmCal = () => {
+      if (scriptReady) return;
+      scriptReady = true;
       (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
       window.Cal('init', { origin: 'https://cal.com' });
       window.Cal('ui', {
@@ -113,17 +116,39 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       window.Cal('preload', { calLink: CAL_LINK });
     };
-    const openBooker = (e) => {
-      if (e) e.preventDefault();
-      bootCal();
-      window.Cal('modal', { calLink: CAL_LINK, config: { theme: 'dark', layout: 'month_view' } });
+    // Render the inline calendar — only once the container is visible
+    const mountCal = () => {
+      if (mounted) return;
+      mounted = true;
+      warmCal();
+      window.Cal('inline', {
+        elementOrSelector: '#cal-inline-form',
+        calLink: CAL_LINK,
+        layout: 'month_view',
+        config: { theme: 'dark' },
+      });
+      window.Cal('on', { action: 'linkReady', callback: () => {
+        calForm.classList.add('is-loaded');
+        const l = calMount.querySelector('.cal-loading');
+        if (l) l.style.display = 'none';
+      }});
     };
-    calTriggers.forEach((el) => {
-      el.addEventListener('click', openBooker);
-      // Warm up the embed on hover/focus intent so the first open is instant
-      el.addEventListener('pointerenter', bootCal, { once: true });
-      el.addEventListener('focus', bootCal, { once: true });
+    dtTrigger.addEventListener('click', () => {
+      const opening = calForm.hasAttribute('hidden');
+      if (opening) {
+        calForm.removeAttribute('hidden');
+        dtTrigger.setAttribute('aria-expanded', 'true');
+        dtTrigger.classList.add('is-open');
+        mountCal();
+      } else {
+        calForm.setAttribute('hidden', '');
+        dtTrigger.setAttribute('aria-expanded', 'false');
+        dtTrigger.classList.remove('is-open');
+      }
     });
+    // Warm the script on hover/focus intent so the first open is instant
+    dtTrigger.addEventListener('pointerenter', warmCal, { once: true });
+    dtTrigger.addEventListener('focus', warmCal, { once: true });
   }
 
   /* ── Count-up animation ── */
