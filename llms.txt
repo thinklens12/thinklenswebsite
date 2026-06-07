@@ -32,12 +32,17 @@ Sourced from the page's JSON-LD `knowsAbout` array and visible services chips �
 
 Typical start: 1–2 weeks from signed SOW; 5 business days for pre-vetted skill sets (Power BI, Tableau, SQL, ETL Testing, Technical BA). Time-zone overlap: 3–5 daily hours with US Eastern, UK, or Singapore, with full overlap for go-lives and sprint reviews.
 
-## Single-page site map (anchors on https://www.thinklens.in/)
+## Pages
+
+- [/](https://www.thinklens.in/) — Homepage: positioning, services overview, FAQ, contact.
+- [/about/](https://www.thinklens.in/about/) — Who Thinklens is: a senior offshore Data & BI consulting team for global IT staffing agencies. Covers the four capability tracks (Data Governance & Technical BA; BI & ETL Modernization; ETL Testing & Report QA; Data Quality, Analysis & Cleanup) and the silent-sub-contractor positioning.
+
+## Homepage site map (anchors on https://www.thinklens.in/)
 
 - [Hero / positioning](https://www.thinklens.in/#hero): one-line value prop and engagement-model summary.
 - [About](https://www.thinklens.in/#about): founding context, sectors served (Aerospace, Biomedical Devices, CPG).
 - [Sectors](https://www.thinklens.in/#sectors): Fortune 500 verticals where Thinklens has delivered.
-- [Services](https://www.thinklens.in/#services-banner): three service tracks — (1) Data Governance & Technical BA, (2) BI/ETL/Report Modernization, (3) Data Quality, Analysis & Cleanup.
+- [Services](https://www.thinklens.in/#services): three service tracks — (1) Data Governance & Technical BA, (2) BI/ETL/Report Modernization, (3) Data Quality, Analysis & Cleanup.
 - [Why Thinklens](https://www.thinklens.in/#why): differentiators vs. generic offshore staffing.
 - [Trust & compliance](https://www.thinklens.in/#trust): security and compliance posture.
 - [FAQ](https://www.thinklens.in/#faq): 9 Q&As covering sub-contracting under MSA, time-zone overlap, BI tool specialization, SAP/Workday scope, ETL/QA process, Technical BA availability, India delivery + compliance frameworks, pricing models, and start times.

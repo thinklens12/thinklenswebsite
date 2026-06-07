@@ -23,19 +23,44 @@ into the output, so the deployed page makes no extra requests.
 
 ```
 src/
-  head.html            <head> meta, Open Graph, JSON-LD, favicons, font preloads
-  styles.css           ALL css  (inlined into <style>)
-  main.js              ALL js   (inlined into <script>)
-  partials/*.html      16 body sections, ordered by SECTIONS[] in build.js:
-                       body-open, nav, mobile-menu, hero, marquee, kinetic, about,
-                       sectors, services, why, trust, faq, cta, contact, footer, sticky-cta
+  head-base.html       Shared <head> (charset, GA4, favicons, font preloads) with
+                       {{PAGE_META}} and {{PAGE_JSONLD}} placeholders that get
+                       filled per-page by build.js.
+  pages/<route>/meta.html    Per-page title/description/robots/canonical/OG/Twitter.
+  pages/<route>/jsonld.html  Per-page JSON-LD graph (often referencing shared
+                       Organization/WebSite via @id rather than redefining them).
+  styles.css           ALL css  (inlined into <style> on every page)
+  main.js              ALL js   (inlined into <script> on every page)
+  partials/shared/     used on every page: body-open, nav, mobile-menu, footer, sticky-cta
+  partials/common/     reused by 2+ pages:   marquee, trust, cta, contact
+  partials/home/       homepage-only:        hero, kinetic, about, sectors, services,
+                                             why, faq
+  partials/<route>/    per-page bodies (when sub-pages are added)
   404-head.html, 404.css, 404.html   → 404 page (reuses styles.css + main.js)
 build.js               src/ → index.html + 404.html (also injects the js-fade boot
                        script + a "GENERATED FILE" banner)
 package.json           npm run build
 ```
 
-- New section? Add `src/partials/<name>.html` **and** add `<name>` to `SECTIONS` in `build.js`.
+- **Multi-page capable.** `build.js` reads a `PAGES[]` array; each entry declares
+  `route` (e.g. `/`, `/about/`), `headFile`, `partials[]` (in body render order), and
+  an optional `sitemap` config. Homepage emits to repo-root `index.html`; sub-pages
+  emit to `<route>/index.html`. The `sitemap.xml` is **generated** from `PAGES[].sitemap`
+  — single source of truth, no hand edits.
+- **`{{HOME}}` / `{{HOME_ROOT}}` template substitution** is applied to every partial.
+  Source partials use `href="{{HOME}}#about"` so the same nav works everywhere:
+  - On `/`: `{{HOME}}` → `''` → `href="#about"` (in-page scroll, unchanged behavior)
+  - On `/about/`: `{{HOME}}` → `'/'` → `href="/#about"` (cross-page jump to homepage anchor)
+  - Logo uses `{{HOME_ROOT}}` (`'#'` on home, `'/'` on sub-pages).
+- New section on homepage? Add `src/partials/home/<name>.html` **and** add
+  `'home/<name>'` to the homepage `partials[]` array in `build.js`.
+- New sub-page? Add a new entry to `PAGES[]` with its own `metaFile`,
+  `jsonldFile`, `partials[]`, and `sitemap` config. Per-page head fragments live
+  under `src/pages/<route>/`. Per-page body partials live under `src/partials/<route>/`.
+- **`$$$` gotcha** in JSON-LD (`"priceRange": "$$$"`) — `String.replace()` interprets
+  `$$` as a literal `$` in the replacement string, eating one `$`. `build.js`
+  works around this by passing the replacement as a function (functions skip the
+  pattern interpretation). Don't switch back to the string form.
 - Section markers `<!-- ══ NAME ══ -->` live inside each partial.
 
 ## Conventions

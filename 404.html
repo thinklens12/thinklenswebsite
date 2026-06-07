@@ -585,7 +585,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .sc-body{font-size:.88rem;color:var(--g400);line-height:1.8}
 
 /* ═══════════ SERVICES (animated SVG flow) ═══════════ */
-#services-banner{
+#services{
   position:relative;overflow:hidden;min-height:640px;display:flex;align-items:center;
   background:var(--bg);
 }
@@ -929,8 +929,8 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   .about-vis-col{min-height:340px;border-right:none;border-bottom:1px solid var(--border)}
   .about-text-col{padding:60px 24px}
   .sector-grid{grid-template-columns:1fr}
-  #services-banner .svc-content{width:100%;padding:60px 24px}
-  #services-banner .svc-vis::after{background:linear-gradient(to bottom,rgba(10,10,10,.3),rgba(10,10,10,.95))}
+  #services .svc-content{width:100%;padding:60px 24px}
+  #services .svc-vis::after{background:linear-gradient(to bottom,rgba(10,10,10,.3),rgba(10,10,10,.95))}
   .why-top{grid-template-columns:1fr;gap:24px}
   .why-cards{grid-template-columns:1fr}
   .trust-layout{grid-template-columns:1fr;gap:48px}
@@ -1051,6 +1051,87 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   .faq-head{margin-bottom:36px}
   .faq-q{padding:18px 20px;font-size:.98rem;gap:16px}
   .faq-a{padding:0 20px 20px;font-size:.93rem}
+}
+
+/* ═══════════ SUB-PAGE INTRO (shared across /about/, /services/*, etc.) ═══════════ */
+.page-top{padding:160px 0 60px;position:relative}
+.page-top .wrap{max-width:980px}
+.page-h1{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;
+  letter-spacing:-.045em;line-height:1.05;
+  color:var(--white);margin:14px 0 24px;
+}
+.page-h1 .a{color:var(--accent)}
+.page-deck{
+  font-size:1.1rem;line-height:1.7;color:var(--g200);
+  max-width:720px;
+}
+.page-deck b{color:var(--g100);font-weight:600}
+@media(max-width:640px){
+  .page-top{padding:120px 0 40px}
+  .page-deck{font-size:1rem}
+}
+
+/* ═══════════ ABOUT — STORY ═══════════ */
+#about-story{padding:80px 0;position:relative}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1.4fr;gap:80px;
+  max-width:1100px;margin:0 auto;
+}
+.about-prose .body-text{font-size:1rem;line-height:1.85}
+@media(max-width:880px){
+  .about-grid{grid-template-columns:1fr;gap:32px}
+}
+
+/* ═══════════ ABOUT — EXPERTISE ═══════════ */
+#about-expertise{padding:80px 0;position:relative;background:rgba(255,255,255,.015)}
+.exp-head{max-width:780px;margin:0 auto 56px;text-align:center}
+.exp-head .eyebrow{padding-left:0}
+.exp-head .eyebrow::before{display:none}
+.exp-deck{font-size:1.05rem;line-height:1.7;color:var(--g300);margin-top:4px}
+.exp-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:20px;
+  max-width:1100px;margin:0 auto;
+}
+.exp-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:32px 28px;
+  transition:border-color .25s var(--ease),background .25s var(--ease),transform .25s var(--ease);
+}
+.exp-card:hover{
+  border-color:var(--border-hi);
+  background:var(--card-hi);
+  transform:translateY(-2px);
+}
+.exp-card-eyebrow{
+  font-size:.7rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:14px;
+}
+.exp-card-h{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1.25rem;font-weight:700;
+  letter-spacing:-.015em;line-height:1.25;
+  color:var(--white);margin:0 0 12px;
+}
+.exp-card-p{
+  font-size:.95rem;line-height:1.7;color:var(--g300);margin:0;
+}
+.exp-foot{
+  max-width:780px;margin:48px auto 0;text-align:center;
+  font-size:1rem;line-height:1.75;color:var(--g200);font-style:italic;
+}
+.exp-foot p{margin:0}
+@media(prefers-reduced-motion:reduce){
+  .exp-card{transition:none}
+  .exp-card:hover{transform:none}
+}
+@media(max-width:780px){
+  #about-expertise{padding:60px 0}
+  .exp-grid{grid-template-columns:1fr;gap:16px}
+  .exp-card{padding:24px 22px}
 }
 
 /* ═══════════ PAGE TRANSITIONS ═══════════ */
