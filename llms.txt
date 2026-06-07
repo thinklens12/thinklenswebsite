@@ -36,6 +36,10 @@ Typical start: 1–2 weeks from signed SOW; 5 business days for pre-vetted skill
 
 - [/](https://www.thinklens.in/) — Homepage: positioning, services overview, FAQ, contact.
 - [/about/](https://www.thinklens.in/about/) — Who Thinklens is: a senior offshore Data & BI consulting team for global IT staffing agencies. Covers the four capability tracks (Data Governance & Technical BA; BI & ETL Modernization; ETL Testing & Report QA; Data Quality, Analysis & Cleanup) and the silent-sub-contractor positioning.
+- [/services/etl-testing-report-qa/](https://www.thinklens.in/services/etl-testing-report-qa/) — ETL Testing & Report QA service: source-to-target reconciliation, transformation logic tests, regression suites, data-quality gates, and BI report QA across Power BI, Tableau, and TIBCO Spotfire.
+- [/services/sap-workday-data/](https://www.thinklens.in/services/sap-workday-data/) — SAP & Workday data services: SAP S/4HANA migration testing, SAP ECC steady-state stewardship, SAP MM material-master cleanup, Workday data integrations and downstream BI.
+- [/services/power-bi-tableau-spotfire/](https://www.thinklens.in/services/power-bi-tableau-spotfire/) — Enterprise BI delivery across Power BI, Tableau, and TIBCO Spotfire — semantic modeling, DAX/calculated-fields, performance tuning, dashboard development, report modernization, and embedded analytics.
+- [/engagement-models/](https://www.thinklens.in/engagement-models/) — The four engagement shapes Thinklens supports: T&M, Fixed-Scope, MSA Sub-Contracting (the primary shape), and B2B Freelance Consultant. Also documents the kickoff sequence (discovery → CV/scope → SOW + NDA).
 
 ## Homepage site map (anchors on https://www.thinklens.in/)
 
