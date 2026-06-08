@@ -1,19 +1,26 @@
 # CLAUDE.md — Thinklens website
 
 Marketing site for **Thinklens Consulting LLP** (`https://www.thinklens.in`).
-Single static landing page + a custom 404. India-based offshore data partner
-(data governance, BI modernization, data quality) for global IT staffing agencies.
+Multi-page static site (6 URLs) + a custom 404. India-based offshore Data & BI
+consulting partner for global IT staffing agencies. Live routes:
+
+- `/` — homepage (positioning, services chips, FAQ, contact)
+- `/about/` — who Thinklens is, how the practice was built
+- `/services/etl-testing-report-qa/` — ETL pipeline validation + BI Report QA
+- `/services/sap-workday-data/` — SAP S/4HANA/ECC/MM + Workday data services
+- `/services/power-bi-tableau-spotfire/` — enterprise BI delivery on the three tools
+- `/engagement-models/` — T&M, Fixed-Scope, MSA Sub-Contracting, B2B Freelance
 
 ## ⚠️ Most important rule
 
-**`index.html` and `404.html` are GENERATED. Never edit them by hand.**
-Edit the source in `src/`, then run the build. Direct edits get overwritten.
+**Every `index.html`, `404.html`, and `sitemap.xml` is GENERATED. Never edit them by hand.**
+Edit the source in `src/`, then run the build. Direct edits get overwritten on next build.
 
 ```bash
-node build.js     # or: npm run build   → regenerates index.html AND 404.html
+node build.js     # or: npm run build   → regenerates ALL pages + sitemap + 404
 ```
 
-Commit **both** your `src/` change and the regenerated `index.html` / `404.html`
+Commit **both** your `src/` change and the regenerated output files
 (GitHub Pages serves the generated files from `main` root — there is **no CI build**).
 
 ## Architecture
@@ -35,10 +42,13 @@ src/
   partials/common/     reused by 2+ pages:   marquee, trust, cta, contact
   partials/home/       homepage-only:        hero, kinetic, about, sectors, services,
                                              why, faq
-  partials/<route>/    per-page bodies (when sub-pages are added)
+  partials/about/      /about/ body sections: intro, story, expertise
+  partials/services/<slug>/body.html    one body partial per service page
+  partials/engagement-models/body.html  /engagement-models/ body
   404-head.html, 404.css, 404.html   → 404 page (reuses styles.css + main.js)
-build.js               src/ → index.html + 404.html (also injects the js-fade boot
-                       script + a "GENERATED FILE" banner)
+build.js               walks PAGES[] → emits 1 index.html per route + sitemap.xml
+                       + 404.html (also injects the js-fade boot script + a
+                       "GENERATED FILE" banner)
 package.json           npm run build
 ```
 
@@ -57,6 +67,9 @@ package.json           npm run build
 - New sub-page? Add a new entry to `PAGES[]` with its own `metaFile`,
   `jsonldFile`, `partials[]`, and `sitemap` config. Per-page head fragments live
   under `src/pages/<route>/`. Per-page body partials live under `src/partials/<route>/`.
+  Sub-pages reuse `.page-top` / `.page-h1` / `.page-deck` for the intro and
+  `.page-section` (+ optional `.alt` modifier) / `.exp-grid` / `.exp-card` for
+  body sections — no new CSS unless you genuinely need it.
 - **`$$$` gotcha** in JSON-LD (`"priceRange": "$$$"`) — `String.replace()` interprets
   `$$` as a literal `$` in the replacement string, eating one `$`. `build.js`
   works around this by passing the replacement as a function (functions skip the
@@ -93,35 +106,49 @@ ripple (`[data-ripple]`) · custom cursor (fine pointers only).
 - **Cal.com booking** → "Date & Time" field in the contact form (`#dtTrigger` reveals
   `#calForm`, lazy-loads inline `#cal-inline-form`). Link: `think-lens-consulting-kui4bb/30min`,
   dark theme, `cal-brand:#007AFF`. The container hugs the iframe (dark bg, no white space).
-- **Google Analytics (GA4)** → gtag.js, measurement ID `G-0L4LLVDPN7`. Lives in the
-  `<head>` of BOTH `src/head.html` and `src/404-head.html` (so 404 landings are tracked too).
-  Loaded `async`; it's in the head verbatim (not part of the inlined JS).
+- **Google Analytics (GA4)** → gtag.js, measurement ID `G-0L4LLVDPN7`. Lives in
+  `src/head-base.html` (so it ships on every multi-page emit) and `src/404-head.html`
+  (so 404 landings are tracked too). Loaded `async`; in the head verbatim, not part
+  of the inlined JS.
 - **Google Search Console** verified — keep `google5ea61d290b4d5cc5.html` in the repo root.
 
 ## SEO
 
-Single-page site, so keywords need mutual reinforcement across **meta + JSON-LD + visible
-copy** — meta alone is keyword stuffing and Google ignores `<meta name="keywords">` anyway.
-The real entity-graph win is the JSON-LD in `src/head.html`:
+Each page needs mutual reinforcement across **meta + JSON-LD + visible copy** — meta alone
+is keyword stuffing, and `<meta name="keywords">` is ignored by Google (removed from this
+site, don't add it back). The real entity-graph wins are in JSON-LD:
 
-- `Organization.alternateName` — array form, includes positioning phrases.
-- `Organization.knowsAbout` — flat list of capabilities (Data Governance, Technical BA,
+- **Homepage** (`src/pages/home/jsonld.html`) holds the canonical graph: `Organization`,
+  `ProfessionalService` (with `OfferCatalog`), `FAQPage`, `WebSite`. This is where
+  `knowsAbout` lives — flat list of capabilities (Data Governance, Technical BA,
   ETL Testing, Report QA, Data Stewardship, Power BI, Tableau, TIBCO Spotfire,
-  SAP S/4HANA / ECC / MM, Workday Data, SQL, B2B Freelance Consulting). Add new
-  capabilities here when claimed elsewhere on the page.
-- `ProfessionalService.hasOfferCatalog` — every claimed service has a corresponding
-  `Offer` entry. Keep it 1:1 with what the page actually advertises.
+  SAP S/4HANA / ECC / MM, Workday Data, SQL). Add new capabilities here when
+  claimed elsewhere on the site.
+- **`OfferCatalog`** — every claimed service has a corresponding `Offer` entry, and
+  each `Offer.itemOffered` has a `url` pointing to its dedicated page where one
+  exists. Wire new pages by adding `url` here so Google can follow Offer → Service → page.
+- **Sub-pages** (`src/pages/<route>/jsonld.html`) reference `Organization` and
+  `WebSite` via `@id` (don't redefine them — Google merges by `@id`). Each adds a
+  page-specific entity (`Service` / `AboutPage` / `WebPage`) and a `BreadcrumbList`.
+- **`FAQPage` is homepage-only.** Google requires the schema to match a visible FAQ
+  on the same page; don't add it to sub-pages without also adding the FAQ section.
 
-Visible support lives in the **services chips** (`src/partials/services.html`) and the
-**engagement-types line** in contact. Don't add a capability to JSON-LD without a visible
-mention somewhere on the page — Google's helpful-content system demotes claims with no
-on-page evidence. And don't claim capabilities the business doesn't actually deliver.
+Visible support on the homepage lives in the **services chips**
+(`src/partials/home/services.html`) and the **engagement-types line** in contact.
+On sub-pages the body partials provide the visible evidence. Don't add a capability
+to any JSON-LD without a visible mention somewhere on the same page — Google's
+helpful-content system demotes claims with no on-page evidence. And don't claim
+capabilities the business doesn't actually deliver.
 
 ## Root assets (served as-is)
 
 `CNAME` (www.thinklens.in), favicons (`favicon.*`, `apple-touch-icon.png` — all transparent
-PNG/ICO rasterized from `favicon.svg`), `og-image.{png,jpg,svg}`, `sitemap.xml`, `robots.txt`,
-`site.webmanifest`, `google5ea61d290b4d5cc5.html` (Search Console — keep it).
+PNG/ICO rasterized from `favicon.svg`), `og-image.{png,svg}` (PNG is the canonical OG
+image; SVG is a vector reference; .jpg was removed as a duplicate), `robots.txt`
+(hand-edited — explicit AI-crawler Allow/Disallow blocks), `llms.txt` (hand-edited —
+AI-discovery file; **update when adding sub-pages**), `site.webmanifest`,
+`google5ea61d290b4d5cc5.html` (Search Console — keep it). **`sitemap.xml` is
+GENERATED by `build.js`** — don't hand-edit.
 
 ## Local preview
 
