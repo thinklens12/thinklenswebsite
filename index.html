@@ -879,9 +879,10 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   filter:drop-shadow(0 0 8px var(--accent));
   offset-rotate:0deg;
 }
-.svc-flow .pkt1{offset-path:path('M40,180 Q160,80 280,180 T520,180');animation:packetMove 5s ease-in-out infinite}
-.svc-flow .pkt2{offset-path:path('M40,300 Q200,200 360,300 T620,300');animation:packetMove 6s ease-in-out infinite .8s}
-.svc-flow .pkt3{offset-path:path('M40,420 Q160,520 300,420 T560,420');animation:packetMove 7s ease-in-out infinite 1.6s}
+.svc-flow .pkt1{offset-path:path('M40,120 Q160,40 280,120 T520,120');animation:packetMove 5s ease-in-out infinite}
+.svc-flow .pkt2{offset-path:path('M40,250 Q200,160 360,250 T620,250');animation:packetMove 6s ease-in-out infinite .8s}
+.svc-flow .pkt3{offset-path:path('M40,370 Q160,470 300,370 T560,370');animation:packetMove 7s ease-in-out infinite 1.6s}
+.svc-flow .pkt4{offset-path:path('M40,490 Q200,580 360,490 T620,490');animation:packetMove 6.5s ease-in-out infinite 2.4s}
 @keyframes packetMove{
   0%{offset-distance:0%;opacity:0}
   10%{opacity:1}
@@ -919,6 +920,52 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   border:1px solid var(--border);transition:all .25s;
 }
 .svc-item:hover .stag{border-color:var(--accent);color:var(--accent);background:rgba(0,122,255,.08)}
+.svc-icon{
+  width:32px;height:32px;flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--g400);transition:color .25s, transform .25s;
+}
+.svc-icon svg{width:100%;height:100%;overflow:visible}
+.svc-item:hover .svc-icon{color:var(--accent);transform:scale(1.08)}
+/* Cleanup — sparks settle down the rows */
+.svc-icon-spark{animation:svcSpark 2.6s ease-in-out infinite}
+.svc-icon-spark.s2{animation-delay:.4s}
+.svc-icon-spark.s3{animation-delay:.8s}
+@keyframes svcSpark{
+  0%,100%{opacity:.25;transform:translateX(0)}
+  50%{opacity:1;transform:translateX(-3px)}
+}
+/* Modernization — bars rise and fall */
+.svc-bar{transform-origin:bottom center;animation:svcBar 2.4s ease-in-out infinite;opacity:.6}
+.svc-bar.b1{animation-delay:0s}
+.svc-bar.b2{animation-delay:.25s}
+.svc-bar.b3{animation-delay:.5s}
+@keyframes svcBar{
+  0%,100%{transform:scaleY(.55);opacity:.55}
+  50%{transform:scaleY(1);opacity:1}
+}
+/* Compliance — check stroke pulses */
+.svc-check{
+  stroke-dasharray:18;stroke-dashoffset:18;
+  animation:svcCheck 3s ease-in-out infinite;
+}
+@keyframes svcCheck{
+  0%,15%{stroke-dashoffset:18;opacity:.4}
+  45%,75%{stroke-dashoffset:0;opacity:1}
+  100%{stroke-dashoffset:0;opacity:.4}
+}
+/* Coverage — orbiting dot circles the globe */
+.svc-orbit{
+  transform-origin:16px 16px;
+  animation:svcOrbit 6s linear infinite;
+}
+@keyframes svcOrbit{
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .svc-icon-spark,.svc-bar,.svc-check,.svc-orbit{animation:none}
+}
 
 /* ═══════════ WHY ═══════════ */
 #why{padding:140px 40px;background:var(--bg);position:relative;overflow:hidden}
@@ -1526,7 +1573,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   <div class="hero-content">
     <p class="hero-overline"><span class="pulse-dot"></span>Offshore Data &amp; BI Consulting for Staffing Agencies</p>
     <h1 class="hero-h1">Data Precision.<br><span class="accent">Global Scale.</span></h1>
-    <p class="hero-sub">Fully-compliant offshore expertise in <b>data governance</b>, <b>ETL</b>, <b>data analysis</b>, and <b>business intelligence</b> for global IT staffing agencies. We handle the technical heavy lifting — you keep the client relationship.</p>
+    <p class="hero-sub"><b>Thinklens</b> helps global staffing agencies manage and modernize data — <b>cleanup</b>, <b>reporting</b>, and <b>compliance</b> handled offshore, so you can focus on clients instead of technical details.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-white" data-magnetic data-ripple>
         Get a Master Service Agreement
@@ -1655,11 +1702,11 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
       </svg>
     </div>
     <div class="about-text-col">
-      <span class="eyebrow r">Our Story</span>
-      <h2 class="section-h2 r">Built on <span class="a">precision.</span><br>Proven in the field.</h2>
-      <p class="body-text r">Founded in 2025, <b>Thinklens</b> bridges complex <b>data governance</b>, <b>ETL</b>, and <b>business intelligence</b> needs with seamless offshore execution. We don't staff projects — we become a compliant, high-caliber extension of your team.</p>
-      <p class="body-text r">From our first engagements, we've delivered <b>data analysis</b> and BI programs for the world's largest organizations in Aerospace, Biomedical Devices, and Consumer Packaged Goods — sectors that demand precision, not approximation.</p>
-      <blockquote class="pull-quote r">We specialize in the "messy" middle of data — ETL, cleanup, migration, analysis, and BI modernization — at Fortune 500 standards, every engagement.</blockquote>
+      <span class="eyebrow r">About Us</span>
+      <h2 class="section-h2 r">Data made <span class="a">simple.</span><br>Compliance made easy.</h2>
+      <p class="body-text r"><b>Thinklens</b> was founded to make data management simple for global staffing agencies. We know that compliance rules and complex reports can slow down your business — so we focus on <b>cleaning</b>, <b>modernizing</b>, and <b>managing</b> data, so you can deliver results faster and with confidence.</p>
+      <p class="body-text r">Our team combines technical expertise with practical business understanding. From <b>aerospace</b> to <b>healthcare</b> to <b>consumer goods</b>, we turn complicated data into clear insights — a reliable offshore partner who ensures compliance and keeps your projects running smoothly.</p>
+      <blockquote class="pull-quote r">Plain answers. Clean data. Compliant delivery. Every engagement.</blockquote>
     </div>
   </div>
 </section>
@@ -1724,46 +1771,90 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 <div id="services">
   <div class="svc-vis">
     <svg class="svc-flow" viewBox="0 0 720 600" preserveAspectRatio="xMidYMid slice">
-      <!-- Flow paths -->
-      <path class="flow-line" d="M40,180 Q160,80 280,180 T520,180"/>
-      <path class="flow-line flow-line--alt" d="M40,300 Q200,200 360,300 T620,300"/>
-      <path class="flow-line" d="M40,420 Q160,520 300,420 T560,420"/>
+      <!-- Flow paths — one per pillar (Cleanup, Modernization, Compliance, Coverage) -->
+      <path class="flow-line" d="M40,120 Q160,40 280,120 T520,120"/>
+      <path class="flow-line flow-line--alt" d="M40,250 Q200,160 360,250 T620,250"/>
+      <path class="flow-line" d="M40,370 Q160,470 300,370 T560,370"/>
+      <path class="flow-line flow-line--alt" d="M40,490 Q200,580 360,490 T620,490"/>
       <!-- End nodes -->
-      <circle class="flow-node" cx="40" cy="180" r="6"/>
-      <circle class="flow-node" cx="40" cy="300" r="6"/>
-      <circle class="flow-node" cx="40" cy="420" r="6"/>
-      <circle class="flow-node flow-node--alt" cx="520" cy="180" r="5"/>
-      <circle class="flow-node flow-node--alt" cx="620" cy="300" r="5"/>
-      <circle class="flow-node flow-node--alt" cx="560" cy="420" r="5"/>
+      <circle class="flow-node" cx="40" cy="120" r="6"/>
+      <circle class="flow-node" cx="40" cy="250" r="6"/>
+      <circle class="flow-node" cx="40" cy="370" r="6"/>
+      <circle class="flow-node" cx="40" cy="490" r="6"/>
+      <circle class="flow-node flow-node--alt" cx="520" cy="120" r="5"/>
+      <circle class="flow-node flow-node--alt" cx="620" cy="250" r="5"/>
+      <circle class="flow-node flow-node--alt" cx="560" cy="370" r="5"/>
+      <circle class="flow-node flow-node--alt" cx="620" cy="490" r="5"/>
       <!-- Intermediate nodes -->
-      <circle class="flow-node" cx="280" cy="180" r="4"/>
-      <circle class="flow-node" cx="360" cy="300" r="4"/>
-      <circle class="flow-node" cx="300" cy="420" r="4"/>
+      <circle class="flow-node" cx="280" cy="120" r="4"/>
+      <circle class="flow-node" cx="360" cy="250" r="4"/>
+      <circle class="flow-node" cx="300" cy="370" r="4"/>
+      <circle class="flow-node" cx="360" cy="490" r="4"/>
       <!-- Traveling packets -->
       <circle class="flow-packet pkt1" r="4"/>
       <circle class="flow-packet pkt2" r="4"/>
       <circle class="flow-packet pkt3" r="4"/>
+      <circle class="flow-packet pkt4" r="4"/>
     </svg>
   </div>
   <div class="svc-content">
-    <span class="eyebrow">Core Specializations</span>
-    <h2 class="section-h2">What we deliver<br>for your <span class="a">clients.</span></h2>
-    <p class="svc-deck">Specialized offshore capabilities in data governance, ETL, data analysis, and business intelligence — designed for plug-and-play integration into your client delivery model.</p>
+    <span class="eyebrow">What We Do</span>
+    <h2 class="section-h2">Clear services.<br>Clear <span class="a">outcomes.</span></h2>
+    <p class="svc-deck">Four ways we help global staffing agencies — straightforward offshore delivery, transparent contracts, and clear insights for your clients.</p>
     <div class="svc-list-items">
       <div class="svc-item">
         <span class="svc-item-num">01</span>
-        <span class="svc-item-name">Data Governance &amp; Technical BA</span>
-        <div class="svc-item-tags"><span class="stag">Technical BA</span><span class="stag">Data Governance</span><span class="stag">Data Stewardship</span><span class="stag">SAP S/4HANA</span><span class="stag">SAP ECC</span><span class="stag">SAP MM</span><span class="stag">Workday Data</span></div>
+        <span class="svc-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 9h22"/>
+            <path d="M8 16h16"/>
+            <path d="M11 23h10"/>
+            <circle class="svc-icon-spark s1" cx="27" cy="9" r="1.4" fill="currentColor" stroke="none"/>
+            <circle class="svc-icon-spark s2" cx="24" cy="16" r="1.4" fill="currentColor" stroke="none"/>
+            <circle class="svc-icon-spark s3" cx="21" cy="23" r="1.4" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="svc-item-name">Data Cleanup</span>
+        <div class="svc-item-tags"><span class="stag">Standardize</span><span class="stag">Dedup</span><span class="stag">Audit</span><span class="stag">SQL</span><span class="stag">Master Data</span></div>
       </div>
       <div class="svc-item">
         <span class="svc-item-num">02</span>
-        <span class="svc-item-name">BI, ETL &amp; Report Modernization</span>
-        <div class="svc-item-tags"><span class="stag">ETL</span><span class="stag">ETL Testing</span><span class="stag">Report QA</span><span class="stag">Power BI</span><span class="stag">Tableau</span><span class="stag">TIBCO Spotfire</span><span class="stag">SQL</span></div>
+        <span class="svc-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="6" width="24" height="18" rx="2"/>
+            <path d="M4 11h24"/>
+            <rect class="svc-bar b1" x="8" y="16" width="3" height="5" fill="currentColor" stroke="none"/>
+            <rect class="svc-bar b2" x="14" y="14" width="3" height="7" fill="currentColor" stroke="none"/>
+            <rect class="svc-bar b3" x="20" y="13" width="3" height="8" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="svc-item-name">Report Modernization</span>
+        <div class="svc-item-tags"><span class="stag">Power BI</span><span class="stag">Tableau</span><span class="stag">TIBCO Spotfire</span><span class="stag">ETL</span><span class="stag">Report QA</span></div>
       </div>
       <div class="svc-item">
         <span class="svc-item-num">03</span>
-        <span class="svc-item-name">Data Quality, Analysis &amp; Cleanup</span>
-        <div class="svc-item-tags"><span class="stag">Data &amp; BI Consultant</span><span class="stag">Data Analysis</span><span class="stag">SQL</span><span class="stag">Audit</span><span class="stag">Dedup</span><span class="stag">Schema</span></div>
+        <span class="svc-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4 L26 8 V16 C26 21 21.5 25.5 16 28 C10.5 25.5 6 21 6 16 V8 Z"/>
+            <path class="svc-check" d="M11 16 L15 20 L22 12" stroke-width="2"/>
+          </svg>
+        </span>
+        <span class="svc-item-name">Compliance Support</span>
+        <div class="svc-item-tags"><span class="stag">GDPR</span><span class="stag">HIPAA</span><span class="stag">SOC 2</span><span class="stag">NDA</span><span class="stag">VDI / VPN</span></div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-item-num">04</span>
+        <span class="svc-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="16" cy="16" r="11"/>
+            <path d="M5 16 H27"/>
+            <path d="M16 5 C20 9 20 23 16 27"/>
+            <path d="M16 5 C12 9 12 23 16 27"/>
+            <circle class="svc-orbit" cx="27" cy="16" r="1.6" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="svc-item-name">Industry Coverage</span>
+        <div class="svc-item-tags"><span class="stag">Aerospace</span><span class="stag">Healthcare</span><span class="stag">Consumer Goods</span><span class="stag">SAP</span><span class="stag">Workday</span></div>
       </div>
     </div>
   </div>

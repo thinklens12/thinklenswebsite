@@ -680,9 +680,10 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   filter:drop-shadow(0 0 8px var(--accent));
   offset-rotate:0deg;
 }
-.svc-flow .pkt1{offset-path:path('M40,180 Q160,80 280,180 T520,180');animation:packetMove 5s ease-in-out infinite}
-.svc-flow .pkt2{offset-path:path('M40,300 Q200,200 360,300 T620,300');animation:packetMove 6s ease-in-out infinite .8s}
-.svc-flow .pkt3{offset-path:path('M40,420 Q160,520 300,420 T560,420');animation:packetMove 7s ease-in-out infinite 1.6s}
+.svc-flow .pkt1{offset-path:path('M40,120 Q160,40 280,120 T520,120');animation:packetMove 5s ease-in-out infinite}
+.svc-flow .pkt2{offset-path:path('M40,250 Q200,160 360,250 T620,250');animation:packetMove 6s ease-in-out infinite .8s}
+.svc-flow .pkt3{offset-path:path('M40,370 Q160,470 300,370 T560,370');animation:packetMove 7s ease-in-out infinite 1.6s}
+.svc-flow .pkt4{offset-path:path('M40,490 Q200,580 360,490 T620,490');animation:packetMove 6.5s ease-in-out infinite 2.4s}
 @keyframes packetMove{
   0%{offset-distance:0%;opacity:0}
   10%{opacity:1}
@@ -720,6 +721,52 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   border:1px solid var(--border);transition:all .25s;
 }
 .svc-item:hover .stag{border-color:var(--accent);color:var(--accent);background:rgba(0,122,255,.08)}
+.svc-icon{
+  width:32px;height:32px;flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--g400);transition:color .25s, transform .25s;
+}
+.svc-icon svg{width:100%;height:100%;overflow:visible}
+.svc-item:hover .svc-icon{color:var(--accent);transform:scale(1.08)}
+/* Cleanup — sparks settle down the rows */
+.svc-icon-spark{animation:svcSpark 2.6s ease-in-out infinite}
+.svc-icon-spark.s2{animation-delay:.4s}
+.svc-icon-spark.s3{animation-delay:.8s}
+@keyframes svcSpark{
+  0%,100%{opacity:.25;transform:translateX(0)}
+  50%{opacity:1;transform:translateX(-3px)}
+}
+/* Modernization — bars rise and fall */
+.svc-bar{transform-origin:bottom center;animation:svcBar 2.4s ease-in-out infinite;opacity:.6}
+.svc-bar.b1{animation-delay:0s}
+.svc-bar.b2{animation-delay:.25s}
+.svc-bar.b3{animation-delay:.5s}
+@keyframes svcBar{
+  0%,100%{transform:scaleY(.55);opacity:.55}
+  50%{transform:scaleY(1);opacity:1}
+}
+/* Compliance — check stroke pulses */
+.svc-check{
+  stroke-dasharray:18;stroke-dashoffset:18;
+  animation:svcCheck 3s ease-in-out infinite;
+}
+@keyframes svcCheck{
+  0%,15%{stroke-dashoffset:18;opacity:.4}
+  45%,75%{stroke-dashoffset:0;opacity:1}
+  100%{stroke-dashoffset:0;opacity:.4}
+}
+/* Coverage — orbiting dot circles the globe */
+.svc-orbit{
+  transform-origin:16px 16px;
+  animation:svcOrbit 6s linear infinite;
+}
+@keyframes svcOrbit{
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .svc-icon-spark,.svc-bar,.svc-check,.svc-orbit{animation:none}
+}
 
 /* ═══════════ WHY ═══════════ */
 #why{padding:140px 40px;background:var(--bg);position:relative;overflow:hidden}
