@@ -1,14 +1,18 @@
 # CLAUDE.md — Thinklens website
 
 Marketing site for **Thinklens Consulting LLP** (`https://www.thinklens.in`).
-Multi-page static site (6 URLs) + a custom 404. India-based offshore Data & BI
+Multi-page static site (9 URLs) + a custom 404. India-based offshore Data & BI
 consulting partner for global IT staffing agencies. Live routes:
 
-- `/` — homepage (positioning, services chips, FAQ, contact)
+- `/` — homepage (positioning, services list, FAQ, contact)
 - `/about/` — who Thinklens is, how the practice was built
 - `/services/etl-testing-report-qa/` — ETL pipeline validation + BI Report QA
 - `/services/sap-workday-data/` — SAP S/4HANA/ECC/MM + Workday data services
 - `/services/power-bi-tableau-spotfire/` — enterprise BI delivery on the three tools
+- `/services/data-governance-technical-ba/` — governance, MDM, Technical BA
+- `/services/data-quality-cleanup/` — audits, dedup, schema remediation, analysis
+- `/case-studies/` — 3 anonymized studies (Aerospace, Biomedical, CPG); outcomes
+  are intentionally qualitative — add real metrics only with owner sign-off
 - `/engagement-models/` — T&M, Fixed-Scope, MSA Sub-Contracting, B2B Freelance
 
 ## ⚠️ Most important rule
@@ -39,11 +43,14 @@ src/
   styles.css           ALL css  (inlined into <style> on every page)
   main.js              ALL js   (inlined into <script> on every page)
   partials/shared/     used on every page: body-open, nav, mobile-menu, footer, sticky-cta
+                       + page-top-vis (animated sub-page hero backdrop — added to
+                       every sub-page's partials[] right before its body partial)
   partials/common/     reused by 2+ pages:   marquee, trust, cta, contact
   partials/home/       homepage-only:        hero, kinetic, about, sectors, services,
                                              why, faq
   partials/about/      /about/ body sections: intro, story, expertise
   partials/services/<slug>/body.html    one body partial per service page
+  partials/case-studies/body.html       /case-studies/ body
   partials/engagement-models/body.html  /engagement-models/ body
   404-head.html, 404.css, 404.html   → 404 page (reuses styles.css + main.js)
 build.js               walks PAGES[] → emits 1 index.html per route + sitemap.xml
@@ -102,14 +109,21 @@ ripple (`[data-ripple]`) · custom cursor (fine pointers only).
 
 ## Integrations
 
-- **Contact form** → Formspree, `FORMSPREE_ID = 'xdapybyb'` in `main.js`.
+- **Contact form** → Formspree, `FORMSPREE_ID = 'xdapybyb'` in `main.js`. The submit
+  handler also does **lead tagging**: appends `lead_type` (`corporate`/`free`, via the
+  `FREE_MAIL` domain list) + `email_domain` to the payload, and rewrites `_subject` to
+  "MSA / Partnership Enquiry — …" for MSA/Sub-Contracting enquiry types (inbox routing).
 - **Cal.com booking** → "Date & Time" field in the contact form (`#dtTrigger` reveals
   `#calForm`, lazy-loads inline `#cal-inline-form`). Link: `think-lens-consulting-kui4bb/30min`,
   dark theme, `cal-brand:#007AFF`. The container hugs the iframe (dark bg, no white space).
 - **Google Analytics (GA4)** → gtag.js, measurement ID `G-0L4LLVDPN7`. Lives in
   `src/head-base.html` (so it ships on every multi-page emit) and `src/404-head.html`
   (so 404 landings are tracked too). Loaded `async`; in the head verbatim, not part
-  of the inlined JS.
+  of the inlined JS. **Conversion events** fire from `main.js`: `generate_lead`
+  (Formspree success — enquiry_type/region/lead_type), `book_appointment` (Cal.com
+  `bookingSuccessful`), `cta_click` (delegated on `.btn`/`.trust-link`/`.sticky-cta`/
+  `.nav-cta`). Every call is guarded (`typeof window.gtag === 'function'`) so the site
+  works with GA blocked — keep new events behind the same guard.
 - **Google Search Console** verified — keep `google5ea61d290b4d5cc5.html` in the repo root.
 
 ## SEO
@@ -143,8 +157,10 @@ capabilities the business doesn't actually deliver.
 ## Root assets (served as-is)
 
 `CNAME` (www.thinklens.in), favicons (`favicon.*`, `apple-touch-icon.png` — all transparent
-PNG/ICO rasterized from `favicon.svg`), `og-image.{png,svg}` (PNG is the canonical OG
-image; SVG is a vector reference; .jpg was removed as a duplicate), `robots.txt`
+PNG/ICO rasterized from `favicon.svg`), `og-image.{png,svg}` (homepage OG image; SVG is a
+vector reference; .jpg was removed as a duplicate), `og/<slug>.png` (per-sub-page OG
+images, 1200×630 — regenerate with `python3 scripts/gen-og-images.py` after adding a
+page; needs `pip install --user pillow fonttools brotli`), `robots.txt`
 (hand-edited — explicit AI-crawler Allow/Disallow blocks), `llms.txt` (hand-edited —
 AI-discovery file; **update when adding sub-pages**), `site.webmanifest`,
 `google5ea61d290b4d5cc5.html` (Search Console — keep it). **`sitemap.xml` is

@@ -145,6 +145,7 @@
             "itemOffered": {
               "@type": "Service",
               "name": "Data Governance & Business Analysis",
+              "url": "https://www.thinklens.in/services/data-governance-technical-ba/",
               "description": "Data governance and technical business analysis for Fortune 500 organizations."
             }
           },
@@ -162,6 +163,7 @@
             "itemOffered": {
               "@type": "Service",
               "name": "Data Quality, Analysis & Cleanup",
+              "url": "https://www.thinklens.in/services/data-quality-cleanup/",
               "description": "Data analysis, audits, deduplication, and schema remediation at Fortune 500 standards."
             }
           },
@@ -902,6 +904,15 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   opacity:0;transform:translateX(20px);
   transition:opacity .5s var(--ease),transform .5s var(--ease),padding-left .25s;
   cursor:pointer;
+  text-decoration:none;color:inherit;
+}
+.svc-go{
+  width:18px;height:18px;flex-shrink:0;color:var(--g400);
+  opacity:0;transform:translateX(-6px);
+  transition:opacity .25s,transform .25s,color .25s;
+}
+.svc-item:hover .svc-go,.svc-item:focus-visible .svc-go{
+  opacity:1;transform:none;color:var(--accent);
 }
 .svc-item.vis{opacity:1;transform:none}
 .svc-item:first-child{border-top:1px solid var(--border)}
@@ -1112,6 +1123,12 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .cmeta:hover{border-color:var(--border-hi);background:var(--card-hi);transform:translateX(4px)}
 .cmeta-l{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g400);margin-bottom:4px}
 .cmeta-v{font-size:.9rem;font-weight:500;color:var(--g100)}
+.cmeta-link{
+  display:inline-flex;align-items:center;gap:7px;
+  color:var(--g100);text-decoration:none;transition:color .2s;
+}
+.cmeta-link svg{color:var(--accent)}
+.cmeta-link:hover{color:var(--accent)}
 
 /* Form */
 .cform{display:flex;flex-direction:column;gap:14px}
@@ -1379,6 +1396,19 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* ═══════════ GENERIC SUB-PAGE SECTION (used by /services/* and /engagement-models/) ═══════════ */
 .page-section{padding:80px 0;position:relative}
 .page-section.alt{background:rgba(255,255,255,.015)}
+
+/* ── Sub-page hero backdrop (shared/page-top-vis partial) ── */
+.page-vis{
+  position:absolute;top:0;left:0;right:0;height:560px;
+  overflow:hidden;pointer-events:none;z-index:0;opacity:.55;
+  -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);
+  mask-image:linear-gradient(180deg,#000 55%,transparent);
+}
+.page-vis svg{width:100%;height:100%;display:block}
+.page-top{z-index:1}
+@media(prefers-reduced-motion:reduce){
+  .page-vis{display:none}
+}
 @media(max-width:780px){
   .page-section{padding:60px 0}
 }
@@ -1764,6 +1794,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         <p class="sc-body">ETL, report modernization, and business intelligence for global CPG giants. Enterprise-scale data analysis across complex, multi-region product landscapes.</p>
       </div>
     </div>
+    <a href="case-studies/" class="trust-link r" style="margin-top:48px;display:inline-flex">Read the case studies
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
   </div>
 </section>
 
@@ -1802,7 +1835,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     <h2 class="section-h2">Clear services.<br>Clear <span class="a">outcomes.</span></h2>
     <p class="svc-deck">Four ways we help global staffing agencies — straightforward offshore delivery, transparent contracts, and clear insights for your clients.</p>
     <div class="svc-list-items">
-      <div class="svc-item">
+      <a class="svc-item" href="services/data-quality-cleanup/">
         <span class="svc-item-num">01</span>
         <span class="svc-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1816,8 +1849,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         </span>
         <span class="svc-item-name">Data Cleanup</span>
         <div class="svc-item-tags"><span class="stag">Standardize</span><span class="stag">Dedup</span><span class="stag">Audit</span><span class="stag">SQL</span><span class="stag">Master Data</span></div>
-      </div>
-      <div class="svc-item">
+        <svg class="svc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a class="svc-item" href="services/power-bi-tableau-spotfire/">
         <span class="svc-item-num">02</span>
         <span class="svc-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1830,8 +1864,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         </span>
         <span class="svc-item-name">Report Modernization</span>
         <div class="svc-item-tags"><span class="stag">Power BI</span><span class="stag">Tableau</span><span class="stag">TIBCO Spotfire</span><span class="stag">ETL</span><span class="stag">Report QA</span></div>
-      </div>
-      <div class="svc-item">
+        <svg class="svc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a class="svc-item" href="services/data-governance-technical-ba/">
         <span class="svc-item-num">03</span>
         <span class="svc-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1841,8 +1876,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         </span>
         <span class="svc-item-name">Compliance Support</span>
         <div class="svc-item-tags"><span class="stag">GDPR</span><span class="stag">HIPAA</span><span class="stag">SOC 2</span><span class="stag">NDA</span><span class="stag">VDI / VPN</span></div>
-      </div>
-      <div class="svc-item">
+        <svg class="svc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a class="svc-item" href="case-studies/">
         <span class="svc-item-num">04</span>
         <span class="svc-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1855,7 +1891,8 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         </span>
         <span class="svc-item-name">Industry Coverage</span>
         <div class="svc-item-tags"><span class="stag">Aerospace</span><span class="stag">Healthcare</span><span class="stag">Consumer Goods</span><span class="stag">SAP</span><span class="stag">Workday</span></div>
-      </div>
+        <svg class="svc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
     </div>
   </div>
 </div>
@@ -1916,6 +1953,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         <p class="wc-body">An invisible extension of your team. Clear documentation, structured handovers, and a model that never compromises your end-client relationship.</p>
       </div>
     </div>
+    <a href="case-studies/" class="trust-link r" style="margin-top:48px;display:inline-flex">See how this works in practice
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
   </div>
 </section>
 
@@ -2091,6 +2131,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         <div class="cmeta-list r">
           <div class="cmeta"><div class="cmeta-l">Email</div><div class="cmeta-v">thinklensconsulting@gmail.com</div></div>
           <div class="cmeta"><div class="cmeta-l">Phone</div><div class="cmeta-v">+91 96762 91788</div></div>
+          <div class="cmeta"><div class="cmeta-l">WhatsApp</div><div class="cmeta-v"><a class="cmeta-link" href="https://wa.me/919676291788?text=Hi%20Thinklens%20—%20I%27d%20like%20to%20discuss%20an%20engagement." target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Chat on WhatsApp</a></div></div>
           <div class="cmeta"><div class="cmeta-l">Delivery Base</div><div class="cmeta-v">India — Serving Global Partners</div></div>
           <div class="cmeta"><div class="cmeta-l">IEC Authorization</div><div class="cmeta-v">Approved for International Trade in Services</div></div>
           <div class="cmeta"><div class="cmeta-l">Engagement Types</div><div class="cmeta-v">T&amp;M · Fixed Scope · MSA Sub-Contracting · B2B Freelance Consultant</div></div>
@@ -2098,12 +2141,12 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
       </div>
       <form class="cform r" id="contactForm">
         <div class="frow">
-          <div class="fg"><label>Name</label><input name="name" type="text" placeholder="John Smith" required></div>
-          <div class="fg"><label>Company</label><input name="company" type="text" placeholder="Staffing Agency Inc." required></div>
+          <div class="fg"><label for="fname">Name</label><input id="fname" name="name" type="text" placeholder="John Smith" required></div>
+          <div class="fg"><label for="fcompany">Company</label><input id="fcompany" name="company" type="text" placeholder="Staffing Agency Inc." required></div>
         </div>
-        <div class="fg"><label>Business Email</label><input id="femail" name="email" type="email" placeholder="john@company.com" required></div>
+        <div class="fg"><label for="femail">Business Email</label><input id="femail" name="email" type="email" placeholder="john@company.com" required></div>
         <div class="fg">
-          <label>Region</label>
+          <label for="fregion">Region</label>
           <select id="fregion" name="region" required>
             <option value="">Select region…</option>
             <option>United States</option><option>United Kingdom</option><option>Canada</option>
@@ -2112,7 +2155,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
           </select>
         </div>
         <div class="fg">
-          <label>Enquiry Type</label>
+          <label for="fenquiry">Enquiry Type</label>
           <select id="fenquiry" name="enquiry_type" required>
             <option value="">Select type…</option>
             <option>Master Service Agreement (MSA)</option>
@@ -2136,7 +2179,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
             </div>
           </div>
         </div>
-        <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell us about your pipeline, team size, or engagement scope…"></textarea></div>
+        <div class="fg"><label for="fmessage">Message</label><textarea id="fmessage" name="message" placeholder="Tell us about your pipeline, team size, or engagement scope…"></textarea></div>
         <input type="text" name="_gotcha" style="display:none">
         <input type="hidden" name="_subject" value="New Enquiry — Thinklens Website">
         <input type="hidden" name="_replyto" id="replyto">
@@ -2326,6 +2369,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const l = calMount.querySelector('.cal-loading');
         if (l) l.style.display = 'none';
       }});
+      window.Cal('on', { action: 'bookingSuccessful', callback: () => {
+        if (typeof window.gtag === 'function') window.gtag('event', 'book_appointment', { method: 'cal.com' });
+      }});
     };
     dtTrigger.addEventListener('click', () => {
       const opening = calForm.hasAttribute('hidden');
@@ -2477,8 +2523,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  /* ── GA4 event helper (no-ops when gtag is absent, e.g. blocked or local) ── */
+  const track = (name, params) => {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  };
+
+  /* ── CTA click tracking (delegated) ── */
+  document.addEventListener('click', (e) => {
+    const cta = e.target.closest('a.btn, .trust-link, .sticky-cta, .nav-cta');
+    if (!cta) return;
+    track('cta_click', { label: (cta.textContent || '').trim().slice(0, 60) });
+  });
+
   /* ── Form submission via Formspree ── */
   const FORMSPREE_ID = 'xdapybyb';
+  // Consumer mail providers — anything else is treated as a corporate domain.
+  const FREE_MAIL = ['gmail.com','yahoo.com','outlook.com','hotmail.com','live.com','icloud.com','proton.me','protonmail.com','aol.com','mail.com','gmx.com','yandex.com','zoho.com','rediffmail.com'];
   const form = document.getElementById('contactForm');
   if (form) {
     form.addEventListener('submit', async function(e) {
@@ -2491,11 +2551,27 @@ document.addEventListener('DOMContentLoaded', function() {
         msg.textContent = 'Please select your region and enquiry type.'; return;
       }
       btn.textContent = 'Sending…'; btn.disabled = true; msg.style.display = 'none';
+      // Lead tagging — free-mail vs corporate domain, MSA routing via subject line
+      const emailDomain = (document.getElementById('femail').value.split('@')[1] || '').toLowerCase();
+      const leadType = FREE_MAIL.includes(emailDomain) ? 'free' : 'corporate';
+      const enquiryType = document.getElementById('fenquiry').value;
+      const isMsa = /^(Master Service Agreement|Sub-Contracting)/.test(enquiryType);
+      this.querySelector('[name="_subject"]').value = isMsa
+        ? 'MSA / Partnership Enquiry — Thinklens Website'
+        : 'New Enquiry — Thinklens Website';
+      const data = new FormData(this);
+      data.append('lead_type', leadType);
+      data.append('email_domain', emailDomain);
       try {
         const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-          method: 'POST', body: new FormData(this), headers: {'Accept': 'application/json'}
+          method: 'POST', body: data, headers: {'Accept': 'application/json'}
         });
         if (res.ok) {
+          track('generate_lead', {
+            enquiry_type: enquiryType,
+            region: document.getElementById('fregion').value,
+            lead_type: leadType,
+          });
           btn.classList.add('ok');
           btn.textContent = '✓ Enquiry sent';
           msg.style.display = 'block';
