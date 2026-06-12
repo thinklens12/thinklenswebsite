@@ -208,6 +208,26 @@ const PAGES = [
     },
   },
   {
+    route: '/case-studies/',
+    metaFile: 'pages/case-studies/meta.html',
+    jsonldFile: 'pages/case-studies/jsonld.html',
+    partials: [
+      'shared/body-open',
+      'shared/nav',
+      'shared/mobile-menu',
+      'case-studies/body',
+      'common/trust',
+      'common/cta',
+      'common/contact',
+      'shared/footer',
+      'shared/sticky-cta',
+    ],
+    sitemap: {
+      priority: '0.8',
+      changefreq: 'monthly',
+    },
+  },
+  {
     route: '/engagement-models/',
     metaFile: 'pages/engagement-models/meta.html',
     jsonldFile: 'pages/engagement-models/jsonld.html',
