@@ -1724,6 +1724,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const l = calMount.querySelector('.cal-loading');
         if (l) l.style.display = 'none';
       }});
+      window.Cal('on', { action: 'bookingSuccessful', callback: () => {
+        if (typeof window.gtag === 'function') window.gtag('event', 'book_appointment', { method: 'cal.com' });
+      }});
     };
     dtTrigger.addEventListener('click', () => {
       const opening = calForm.hasAttribute('hidden');
@@ -1875,8 +1878,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  /* ── GA4 event helper (no-ops when gtag is absent, e.g. blocked or local) ── */
+  const track = (name, params) => {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  };
+
+  /* ── CTA click tracking (delegated) ── */
+  document.addEventListener('click', (e) => {
+    const cta = e.target.closest('a.btn, .trust-link, .sticky-cta, .nav-cta');
+    if (!cta) return;
+    track('cta_click', { label: (cta.textContent || '').trim().slice(0, 60) });
+  });
+
   /* ── Form submission via Formspree ── */
   const FORMSPREE_ID = 'xdapybyb';
+  // Consumer mail providers — anything else is treated as a corporate domain.
+  const FREE_MAIL = ['gmail.com','yahoo.com','outlook.com','hotmail.com','live.com','icloud.com','proton.me','protonmail.com','aol.com','mail.com','gmx.com','yandex.com','zoho.com','rediffmail.com'];
   const form = document.getElementById('contactForm');
   if (form) {
     form.addEventListener('submit', async function(e) {
@@ -1889,11 +1906,27 @@ document.addEventListener('DOMContentLoaded', function() {
         msg.textContent = 'Please select your region and enquiry type.'; return;
       }
       btn.textContent = 'Sending…'; btn.disabled = true; msg.style.display = 'none';
+      // Lead tagging — free-mail vs corporate domain, MSA routing via subject line
+      const emailDomain = (document.getElementById('femail').value.split('@')[1] || '').toLowerCase();
+      const leadType = FREE_MAIL.includes(emailDomain) ? 'free' : 'corporate';
+      const enquiryType = document.getElementById('fenquiry').value;
+      const isMsa = /^(Master Service Agreement|Sub-Contracting)/.test(enquiryType);
+      this.querySelector('[name="_subject"]').value = isMsa
+        ? 'MSA / Partnership Enquiry — Thinklens Website'
+        : 'New Enquiry — Thinklens Website';
+      const data = new FormData(this);
+      data.append('lead_type', leadType);
+      data.append('email_domain', emailDomain);
       try {
         const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-          method: 'POST', body: new FormData(this), headers: {'Accept': 'application/json'}
+          method: 'POST', body: data, headers: {'Accept': 'application/json'}
         });
         if (res.ok) {
+          track('generate_lead', {
+            enquiry_type: enquiryType,
+            region: document.getElementById('fregion').value,
+            lead_type: leadType,
+          });
           btn.classList.add('ok');
           btn.textContent = '✓ Enquiry sent';
           msg.style.display = 'block';
