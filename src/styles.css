@@ -610,6 +610,15 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   opacity:0;transform:translateX(20px);
   transition:opacity .5s var(--ease),transform .5s var(--ease),padding-left .25s;
   cursor:pointer;
+  text-decoration:none;color:inherit;
+}
+.svc-go{
+  width:18px;height:18px;flex-shrink:0;color:var(--g400);
+  opacity:0;transform:translateX(-6px);
+  transition:opacity .25s,transform .25s,color .25s;
+}
+.svc-item:hover .svc-go,.svc-item:focus-visible .svc-go{
+  opacity:1;transform:none;color:var(--accent);
 }
 .svc-item.vis{opacity:1;transform:none}
 .svc-item:first-child{border-top:1px solid var(--border)}

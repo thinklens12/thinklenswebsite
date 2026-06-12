@@ -904,6 +904,15 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   opacity:0;transform:translateX(20px);
   transition:opacity .5s var(--ease),transform .5s var(--ease),padding-left .25s;
   cursor:pointer;
+  text-decoration:none;color:inherit;
+}
+.svc-go{
+  width:18px;height:18px;flex-shrink:0;color:var(--g400);
+  opacity:0;transform:translateX(-6px);
+  transition:opacity .25s,transform .25s,color .25s;
+}
+.svc-item:hover .svc-go,.svc-item:focus-visible .svc-go{
+  opacity:1;transform:none;color:var(--accent);
 }
 .svc-item.vis{opacity:1;transform:none}
 .svc-item:first-child{border-top:1px solid var(--border)}
@@ -1826,7 +1835,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     <h2 class="section-h2">Clear services.<br>Clear <span class="a">outcomes.</span></h2>
     <p class="svc-deck">Four ways we help global staffing agencies — straightforward offshore delivery, transparent contracts, and clear insights for your clients.</p>
     <div class="svc-list-items">
-      <div class="svc-item">
+      <a class="svc-item" href="services/data-quality-cleanup/">
         <span class="svc-item-num">01</span>
         <span class="svc-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1840,8 +1849,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         </span>
         <span class="svc-item-name">Data Cleanup</span>
         <div class="svc-item-tags"><span class="stag">Standardize</span><span class="stag">Dedup</span><span class="stag">Audit</span><span class="stag">SQL</span><span class="stag">Master Data</span></div>
-      </div>
-      <div class="svc-item">
+        <svg class="svc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a class="svc-item" href="services/power-bi-tableau-spotfire/">
         <span class="svc-item-num">02</span>
         <span class="svc-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1854,8 +1864,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         </span>
         <span class="svc-item-name">Report Modernization</span>
         <div class="svc-item-tags"><span class="stag">Power BI</span><span class="stag">Tableau</span><span class="stag">TIBCO Spotfire</span><span class="stag">ETL</span><span class="stag">Report QA</span></div>
-      </div>
-      <div class="svc-item">
+        <svg class="svc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a class="svc-item" href="services/data-governance-technical-ba/">
         <span class="svc-item-num">03</span>
         <span class="svc-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1865,8 +1876,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         </span>
         <span class="svc-item-name">Compliance Support</span>
         <div class="svc-item-tags"><span class="stag">GDPR</span><span class="stag">HIPAA</span><span class="stag">SOC 2</span><span class="stag">NDA</span><span class="stag">VDI / VPN</span></div>
-      </div>
-      <div class="svc-item">
+        <svg class="svc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a class="svc-item" href="case-studies/">
         <span class="svc-item-num">04</span>
         <span class="svc-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1879,7 +1891,8 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
         </span>
         <span class="svc-item-name">Industry Coverage</span>
         <div class="svc-item-tags"><span class="stag">Aerospace</span><span class="stag">Healthcare</span><span class="stag">Consumer Goods</span><span class="stag">SAP</span><span class="stag">Workday</span></div>
-      </div>
+        <svg class="svc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
     </div>
   </div>
 </div>
