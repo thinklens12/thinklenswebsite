@@ -40,3 +40,38 @@
   ]
 }
 </script>
+
+<!-- ── FAQ structured data (mirrors visible FAQ) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.thinklens.in/services/data-quality-cleanup/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does a data cleanup engagement involve?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Audit and profiling ranked by business impact, deduplication with domain-tuned match rules and survivorship logic, schema remediation via staged migrations, and standardization with validation rules wired in at entry."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is your deduplication reversible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — merges run with full before/after lineage and agreed survivorship rules; the process is reversible, never destructive."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you prepare data for an SAP or Workday migration?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — cleanup is scoped for what's next (SAP S/4HANA, Workday, or warehouse consolidation) so the new system goes live on data that has already been through quarantine."
+      }
+    }
+  ]
+}
+</script>

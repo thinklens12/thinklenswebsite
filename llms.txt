@@ -1,6 +1,6 @@
 # Thinklens Consulting LLP
 
-> India-based offshore Data & BI consulting partner for global IT staffing agencies. We operate as a silent sub-contractor under your MSA — you keep the client relationship, branding, and invoicing; we deliver the technical work. Founded 2025. Single-page site at https://www.thinklens.in/.
+> India-based (Hyderabad) offshore Data & BI consulting partner for global IT staffing agencies. We operate as a silent sub-contractor under your MSA — you keep the client relationship, branding, and invoicing; we deliver the technical work to Fortune 500 standards. Core services: data governance, ETL testing, BI report QA, data quality & cleanup, and SAP/Workday data. Engagement models: Time & Materials, Fixed-Scope, MSA Sub-Contracting, and B2B Freelance Consultant. Founded 2025. Site: https://www.thinklens.in/.
 
 ## What we are (and aren't)
 

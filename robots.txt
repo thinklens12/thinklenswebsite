@@ -55,6 +55,19 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
+# ─── Newer AI agents (same allow posture) ───
+User-agent: Google-CloudVertexBot
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
 # ─── Aggressive / unwanted scrapers (blocked) ───
 User-agent: Bytespider
 Disallow: /
