@@ -62,6 +62,7 @@ const PAGES = [
       'shared/nav',
       'shared/mobile-menu',
       'home/hero',
+      'home/citable',
       'common/marquee',
       'home/kinetic',
       'home/about',

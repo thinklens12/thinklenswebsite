@@ -1103,6 +1103,19 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .page-section{padding:80px 0;position:relative}
 .page-section.alt{background:rgba(255,255,255,.015)}
 
+/* ── Citable answer (AEO lead paragraph — first content under H1) ── */
+.citable-answer{padding:8px 0 56px;position:relative}
+.citable-answer .wrap{max-width:900px}
+.citable-answer p{
+  margin:0;font-size:1.12rem;line-height:1.85;color:var(--g300);
+  padding-left:24px;border-left:2px solid var(--accent);
+}
+.citable-answer b{color:var(--g100);font-weight:600}
+@media(max-width:640px){
+  .citable-answer{padding:4px 0 36px}
+  .citable-answer p{font-size:1rem;padding-left:16px}
+}
+
 /* ── Sub-page hero backdrop (shared/page-top-vis partial) ── */
 .page-vis{
   position:absolute;top:0;left:0;right:0;height:560px;
