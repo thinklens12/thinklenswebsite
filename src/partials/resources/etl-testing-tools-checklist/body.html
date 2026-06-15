@@ -1,0 +1,73 @@
+<!-- ══════════ ARTICLE — INTRO ══════════ -->
+<section class="page-top">
+  <div class="wrap">
+    <span class="eyebrow r">Resources / Checklist</span>
+    <h1 class="page-h1 r">ETL testing tools<br>&amp; a QA <span class="a">checklist.</span></h1>
+    <p class="page-deck r">The tools teams actually use to validate data pipelines, plus a copy-ready source-to-target QA checklist you can run on your next load.</p>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — CITABLE ANSWER ══════════ -->
+<section class="citable-answer">
+  <div class="wrap">
+    <p class="r"><b>ETL testing tools fall into four groups: SQL and scripting (the universal baseline), data-quality frameworks like dbt tests, Great Expectations, and Soda, dedicated ETL/data-test platforms like QuerySurge and Datagaps, and the orchestration and CI tools that run those tests automatically.</b> Most teams do not need a specialized tool to start — disciplined SQL plus a quality framework in version control covers the majority of pipeline validation. A good source-to-target QA checklist covers row counts, aggregate totals, field-level samples, transformation rules, referential integrity, null and duplicate checks, data-type conformance, and a regression run on every release.</p>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — BODY ══════════ -->
+<section class="page-section">
+  <div class="wrap article-prose r">
+    <h2>The ETL testing tool landscape</h2>
+    <p>You don't need to buy anything to start testing pipelines — but knowing the categories helps you pick the right level of investment.</p>
+
+    <h3>1. SQL &amp; scripting (the baseline)</h3>
+    <p>SQL is the universal ETL testing tool. Reconciliation queries, transformation checks, and integrity tests are all just SQL, often wrapped in Python or shell scripts for repeatability. If you can write a <code>GROUP BY</code> and a <code>JOIN</code>, you can test a pipeline. Every team should be fluent here before reaching for a product.</p>
+
+    <h3>2. Data-quality frameworks</h3>
+    <ul>
+      <li><b>dbt tests</b> — assertions (unique, not-null, relationships, accepted values) defined alongside your transformation models in version control.</li>
+      <li><b>Great Expectations</b> — a Python framework for declaring and validating "expectations" about data, with readable docs.</li>
+      <li><b>Soda</b> — a checks-as-code approach for data-quality monitoring across warehouses.</li>
+    </ul>
+
+    <h3>3. Dedicated ETL/data-test platforms</h3>
+    <ul>
+      <li><b>QuerySurge</b> — purpose-built for data warehouse and ETL testing, with automated source-to-target comparison.</li>
+      <li><b>Datagaps ETL Validator</b> — test automation for ETL, BI, and data migration validation.</li>
+      <li><b>iCEDQ, RightData</b> — rules-based data testing and reconciliation platforms.</li>
+    </ul>
+
+    <h3>4. Orchestration &amp; CI</h3>
+    <p>Tools like Airflow, Azure Data Factory, and CI runners (GitHub Actions, Azure Pipelines) schedule and gate your tests — so the regression suite runs on every release automatically, not when someone remembers.</p>
+
+    <h2>The source-to-target QA checklist</h2>
+    <p>Run this on every load before sign-off. It's tool-agnostic — it works whether you're in raw SQL or QuerySurge.</p>
+    <ul>
+      <li>☐ <b>Row counts</b> match between source and target (or the difference is explained by a documented rule).</li>
+      <li>☐ <b>Aggregate totals</b> (sums, averages of key measures) reconcile within tolerance.</li>
+      <li>☐ <b>Field-level samples</b> spot-checked across representative records.</li>
+      <li>☐ <b>Transformation rules</b> each tested with a known input and expected output.</li>
+      <li>☐ <b>Referential integrity</b> — no orphaned records, no broken foreign keys.</li>
+      <li>☐ <b>Uniqueness</b> — no duplicate primary or business keys.</li>
+      <li>☐ <b>Null checks</b> — required fields populated; null rates within threshold.</li>
+      <li>☐ <b>Data types &amp; formats</b> conform (dates, currencies, encodings).</li>
+      <li>☐ <b>Boundary &amp; value-domain</b> checks — values fall within valid ranges/enumerations.</li>
+      <li>☐ <b>Historical / incremental loads</b> don't double-count or drop late-arriving data.</li>
+      <li>☐ <b>Regression suite</b> re-run on every release, results versioned.</li>
+      <li>☐ <b>Test evidence</b> captured and stored for audit.</li>
+    </ul>
+
+    <div class="key-takeaway"><b>Key takeaway:</b> start with SQL and a quality framework in version control. Add a dedicated platform only when scale or audit requirements justify it — and run the checklist above on every load, every release.</div>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — CTA ══════════ -->
+<div class="wrap">
+  <div class="article-cta r">
+    <div class="article-cta-h">Want this run for you, on a real pipeline?</div>
+    <p>Thinklens brings the tooling, the checklist, and the test-evidence trail — offshore under your MSA, across Power BI, Tableau, and Spotfire.</p>
+    <a href="{{HOME}}services/etl-testing-report-qa/" class="btn btn-outline" data-magnetic>See our ETL Testing &amp; Report QA service
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M8 7 L17 7 L17 16"/></svg>
+    </a>
+  </div>
+</div>

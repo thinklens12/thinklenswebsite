@@ -999,9 +999,27 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .foot-inner{
   max-width:1120px;margin:0 auto;
-  display:grid;grid-template-columns:220px 1fr auto auto;
-  gap:40px;align-items:center;position:relative;z-index:1;
+  display:flex;flex-direction:column;gap:48px;
+  position:relative;z-index:1;
 }
+.foot-cols{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;
+}
+.foot-col{display:flex;flex-direction:column;gap:12px}
+.foot-col-h{
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--g400);margin-bottom:4px;
+}
+.foot-col a{
+  font-size:.85rem;font-weight:500;color:var(--g300);
+  transition:color .2s,padding-left .2s;width:fit-content;
+}
+.foot-col a:hover{color:var(--white);padding-left:4px}
+.foot-bottom{
+  display:flex;align-items:center;gap:32px;
+  padding-top:32px;border-top:1px solid var(--border);
+}
+.foot-bottom .foot-copy{margin-left:auto}
 .foot-social{display:flex;gap:10px;align-items:center}
 .foot-social a{
   width:38px;height:38px;border-radius:50%;
@@ -1055,10 +1073,10 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   .trust-grid{grid-template-columns:1fr}
   .contact-layout{grid-template-columns:1fr;gap:48px;align-items:start}
   .frow{grid-template-columns:1fr}
-  .foot-inner{grid-template-columns:1fr;text-align:center;gap:24px}
-  .foot-nav{justify-content:center}
-  .foot-social{justify-content:center}
-  .foot-copy{text-align:center}
+  .foot-inner{gap:36px}
+  .foot-cols{grid-template-columns:1fr 1fr;gap:28px}
+  .foot-bottom{flex-direction:column;align-items:flex-start;gap:20px}
+  .foot-bottom .foot-copy{margin-left:0;text-align:left}
   #kinetic{padding:100px 24px}
   #why,#trust,#contact,#sectors,#cta-section{padding-left:24px;padding-right:24px}
   .wrap{padding:0 24px}
@@ -1208,6 +1226,73 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   .citable-answer p{font-size:1rem;padding-left:16px}
 }
 
+/* ── Resources hub (article index cards) ── */
+.res-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.res-card{
+  display:flex;flex-direction:column;gap:12px;
+  padding:28px;border:1px solid var(--border);border-radius:16px;
+  background:var(--card);text-decoration:none;
+  transition:border-color .25s,transform .25s var(--ease),background .25s;
+}
+.res-card:hover{border-color:var(--accent);transform:translateY(-3px);background:var(--card-hi)}
+.res-card-tag{
+  font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);
+}
+.res-card-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--white);line-height:1.3}
+.res-card-p{font-size:.9rem;line-height:1.65;color:var(--g400);margin:0}
+.res-card-go{margin-top:auto;font-size:.8rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
+@media(max-width:640px){.res-grid{grid-template-columns:1fr}}
+
+/* ── Long-form article prose ── */
+.article-prose{max-width:760px}
+.article-prose h2{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:1.6rem;font-weight:800;
+  letter-spacing:-.02em;color:var(--white);line-height:1.25;
+  margin:48px 0 16px;
+}
+.article-prose h3{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:1.18rem;font-weight:700;
+  color:var(--white);margin:32px 0 12px;
+}
+.article-prose p{font-size:1.05rem;line-height:1.85;color:var(--g300);margin:0 0 18px}
+.article-prose ul,.article-prose ol{margin:0 0 18px;padding-left:22px;display:flex;flex-direction:column;gap:10px}
+.article-prose li{font-size:1.05rem;line-height:1.7;color:var(--g300)}
+.article-prose li::marker{color:var(--accent)}
+.article-prose b,.article-prose strong{color:var(--g100);font-weight:600}
+.article-prose code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--card);border:1px solid var(--border);border-radius:5px;padding:1px 6px;color:var(--g100)}
+.article-prose em{color:var(--g200);font-style:italic}
+.article-prose a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(0,122,255,.35);transition:border-color .2s}
+.article-prose a:hover{border-color:var(--accent)}
+.article-prose blockquote{
+  margin:24px 0;padding:4px 0 4px 22px;border-left:2px solid var(--accent);
+  font-size:1.12rem;line-height:1.7;color:var(--g100);
+}
+.article-prose .key-takeaway{
+  margin:28px 0;padding:22px 24px;border:1px solid var(--border);border-radius:14px;
+  background:var(--card);font-size:1rem;line-height:1.7;color:var(--g200);
+}
+.article-prose .key-takeaway b{color:var(--accent)}
+.article-prose table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.92rem}
+.article-prose th,.article-prose td{
+  text-align:left;padding:12px 14px;border:1px solid var(--border);vertical-align:top;color:var(--g300);
+}
+.article-prose th{background:var(--card);color:var(--g100);font-weight:600;font-size:.8rem;letter-spacing:.02em}
+@media(max-width:640px){
+  .article-prose h2{font-size:1.35rem}
+  .article-prose p,.article-prose li{font-size:1rem}
+}
+
+/* ── Inline CTA card (article → service page) ── */
+.article-cta{
+  margin:48px auto 0;max-width:760px;padding:32px;
+  border:1px solid var(--border);border-radius:18px;
+  background:linear-gradient(135deg,rgba(0,122,255,.08),rgba(0,122,255,.02));
+  display:flex;flex-direction:column;gap:14px;align-items:flex-start;
+}
+.article-cta-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white)}
+.article-cta p{font-size:.98rem;line-height:1.7;color:var(--g300);margin:0}
+
 /* ── Sub-page hero backdrop (shared/page-top-vis partial) ── */
 .page-vis{
   position:absolute;top:0;left:0;right:0;height:560px;
@@ -1328,9 +1413,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
       </svg>
     </a>
     <ul class="nav-links">
-      <li><a href="/#about">About</a></li>
-      <li><a href="/#sectors">Sectors</a></li>
+      <li><a href="/about/">About</a></li>
       <li><a href="/#services">Services</a></li>
+      <li><a href="/resources/">Resources</a></li>
       <li><a href="/#why">Partnership</a></li>
       <li><a href="/#contact">Contact</a></li>
     </ul>
@@ -1344,9 +1429,11 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 <!-- ══════════ MOBILE MENU ══════════ -->
 <div id="mobileMenu" role="dialog" aria-modal="true" aria-label="Site menu">
   <ul class="mm-links">
-    <li><a href="/#about">About</a></li>
-    <li><a href="/#sectors">Sectors</a></li>
+    <li><a href="/about/">About</a></li>
     <li><a href="/#services">Services</a></li>
+    <li><a href="/resources/">Resources</a></li>
+    <li><a href="/case-studies/">Case Studies</a></li>
+    <li><a href="/engagement-models/">Engagement Models</a></li>
     <li><a href="/#why">Partnership</a></li>
     <li><a href="/#contact">Contact</a></li>
   </ul>
@@ -1647,39 +1734,60 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 <!-- ══════════ FOOTER ══════════ -->
 <footer id="footer">
   <div class="foot-inner">
-    <a href="/" class="foot-logo" aria-label="Thinklens home">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="28" viewBox="0 0 1010 144" width="112">
-        <circle cx="406.5" cy="15" r="15" fill="#007aff"/>
-        <g fill="#636366">
-          <path d="m209.22 139v-112.5h-34.74v-21.6h93.6v21.6h-34.2v112.5z"/>
-          <path d="m284.639 139v-136.26h23.58v57.6l-3.24-3.42c2.28-5.88 6-10.32 11.16-13.32 5.28-3.12 11.4-4.68 18.36-4.68 7.2 0 13.56 1.56 19.08 4.68 5.64 3.12 10.02 7.5 13.14 13.14 3.12 5.52 4.68 11.94 4.68 19.26v63h-23.58v-57.42c0-4.32-.84-8.04-2.52-11.16s-4.02-5.52-7.02-7.2c-2.88-1.8-6.3-2.7-10.26-2.7-3.84 0-7.26.9-10.26 2.7-3 1.68-5.34 4.08-7.02 7.2s-2.52 6.84-2.52 11.16v57.42z"/>
-          <path d="m394.938 139v-97.92h23.58v97.92z"/>
-          <path d="m443.889 139v-97.92h22.14v19.26l-1.8-3.42c2.28-5.88 6-10.32 11.16-13.32 5.28-3.12 11.4-4.68 18.36-4.68 7.2 0 13.56 1.56 19.08 4.68 5.64 3.12 10.02 7.5 13.14 13.14 3.12 5.52 4.68 11.94 4.68 19.26v63h-23.58v-57.42c0-4.32-.84-8.04-2.52-11.16s-4.02-5.52-7.02-7.2c-2.88-1.8-6.3-2.7-10.26-2.7-3.84 0-7.26.9-10.26 2.7-3 1.68-5.34 4.08-7.02 7.2s-2.52 6.84-2.52 11.16v57.42z"/>
-          <path d="m554.189 139v-136.26h23.58v89.28l-9-2.7 46.08-48.24h29.34l-36.18 39.42 36.9 58.5h-27l-32.04-50.76 14.04-2.88-29.52 31.68 7.38-14.4v36.36z"/>
-          <path d="m661.675 139v-136.26h23.58v136.26z"/>
-          <path d="m757.067 141.16c-10.08 0-18.9-2.28-26.46-6.84s-13.44-10.74-17.64-18.54-6.3-16.44-6.3-25.92c0-9.84 2.1-18.54 6.3-26.1 4.32-7.68 10.14-13.74 17.46-18.18 7.44-4.44 15.72-6.66 24.84-6.66 7.68 0 14.4 1.26 20.16 3.78 5.88 2.52 10.86 6 14.94 10.44s7.2 9.54 9.36 15.3c2.16 5.64 3.24 11.76 3.24 18.36 0 1.68-.12 3.42-.36 5.22-.12 1.8-.42 3.36-.9 4.68h-75.6v-18h62.28l-11.16 8.46c1.08-5.52.78-10.44-.9-14.76-1.56-4.32-4.2-7.74-7.92-10.26-3.6-2.52-7.98-3.78-13.14-3.78-4.92 0-9.3 1.26-13.14 3.78-3.84 2.4-6.78 6-8.82 10.8-1.92 4.68-2.64 10.38-2.16 17.1-.48 6 .3 11.34 2.34 16.02 2.16 4.56 5.28 8.1 9.36 10.62 4.2 2.52 9 3.78 14.4 3.78s9.96-1.14 13.68-3.42c3.84-2.28 6.84-5.34 9-9.18l19.08 9.36c-1.92 4.68-4.92 8.82-9 12.42s-8.94 6.42-14.58 8.46c-5.52 2.04-11.64 3.06-18.36 3.06z"/>
-          <path d="m824.442 139v-97.92h22.14v19.26l-1.8-3.42c2.28-5.88 6-10.32 11.16-13.32 5.28-3.12 11.4-4.68 18.36-4.68 7.2 0 13.56 1.56 19.08 4.68 5.64 3.12 10.02 7.5 13.14 13.14 3.12 5.52 4.68 11.94 4.68 19.26v63h-23.58v-57.42c0-4.32-.84-8.04-2.52-11.16s-4.02-5.52-7.02-7.2c-2.88-1.8-6.3-2.7-10.26-2.7-3.84 0-7.26.9-10.26 2.7-3 1.68-5.34 4.08-7.02 7.2s-2.52 6.84-2.52 11.16v57.42z"/>
-          <path d="m972.001 141.16c-10.44 0-19.56-2.46-27.36-7.38-7.68-5.04-12.96-11.82-15.84-20.34l17.64-8.46c2.52 5.52 6 9.84 10.44 12.96 4.56 3.12 9.6 4.68 15.12 4.68 4.32 0 7.74-.96 10.26-2.88s3.78-4.44 3.78-7.56c0-1.92-.54-3.48-1.62-4.68-.96-1.32-2.34-2.4-4.14-3.24-1.68-.96-3.54-1.74-5.58-2.34l-16.02-4.5c-8.28-2.4-14.58-6.06-18.9-10.98-4.2-4.92-6.3-10.74-6.3-17.46 0-6 1.5-11.22 4.5-15.66 3.12-4.56 7.38-8.1 12.78-10.62 5.52-2.52 11.82-3.78 18.9-3.78 9.24 0 17.4 2.22 24.48 6.66 7.079 4.44 12.119 10.68 15.119 18.72l-17.999 8.46c-1.68-4.44-4.5-7.98-8.46-10.62s-8.4-3.96-13.32-3.96c-3.96 0-7.08.9-9.36 2.7s-3.42 4.14-3.42 7.02c0 1.8.48 3.36 1.44 4.68s2.28 2.4 3.96 3.24c1.8.84 3.84 1.62 6.12 2.34l15.66 4.68c8.04 2.4 14.22 6 18.539 10.8 4.44 4.8 6.66 10.68 6.66 17.64 0 5.88-1.56 11.1-4.68 15.66-3.12 4.44-7.439 7.92-12.959 10.44s-12 3.78-19.44 3.78z"/>
-        </g>
-        <path d="m69.5 139.9c36.451 0 66-29.303 66-65.45s-29.549-65.45-66-65.45c-36.4508 0-66 29.303-66 65.45s29.5492 65.45 66 65.45z" stroke="#636366" stroke-width="7"/>
-        <circle cx="69.5" cy="75" r="38.5" fill="#007aff"/>
-        <circle cx="25" cy="23.5" r="13.5" fill="#007aff"/>
-        <circle cx="110" cy="127.5" r="13.5" fill="#007aff"/>
-      </svg>
-    </a>
-    <nav class="foot-nav">
-      <a href="/#about">About</a><a href="/#sectors">Sectors</a>
-      <a href="/#services">Services</a><a href="/#why">Partnership</a>
-      <a href="/#trust">Compliance</a><a href="/#contact">Contact</a>
+    <nav class="foot-cols" aria-label="Footer">
+      <div class="foot-col">
+        <div class="foot-col-h">Services</div>
+        <a href="/services/etl-testing-report-qa/">ETL Testing &amp; Report QA</a>
+        <a href="/services/power-bi-tableau-spotfire/">Power BI, Tableau &amp; Spotfire</a>
+        <a href="/services/data-governance-technical-ba/">Data Governance &amp; Technical BA</a>
+        <a href="/services/data-quality-cleanup/">Data Quality &amp; Cleanup</a>
+        <a href="/services/sap-workday-data/">SAP &amp; Workday Data</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-col-h">Company</div>
+        <a href="/about/">About</a>
+        <a href="/case-studies/">Case Studies</a>
+        <a href="/engagement-models/">Engagement Models</a>
+        <a href="/resources/">Resources</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-col-h">On this site</div>
+        <a href="/#sectors">Sectors</a>
+        <a href="/#why">Partnership Model</a>
+        <a href="/#trust">Compliance</a>
+        <a href="/#contact">Contact</a>
+      </div>
     </nav>
-    <div class="foot-social">
-      <a href="https://www.linkedin.com/in/thinklens-ds-3a7b60400/" target="_blank" rel="noopener noreferrer" aria-label="Thinklens on LinkedIn" title="Thinklens on LinkedIn">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+    <div class="foot-bottom">
+      <a href="/" class="foot-logo" aria-label="Thinklens home">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="28" viewBox="0 0 1010 144" width="112">
+          <circle cx="406.5" cy="15" r="15" fill="#007aff"/>
+          <g fill="#636366">
+            <path d="m209.22 139v-112.5h-34.74v-21.6h93.6v21.6h-34.2v112.5z"/>
+            <path d="m284.639 139v-136.26h23.58v57.6l-3.24-3.42c2.28-5.88 6-10.32 11.16-13.32 5.28-3.12 11.4-4.68 18.36-4.68 7.2 0 13.56 1.56 19.08 4.68 5.64 3.12 10.02 7.5 13.14 13.14 3.12 5.52 4.68 11.94 4.68 19.26v63h-23.58v-57.42c0-4.32-.84-8.04-2.52-11.16s-4.02-5.52-7.02-7.2c-2.88-1.8-6.3-2.7-10.26-2.7-3.84 0-7.26.9-10.26 2.7-3 1.68-5.34 4.08-7.02 7.2s-2.52 6.84-2.52 11.16v57.42z"/>
+            <path d="m394.938 139v-97.92h23.58v97.92z"/>
+            <path d="m443.889 139v-97.92h22.14v19.26l-1.8-3.42c2.28-5.88 6-10.32 11.16-13.32 5.28-3.12 11.4-4.68 18.36-4.68 7.2 0 13.56 1.56 19.08 4.68 5.64 3.12 10.02 7.5 13.14 13.14 3.12 5.52 4.68 11.94 4.68 19.26v63h-23.58v-57.42c0-4.32-.84-8.04-2.52-11.16s-4.02-5.52-7.02-7.2c-2.88-1.8-6.3-2.7-10.26-2.7-3.84 0-7.26.9-10.26 2.7-3 1.68-5.34 4.08-7.02 7.2s-2.52 6.84-2.52 11.16v57.42z"/>
+            <path d="m554.189 139v-136.26h23.58v89.28l-9-2.7 46.08-48.24h29.34l-36.18 39.42 36.9 58.5h-27l-32.04-50.76 14.04-2.88-29.52 31.68 7.38-14.4v36.36z"/>
+            <path d="m661.675 139v-136.26h23.58v136.26z"/>
+            <path d="m757.067 141.16c-10.08 0-18.9-2.28-26.46-6.84s-13.44-10.74-17.64-18.54-6.3-16.44-6.3-25.92c0-9.84 2.1-18.54 6.3-26.1 4.32-7.68 10.14-13.74 17.46-18.18 7.44-4.44 15.72-6.66 24.84-6.66 7.68 0 14.4 1.26 20.16 3.78 5.88 2.52 10.86 6 14.94 10.44s7.2 9.54 9.36 15.3c2.16 5.64 3.24 11.76 3.24 18.36 0 1.68-.12 3.42-.36 5.22-.12 1.8-.42 3.36-.9 4.68h-75.6v-18h62.28l-11.16 8.46c1.08-5.52.78-10.44-.9-14.76-1.56-4.32-4.2-7.74-7.92-10.26-3.6-2.52-7.98-3.78-13.14-3.78-4.92 0-9.3 1.26-13.14 3.78-3.84 2.4-6.78 6-8.82 10.8-1.92 4.68-2.64 10.38-2.16 17.1-.48 6 .3 11.34 2.34 16.02 2.16 4.56 5.28 8.1 9.36 10.62 4.2 2.52 9 3.78 14.4 3.78s9.96-1.14 13.68-3.42c3.84-2.28 6.84-5.34 9-9.18l19.08 9.36c-1.92 4.68-4.92 8.82-9 12.42s-8.94 6.42-14.58 8.46c-5.52 2.04-11.64 3.06-18.36 3.06z"/>
+            <path d="m824.442 139v-97.92h22.14v19.26l-1.8-3.42c2.28-5.88 6-10.32 11.16-13.32 5.28-3.12 11.4-4.68 18.36-4.68 7.2 0 13.56 1.56 19.08 4.68 5.64 3.12 10.02 7.5 13.14 13.14 3.12 5.52 4.68 11.94 4.68 19.26v63h-23.58v-57.42c0-4.32-.84-8.04-2.52-11.16s-4.02-5.52-7.02-7.2c-2.88-1.8-6.3-2.7-10.26-2.7-3.84 0-7.26.9-10.26 2.7-3 1.68-5.34 4.08-7.02 7.2s-2.52 6.84-2.52 11.16v57.42z"/>
+            <path d="m972.001 141.16c-10.44 0-19.56-2.46-27.36-7.38-7.68-5.04-12.96-11.82-15.84-20.34l17.64-8.46c2.52 5.52 6 9.84 10.44 12.96 4.56 3.12 9.6 4.68 15.12 4.68 4.32 0 7.74-.96 10.26-2.88s3.78-4.44 3.78-7.56c0-1.92-.54-3.48-1.62-4.68-.96-1.32-2.34-2.4-4.14-3.24-1.68-.96-3.54-1.74-5.58-2.34l-16.02-4.5c-8.28-2.4-14.58-6.06-18.9-10.98-4.2-4.92-6.3-10.74-6.3-17.46 0-6 1.5-11.22 4.5-15.66 3.12-4.56 7.38-8.1 12.78-10.62 5.52-2.52 11.82-3.78 18.9-3.78 9.24 0 17.4 2.22 24.48 6.66 7.079 4.44 12.119 10.68 15.119 18.72l-17.999 8.46c-1.68-4.44-4.5-7.98-8.46-10.62s-8.4-3.96-13.32-3.96c-3.96 0-7.08.9-9.36 2.7s-3.42 4.14-3.42 7.02c0 1.8.48 3.36 1.44 4.68s2.28 2.4 3.96 3.24c1.8.84 3.84 1.62 6.12 2.34l15.66 4.68c8.04 2.4 14.22 6 18.539 10.8 4.44 4.8 6.66 10.68 6.66 17.64 0 5.88-1.56 11.1-4.68 15.66-3.12 4.44-7.439 7.92-12.959 10.44s-12 3.78-19.44 3.78z"/>
+          </g>
+          <path d="m69.5 139.9c36.451 0 66-29.303 66-65.45s-29.549-65.45-66-65.45c-36.4508 0-66 29.303-66 65.45s29.5492 65.45 66 65.45z" stroke="#636366" stroke-width="7"/>
+          <circle cx="69.5" cy="75" r="38.5" fill="#007aff"/>
+          <circle cx="25" cy="23.5" r="13.5" fill="#007aff"/>
+          <circle cx="110" cy="127.5" r="13.5" fill="#007aff"/>
         </svg>
       </a>
+      <div class="foot-social">
+        <a href="https://www.linkedin.com/in/thinklens-ds-3a7b60400/" target="_blank" rel="noopener noreferrer" aria-label="Thinklens on LinkedIn" title="Thinklens on LinkedIn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+          </svg>
+        </a>
+      </div>
+      <div class="foot-copy">© 2025 Thinklens Consulting LLP<br>India · All rights reserved.</div>
     </div>
-    <div class="foot-copy">© 2025 Thinklens Consulting LLP<br>India · All rights reserved.</div>
   </div>
 </footer>
 

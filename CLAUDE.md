@@ -1,7 +1,7 @@
 # CLAUDE.md — Thinklens website
 
 Marketing site for **Thinklens Consulting LLP** (`https://www.thinklens.in`).
-Multi-page static site (9 URLs) + a custom 404. India-based offshore Data & BI
+Multi-page static site (15 URLs) + a custom 404. India-based offshore Data & BI
 consulting partner for global IT staffing agencies. Live routes:
 
 - `/` — homepage (positioning, services list, FAQ, contact)
@@ -14,6 +14,18 @@ consulting partner for global IT staffing agencies. Live routes:
 - `/case-studies/` — 3 anonymized studies (Aerospace, Biomedical, CPG); outcomes
   are intentionally qualitative — add real metrics only with owner sign-off
 - `/engagement-models/` — T&M, Fixed-Scope, MSA Sub-Contracting, B2B Freelance
+- `/resources/` — guides hub (top-of-funnel/AEO content) + 5 articles:
+  `power-bi-vs-tableau-vs-spotfire`, `what-is-etl-testing`,
+  `etl-testing-tools-checklist`, `technical-business-analyst-role`,
+  `why-data-governance-matters`. Each = citable lead + `.article-prose` body
+  + CTA to a service page. Add new guides under `src/pages/resources/<slug>/`
+  + `src/partials/resources/<slug>/body.html`; run `scripts/gen-resource-heads.py`
+  for the patterned meta/jsonld (Article + BreadcrumbList).
+
+**Internal linking:** nav + footer link the *real* page URLs (footer is a 3-column
+hub: Services / Company / On-this-site). Don't revert these to homepage-anchor-only
+links — orphaned pages were a flagged SEO issue. Homepage service items also deep-link
+to service pages.
 
 ## ⚠️ Most important rule
 
@@ -52,6 +64,8 @@ src/
   partials/services/<slug>/body.html    one body partial per service page
   partials/case-studies/body.html       /case-studies/ body
   partials/engagement-models/body.html  /engagement-models/ body
+  partials/resources/index.html         /resources/ hub (article cards)
+  partials/resources/<slug>/body.html   one body partial per guide article
   404-head.html, 404.css, 404.html   → 404 page (reuses styles.css + main.js)
 build.js               walks PAGES[] → emits 1 index.html per route + sitemap.xml
                        + 404.html (also injects the js-fade boot script + a
