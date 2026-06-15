@@ -1,0 +1,57 @@
+<!-- ══════════ ARTICLE — INTRO ══════════ -->
+<section class="page-top">
+  <div class="wrap">
+    <span class="eyebrow r">Resources / Guide</span>
+    <h1 class="page-h1 r">What is ETL testing,<br>and why does it <span class="a">matter?</span></h1>
+    <p class="page-deck r">Before anyone trusts a dashboard, someone has to prove the data underneath it is correct. That proof is ETL testing — here's what it covers, with examples.</p>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — CITABLE ANSWER ══════════ -->
+<section class="citable-answer">
+  <div class="wrap">
+    <p class="r"><b>ETL testing is the process of verifying that data is correctly Extracted from source systems, Transformed according to business rules, and Loaded into a target system — before that data is trusted for reporting or decisions.</b> It confirms completeness (no rows lost), correctness (transformations applied as specified), integrity (relationships intact), and quality (no bad values) across the pipeline. ETL testing matters because a single silent error — a dropped join, a wrong currency conversion, a truncated field — can flow undetected into executive dashboards and regulated reports. Catching it at the pipeline, rather than weeks later in a board meeting, is the difference between a data team that's trusted and one that isn't.</p>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — BODY ══════════ -->
+<section class="page-section">
+  <div class="wrap article-prose r">
+    <h2>ETL, in one sentence</h2>
+    <p><b>ETL</b> stands for <b>Extract, Transform, Load</b> — the process of pulling data out of source systems (like SAP, Workday, files, or APIs), reshaping it according to business rules, and loading it into a warehouse or reporting layer. ETL testing is the discipline of proving each of those three steps did what it was supposed to.</p>
+
+    <h2>Why it matters</h2>
+    <p>Reports are only as trustworthy as the pipeline beneath them. When numbers are wrong, the damage isn't just a bad chart — it's lost credibility, wrong decisions, and in regulated industries, audit findings. The catch is that ETL errors are usually <b>silent</b>: the report still renders, the dashboard still loads, and the number is simply wrong. Without testing, nobody knows until someone downstream notices the totals don't add up.</p>
+
+    <h2>The four layers of ETL testing</h2>
+    <p>Good ETL testing isn't a single check — it's layered. These are the four layers we run on every engagement:</p>
+
+    <h3>1. Source-to-target reconciliation</h3>
+    <p>The foundational check: does what landed in the target match what left the source? This means comparing <b>row counts</b>, <b>aggregate totals</b> (sums, averages), and <b>field-level samples</b> between source and target. <em>Example:</em> the source has 1,240,512 order rows totaling $48.2M; the warehouse must show the same count and total after load, or the difference must be explained by a documented rule.</p>
+
+    <h3>2. Transformation logic testing</h3>
+    <p>Every transformation rule — joins, lookups, derivations, business calculations — needs its own test with a known expected result. <em>Example:</em> if the rule is "net revenue = gross − returns − discounts," you feed in a row with known values and confirm the output matches to the cent. Versioned expected/actual fixtures mean regressions get caught at code review, not in production.</p>
+
+    <h3>3. Referential integrity &amp; regression</h3>
+    <p>Checks that relationships hold: no orphaned records, no broken foreign keys, no duplicate primary keys. A <b>regression suite</b> re-runs the full set of checks on every release, so a fix in one place can't quietly break another. <em>Example:</em> every order must reference a customer that actually exists in the customer table.</p>
+
+    <h3>4. Data-quality gates</h3>
+    <p>Rules that reject bad data at ingest rather than surfacing it downstream — null thresholds, valid value ranges, freshness checks, and anomaly detection. <em>Example:</em> a gate rejects the load if more than 0.5% of email fields are malformed, instead of letting them flow into a marketing report six weeks later.</p>
+
+    <h2>ETL testing vs. BI report QA</h2>
+    <p>They're related but distinct. ETL testing validates the <b>data pipeline</b>; <a href="{{HOME}}services/etl-testing-report-qa/">BI report QA</a> validates the <b>report on top of it</b> — DAX measures, row-level security, drill-through paths, and visual accuracy. Clean ETL with a buggy report is still a wrong number; you need both.</p>
+
+    <div class="key-takeaway"><b>Key takeaway:</b> ETL testing proves data moved correctly from source to report. Skip it and errors stay silent until they're expensive. Run all four layers and you can sign off with a test-evidence trail an auditor can follow.</div>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — CTA ══════════ -->
+<div class="wrap">
+  <div class="article-cta r">
+    <div class="article-cta-h">Need ETL testing on a live pipeline?</div>
+    <p>Thinklens runs all four layers offshore under your MSA, closing engagements at 95%+ test coverage against documented acceptance criteria.</p>
+    <a href="{{HOME}}services/etl-testing-report-qa/" class="btn btn-outline" data-magnetic>See our ETL Testing &amp; Report QA service
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M8 7 L17 7 L17 16"/></svg>
+    </a>
+  </div>
+</div>

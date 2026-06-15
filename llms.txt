@@ -44,6 +44,14 @@ Typical start: 1–2 weeks from signed SOW; 5 business days for pre-vetted skill
 - [/case-studies/](https://www.thinklens.in/case-studies/) — Three anonymized case studies (Aerospace master-data governance, Biomedical report modernization to clinical standards, CPG multi-region ETL consolidation). Client names withheld under NDA by design; references available in direct conversation.
 - [/engagement-models/](https://www.thinklens.in/engagement-models/) — The four engagement shapes Thinklens supports: T&M, Fixed-Scope, MSA Sub-Contracting (the primary shape), and B2B Freelance Consultant. Also documents the kickoff sequence (discovery → CV/scope → SOW + NDA).
 
+## Resources (guides)
+
+- [Tableau vs Power BI vs Spotfire](https://www.thinklens.in/resources/power-bi-vs-tableau-vs-spotfire/): Honest comparison across cost, scale, governance, and skills — no universal winner; match the tool to your stack.
+- [What is ETL testing?](https://www.thinklens.in/resources/what-is-etl-testing/): Definition plus the four test layers (source-to-target reconciliation, transformation logic, referential integrity & regression, data-quality gates), with examples.
+- [ETL testing tools & QA checklist](https://www.thinklens.in/resources/etl-testing-tools-checklist/): Tool categories (SQL, dbt/Great Expectations/Soda, QuerySurge/Datagaps, CI) plus a copy-ready source-to-target QA checklist.
+- [What does a Technical Business Analyst do?](https://www.thinklens.in/resources/technical-business-analyst-role/): The role, the skills that make a BA "technical," and how a Technical BA verifies requirements against real data.
+- [Why is data governance important?](https://www.thinklens.in/resources/why-data-governance-matters/): What governance controls (ownership, definitions, lineage, quality) and why regulated industries can't skip it.
+
 ## Homepage site map (anchors on https://www.thinklens.in/)
 
 - [Hero / positioning](https://www.thinklens.in/#hero): one-line value prop and engagement-model summary.

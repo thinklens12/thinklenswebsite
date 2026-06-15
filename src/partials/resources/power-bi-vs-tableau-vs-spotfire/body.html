@@ -1,0 +1,67 @@
+<!-- ══════════ ARTICLE — INTRO ══════════ -->
+<section class="page-top">
+  <div class="wrap">
+    <span class="eyebrow r">Resources / Comparison</span>
+    <h1 class="page-h1 r">Tableau vs Power BI<br>vs <span class="a">Spotfire.</span></h1>
+    <p class="page-deck r">An honest decision guide across cost, scale, governance, and skills — written by a team that delivers production work on all three platforms, so we have no tool to sell you.</p>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — CITABLE ANSWER ══════════ -->
+<section class="citable-answer">
+  <div class="wrap">
+    <p class="r"><b>Power BI, Tableau, and TIBCO Spotfire are the three leading enterprise BI platforms, and the right choice depends on context, not a universal winner.</b> Power BI usually wins on cost and Microsoft-stack integration; Tableau wins on visual exploration and analyst experience; Spotfire wins on heavy statistical and scientific analytics in regulated industries like pharma and energy. For most organizations the deciding factors are existing licensing, the team's skills, data scale, and governance requirements — not raw feature counts. The honest answer is that all three can build excellent dashboards; the cost of choosing "wrong" is usually migration effort and lost institutional knowledge, not capability.</p>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — BODY ══════════ -->
+<section class="page-section">
+  <div class="wrap article-prose r">
+    <h2>The short version</h2>
+    <p>If your organization already runs Microsoft 365 and Azure, <b>Power BI</b> is the default — the licensing is bundled or cheap, and it plugs into everything you already own. If your priority is analysts exploring data visually and building beautiful, interactive dashboards, <b>Tableau</b> is still the experience to beat. If you're in life sciences, energy, or manufacturing and need heavy statistical analysis, predictive models, and point-and-click data science, <b>TIBCO Spotfire</b> is built for exactly that.</p>
+
+    <h2>How they compare</h2>
+    <table>
+      <thead>
+        <tr><th>Factor</th><th>Power BI</th><th>Tableau</th><th>TIBCO Spotfire</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Best for</td><td>Microsoft-stack orgs, cost-sensitive rollouts</td><td>Visual exploration, analyst experience</td><td>Statistical &amp; scientific analytics, regulated industries</td></tr>
+        <tr><td>Licensing cost</td><td>Lowest (often bundled with M365)</td><td>Higher per-seat</td><td>Highest, enterprise-negotiated</td></tr>
+        <tr><td>Learning curve</td><td>Gentle for Excel users; DAX is the hard part</td><td>Moderate; intuitive for visuals</td><td>Steeper; rewards power users</td></tr>
+        <tr><td>Data modeling</td><td>Strong (semantic models, DAX)</td><td>Good (extracts, relationships)</td><td>Strong (in-memory, data functions)</td></tr>
+        <tr><td>Statistical / data science</td><td>Basic + Python/R visuals</td><td>Basic + external integration</td><td>Native (TERR, predictive modeling)</td></tr>
+        <tr><td>Governance &amp; security</td><td>Mature (RLS/OLS, Purview)</td><td>Mature (Server/Cloud permissions)</td><td>Mature (Library, IronPython control)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Cost: Power BI almost always wins</h2>
+    <p>Power BI Pro is inexpensive per user and frequently included in Microsoft 365 E5, which makes it the lowest total cost for most organizations. Tableau is priced per seat at a premium, and Spotfire is an enterprise-negotiated contract that tends to be the most expensive of the three. But sticker price isn't the whole story: the real cost is people. A tool your team already knows is cheaper than a cheaper tool you have to retrain everyone on.</p>
+
+    <h2>Scale and performance</h2>
+    <p>All three scale to enterprise data volumes, but they get there differently. Power BI uses semantic models and, on Premium/Fabric, Direct Lake for large datasets. Tableau leans on its Hyper in-memory engine and extract strategy. Spotfire's in-memory analytical engine is built for large, columnar scientific datasets. Performance problems are almost always a <b>data-modeling</b> issue, not a tool limitation — a badly modeled dataset will be slow in all three.</p>
+
+    <h2>Governance and regulated industries</h2>
+    <p>If you operate under GDPR, HIPAA, or SOC 2, governance maturity matters more than chart types. Each platform has robust row-level security and permissions, but Spotfire's lineage and scripting control make it a long-standing favorite in pharma and energy, where every figure must be defensible to an auditor. Whatever you pick, the governance work — definitions, lineage, access control — lives in your <a href="{{HOME}}services/data-governance-technical-ba/">data governance</a> practice, not the tool.</p>
+
+    <h2>So which should you choose?</h2>
+    <ul>
+      <li><b>Choose Power BI</b> if you're a Microsoft shop, cost matters, and most users come from Excel.</li>
+      <li><b>Choose Tableau</b> if visual exploration and analyst self-service are the priority and budget allows.</li>
+      <li><b>Choose Spotfire</b> if you need heavy statistics, predictive analytics, or you're in a regulated scientific industry.</li>
+      <li><b>Already have one?</b> The cost of switching usually outweighs the benefit. Optimize what you have before you migrate.</li>
+    </ul>
+    <div class="key-takeaway"><b>Bottom line:</b> there is no universal best BI tool. Match the platform to your stack, skills, data scale, and governance needs — and remember that a well-modeled dataset matters more than the logo on the dashboard.</div>
+  </div>
+</section>
+
+<!-- ══════════ ARTICLE — CTA ══════════ -->
+<div class="wrap">
+  <div class="article-cta r">
+    <div class="article-cta-h">Running all three — or migrating between them?</div>
+    <p>Thinklens delivers a single senior offshore bench across Power BI, Tableau, and TIBCO Spotfire — dashboards, modernization, and migrations with parity testing.</p>
+    <a href="{{HOME}}services/power-bi-tableau-spotfire/" class="btn btn-outline" data-magnetic>See our BI delivery service
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M8 7 L17 7 L17 16"/></svg>
+    </a>
+  </div>
+</div>

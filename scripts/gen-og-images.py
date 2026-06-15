@@ -34,6 +34,12 @@ PAGES = {
     'services-data-quality-cleanup': (['Data Quality &', 'Cleanup.'], 'Messy data in. Clean answers out.'),
     'case-studies': (['Proof, not', 'promises.'], 'Aerospace · Biomedical · CPG — anonymized under NDA.'),
     'engagement-models': (['Engagement', 'Models.'], 'T&M · Fixed Scope · MSA Sub-Contracting · B2B Freelance.'),
+    'resources': (['Resources.'], 'Guides on ETL testing, BI tools, Technical BA & governance.'),
+    'resources-power-bi-vs-tableau-vs-spotfire': (['Tableau vs Power BI', 'vs Spotfire.'], 'An honest BI tool comparison — no universal winner.'),
+    'resources-what-is-etl-testing': (['What is', 'ETL testing?'], 'The four layers that prove data moved correctly.'),
+    'resources-etl-testing-tools-checklist': (['ETL testing tools', '& checklist.'], 'The tools teams use + a source-to-target QA checklist.'),
+    'resources-technical-business-analyst-role': (['Technical', 'Business Analyst.'], 'The role, the skills, where a data BA fits.'),
+    'resources-why-data-governance-matters': (['Why data', 'governance matters.'], 'What it controls and why regulated industries need it.'),
 }
 
 

@@ -236,6 +236,72 @@ const PAGES = [
     },
   },
   {
+    route: '/resources/',
+    metaFile: 'pages/resources/meta.html',
+    jsonldFile: 'pages/resources/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'resources/index',
+      'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.7', changefreq: 'monthly' },
+  },
+  {
+    route: '/resources/power-bi-vs-tableau-vs-spotfire/',
+    metaFile: 'pages/resources/power-bi-vs-tableau-vs-spotfire/meta.html',
+    jsonldFile: 'pages/resources/power-bi-vs-tableau-vs-spotfire/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'resources/power-bi-vs-tableau-vs-spotfire/body',
+      'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.7', changefreq: 'monthly' },
+  },
+  {
+    route: '/resources/what-is-etl-testing/',
+    metaFile: 'pages/resources/what-is-etl-testing/meta.html',
+    jsonldFile: 'pages/resources/what-is-etl-testing/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'resources/what-is-etl-testing/body',
+      'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.7', changefreq: 'monthly' },
+  },
+  {
+    route: '/resources/etl-testing-tools-checklist/',
+    metaFile: 'pages/resources/etl-testing-tools-checklist/meta.html',
+    jsonldFile: 'pages/resources/etl-testing-tools-checklist/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'resources/etl-testing-tools-checklist/body',
+      'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.7', changefreq: 'monthly' },
+  },
+  {
+    route: '/resources/technical-business-analyst-role/',
+    metaFile: 'pages/resources/technical-business-analyst-role/meta.html',
+    jsonldFile: 'pages/resources/technical-business-analyst-role/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'resources/technical-business-analyst-role/body',
+      'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.7', changefreq: 'monthly' },
+  },
+  {
+    route: '/resources/why-data-governance-matters/',
+    metaFile: 'pages/resources/why-data-governance-matters/meta.html',
+    jsonldFile: 'pages/resources/why-data-governance-matters/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'resources/why-data-governance-matters/body',
+      'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.7', changefreq: 'monthly' },
+  },
+  {
     route: '/engagement-models/',
     metaFile: 'pages/engagement-models/meta.html',
     jsonldFile: 'pages/engagement-models/jsonld.html',
