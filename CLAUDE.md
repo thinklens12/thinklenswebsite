@@ -27,17 +27,13 @@ hub: Services / Company / On-this-site). Don't revert these to homepage-anchor-o
 links — orphaned pages were a flagged SEO issue. Homepage service items also deep-link
 to service pages.
 
-## ⚠️ PRE-MERGE placeholders (verify before merging this branch to main)
-
-Two values are **placeholders awaiting real accounts** (per the 13 Jun SEO audit fixes):
-- **Public email** is `hello@thinklens.in` everywhere (JSON-LD, contact, footer, cta,
-  mobile menu, llms.txt). **That mailbox must exist** before deploy, or direct email
-  bounces. The Formspree form is unaffected (it posts to `xdapybyb`).
-- **Organization `sameAs` + footer LinkedIn** point to
-  `https://www.linkedin.com/company/thinklens-consulting/` — **a guessed slug.** Create
-  the LinkedIn *company* page and update this to its real URL (was a personal profile,
-  which the audit flagged). `FREE_MAIL` list in `main.js` still legitimately contains
-  `'gmail.com'` — leave it.
+**Future entity upgrades (not yet done — real accounts don't exist):** the audit
+flagged the public `thinklensconsulting@gmail.com` email and the personal-profile
+`sameAs`. Both are kept as-is for now because they're the real, working values. When a
+domain mailbox (`hello@thinklens.in`) and a LinkedIn *company* page exist, swap them in
+JSON-LD (`src/pages/home/jsonld.html`), `footer.html`, `cta.html`, `contact.html`,
+`mobile-menu.html`, and `llms.txt`. Leave the `FREE_MAIL` list in `main.js` alone
+(it legitimately lists `gmail.com` for lead tagging).
 
 ## ⚠️ Most important rule
 

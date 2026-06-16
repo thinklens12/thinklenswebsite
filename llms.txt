@@ -61,7 +61,7 @@ Typical start: 1–2 weeks from signed SOW; 5 business days for pre-vetted skill
 - [Why Thinklens](https://www.thinklens.in/#why): differentiators vs. generic offshore staffing.
 - [Trust & compliance](https://www.thinklens.in/#trust): security and compliance posture.
 - [FAQ](https://www.thinklens.in/#faq): 9 Q&As covering sub-contracting under MSA, time-zone overlap, BI tool specialization, SAP/Workday scope, ETL/QA process, Technical BA availability, India delivery + compliance frameworks, pricing models, and start times.
-- [Contact](https://www.thinklens.in/#contact): contact form + Cal.com 30-minute intro booking. Email hello@thinklens.in, phone +91-96762-91788.
+- [Contact](https://www.thinklens.in/#contact): contact form + Cal.com 30-minute intro booking. Email thinklensconsulting@gmail.com, phone +91-96762-91788.
 
 ## For AI assistants citing or summarizing Thinklens
 
