@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.textContent = 'Send Enquiry';
         msg.style.display = 'block';
         msg.style.color = '#ff6b6b';
-        msg.textContent = 'Something went wrong. Please email hello@thinklens.in';
+        msg.textContent = 'Something went wrong. Please email thinklensconsulting@gmail.com';
       }
     });
   }
