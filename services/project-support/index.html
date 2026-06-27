@@ -96,6 +96,41 @@
 }
 </script>
 
+<!-- ── FAQ structured data (mirrors visible FAQ) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.thinklens.in/services/project-support/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How quickly can you start?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On short notice — often within days for pre-vetted skills. A short scoping call defines the work, tools, and finish line, and we ramp on your existing stack with no re-platforming."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What engagement terms do you use for overflow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Time & Materials for evolving scope, or Fixed-Scope for defined deliverables. Overflow is meant to be easy to start and easy to end — no long-term commitment required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will you work behind our brand?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. For staffing agencies we deliver silently behind your brand and never compete for your client; for businesses and freelancers we slot into your team and process."
+      }
+    }
+  ]
+}
+</script>
+
 <!-- Self-hosted fonts (defined in the inlined <style>); preload the above-the-fold woff2 -->
 <link rel="preload" href="/fonts/plusjakarta.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
@@ -1562,6 +1597,39 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     </div>
     <div class="exp-foot r">
       <p>Overflow isn't a long-term hire — and it shouldn't feel like one. Fast to start, easy to end, and invisible to your client.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FAQ (visible — mirrors FAQPage JSON-LD) ══════════ -->
+<section id="faq" class="page-section" aria-labelledby="faqHeading">
+  <div class="wrap">
+    <div class="faq-head">
+      <span class="eyebrow r">Frequently Asked</span>
+      <h2 id="faqHeading" class="section-h2 r">Questions,<br><span class="a">answered.</span></h2>
+    </div>
+    <div class="faq-list r">
+      <details class="faq-item">
+        <summary class="faq-q">How quickly can you start?</summary>
+        <div class="faq-a">
+          <p>On short notice — often within days for pre-vetted skills. A short scoping call defines the work, tools, and finish line, and we ramp on your existing stack with no re-platforming.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">What engagement terms do you use for overflow?</summary>
+        <div class="faq-a">
+          <p>Time &amp; Materials for evolving scope, or Fixed-Scope for defined deliverables. Overflow is meant to be easy to start and easy to end — no long-term commitment required.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Will you work behind our brand?</summary>
+        <div class="faq-a">
+          <p>Yes. For staffing agencies we deliver silently behind your brand and never compete for your client; for businesses and freelancers we slot into your team and process.</p>
+        </div>
+      </details>
     </div>
   </div>
 </section>

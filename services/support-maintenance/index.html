@@ -96,6 +96,41 @@
 }
 </script>
 
+<!-- ── FAQ structured data (mirrors visible FAQ) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.thinklens.in/services/support-maintenance/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What do you support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mainly the data and BI stack — Power BI, Tableau, and Spotfire dashboards, ETL pipelines, and warehouses (including SAP and Workday feeds) — plus the adjacent IT systems that keep them fed and running."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does pricing work for support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Typically a retainer or block of hours with agreed response times, so urgent issues get urgent attention and routine requests are scheduled. We size it to your actual volume."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer SLAs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — clear severity levels and response windows agreed up front. We only commit to what we can reliably support, and we'll tell you when something is out of scope."
+      }
+    }
+  ]
+}
+</script>
+
 <!-- Self-hosted fonts (defined in the inlined <style>); preload the above-the-fold woff2 -->
 <link rel="preload" href="/fonts/plusjakarta.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
@@ -1562,6 +1597,39 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     </div>
     <div class="exp-foot r">
       <p>We support what we can support well, and we'll tell you when something is outside our scope. Honest boundaries beat an SLA you can't rely on.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ FAQ (visible — mirrors FAQPage JSON-LD) ══════════ -->
+<section id="faq" class="page-section" aria-labelledby="faqHeading">
+  <div class="wrap">
+    <div class="faq-head">
+      <span class="eyebrow r">Frequently Asked</span>
+      <h2 id="faqHeading" class="section-h2 r">Questions,<br><span class="a">answered.</span></h2>
+    </div>
+    <div class="faq-list r">
+      <details class="faq-item">
+        <summary class="faq-q">What do you support?</summary>
+        <div class="faq-a">
+          <p>Mainly the data and BI stack — Power BI, Tableau, and Spotfire dashboards, ETL pipelines, and warehouses (including SAP and Workday feeds) — plus the adjacent IT systems that keep them fed and running.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">How does pricing work for support?</summary>
+        <div class="faq-a">
+          <p>Typically a retainer or block of hours with agreed response times, so urgent issues get urgent attention and routine requests are scheduled. We size it to your actual volume.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Do you offer SLAs?</summary>
+        <div class="faq-a">
+          <p>Yes — clear severity levels and response windows agreed up front. We only commit to what we can reliably support, and we&#x27;ll tell you when something is out of scope.</p>
+        </div>
+      </details>
     </div>
   </div>
 </section>
