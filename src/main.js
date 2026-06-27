@@ -31,6 +31,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  /* ── Theme toggle (light/dark) ──
+     The initial theme is set before paint by the boot script in the <head>
+     (saved choice wins, else auto by local time). Here we just wire the
+     button to flip + persist — which then overrides the time-based default
+     on future visits. */
+  (function(){
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    btn.addEventListener('click', () => {
+      const next = (root.getAttribute('data-theme') === 'light') ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      if (meta) meta.setAttribute('content', next === 'light' ? '#f7f8fa' : '#0a0a0a');
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      if (typeof window.gtag === 'function') window.gtag('event', 'theme_toggle', { theme: next });
+    });
+  })();
+
   /* ── Nav scroll background ── */
   const nav = document.getElementById('nav');
   if (nav) window.addEventListener('scroll', () => {
