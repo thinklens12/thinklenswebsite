@@ -27,11 +27,11 @@ hub: Services / Company / On-this-site). Don't revert these to homepage-anchor-o
 links — orphaned pages were a flagged SEO issue. Homepage service items also deep-link
 to service pages.
 
-**Future entity upgrades (not yet done — real accounts don't exist):** the audit
-flagged the public `thinklensconsulting@gmail.com` email and the personal-profile
-`sameAs`. Both are kept as-is for now because they're the real, working values. When a
-domain mailbox (`hello@thinklens.in`) and a LinkedIn *company* page exist, swap them in
-JSON-LD (`src/pages/home/jsonld.html`), `footer.html`, `cta.html`, `contact.html`,
+**Entity signals:** `sameAs` + footer now point to the real LinkedIn *company* page
+(`https://www.linkedin.com/company/thinklens-consulting/`). One audit upgrade remains:
+the public email is still `thinklensconsulting@gmail.com` (kept because it's the real
+working inbox). If a domain mailbox (`hello@thinklens.in`) is set up, swap it in JSON-LD
+(`src/pages/home/jsonld.html`), `footer.html`, `cta.html`, `contact.html`,
 `mobile-menu.html`, and `llms.txt`. Leave the `FREE_MAIL` list in `main.js` alone
 (it legitimately lists `gmail.com` for lead tagging).
 
