@@ -947,7 +947,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   position:relative;z-index:1;
 }
 .foot-cols{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px;
 }
 .foot-col{display:flex;flex-direction:column;gap:12px}
 .foot-col-h{
@@ -1800,7 +1800,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const emailDomain = (document.getElementById('femail').value.split('@')[1] || '').toLowerCase();
       const leadType = FREE_MAIL.includes(emailDomain) ? 'free' : 'corporate';
       const enquiryType = document.getElementById('fenquiry').value;
-      const isMsa = /^(Master Service Agreement|Sub-Contracting)/.test(enquiryType);
+      const isMsa = /^(MSA|Master Service Agreement|Sub-Contracting)/.test(enquiryType);
       this.querySelector('[name="_subject"]').value = isMsa
         ? 'MSA / Partnership Enquiry — Thinklens Website'
         : 'New Enquiry — Thinklens Website';

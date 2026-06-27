@@ -1026,7 +1026,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   position:relative;z-index:1;
 }
 .foot-cols{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px;
 }
 .foot-col{display:flex;flex-direction:column;gap:12px}
 .foot-col-h{
@@ -1565,8 +1565,8 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   </div>
   <div class="cta-content r">
     <span class="eyebrow">Get Started</span>
-    <h2 class="cta-h2">Ready to leverage<br>your data for <span class="a">success?</span></h2>
-    <p class="cta-sub">Contact us for a personalized partnership strategy that expands your delivery capacity and drives measurable results.</p>
+    <h2 class="cta-h2">Need extra hands,<br><span class="a">on short notice?</span></h2>
+    <p class="cta-sub">Tell us your gap — long-term, short-term, or overflow — and we'll line up the right senior consultant, remotely, with fast ramp-up.</p>
     <div class="cta-actions">
       <a href="#contact" class="btn btn-white" data-magnetic data-ripple>
         Start the Conversation
@@ -1586,7 +1586,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
       <div>
         <span class="eyebrow r">Get In Touch</span>
         <h2 class="contact-h2 r">Ready to expand<br>your <span class="a">capacity?</span></h2>
-        <p class="contact-deck r">Whether it's an MSA, a scope discussion, or a trial engagement — we move fast.</p>
+        <p class="contact-deck r">An overflow crunch, a long-term mandate, ongoing support, or training — tell us what you need and we'll move fast.</p>
         <div class="cmeta-list r">
           <div class="cmeta"><div class="cmeta-l">Email</div><div class="cmeta-v">thinklensconsulting@gmail.com</div></div>
           <div class="cmeta"><div class="cmeta-l">Phone</div><div class="cmeta-v">+91 96762 91788</div></div>
@@ -1617,11 +1617,11 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
           <label for="fenquiry">Enquiry Type</label>
           <select id="fenquiry" name="enquiry_type" required>
             <option value="">Select type…</option>
-            <option>Master Service Agreement (MSA)</option>
-            <option>Sub-Contracting Partnership</option>
-            <option>Data Governance / BA Project</option>
-            <option>BI Modernization Project</option>
-            <option>Data Quality / Cleanup Sprint</option>
+            <option>Project Support / Overflow</option>
+            <option>Support &amp; Maintenance</option>
+            <option>Training &amp; Enablement</option>
+            <option>Data &amp; BI Project</option>
+            <option>MSA / Sub-Contracting (agencies)</option>
             <option>General Enquiry</option>
           </select>
         </div>
@@ -1654,12 +1654,18 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   <div class="foot-inner">
     <nav class="foot-cols" aria-label="Footer">
       <div class="foot-col">
-        <div class="foot-col-h">Services</div>
+        <div class="foot-col-h">Data &amp; BI</div>
         <a href="/services/etl-testing-report-qa/">ETL Testing &amp; Report QA</a>
         <a href="/services/power-bi-tableau-spotfire/">Power BI, Tableau &amp; Spotfire</a>
         <a href="/services/data-governance-technical-ba/">Data Governance &amp; Technical BA</a>
         <a href="/services/data-quality-cleanup/">Data Quality &amp; Cleanup</a>
         <a href="/services/sap-workday-data/">SAP &amp; Workday Data</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-col-h">Support &amp; Training</div>
+        <a href="/services/project-support/">Project Support &amp; Overflow</a>
+        <a href="/services/support-maintenance/">Support &amp; Maintenance</a>
+        <a href="/services/training/">Training &amp; Enablement</a>
       </div>
       <div class="foot-col">
         <div class="foot-col-h">Company</div>
@@ -2035,7 +2041,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const emailDomain = (document.getElementById('femail').value.split('@')[1] || '').toLowerCase();
       const leadType = FREE_MAIL.includes(emailDomain) ? 'free' : 'corporate';
       const enquiryType = document.getElementById('fenquiry').value;
-      const isMsa = /^(Master Service Agreement|Sub-Contracting)/.test(enquiryType);
+      const isMsa = /^(MSA|Master Service Agreement|Sub-Contracting)/.test(enquiryType);
       this.querySelector('[name="_subject"]').value = isMsa
         ? 'MSA / Partnership Enquiry — Thinklens Website'
         : 'New Enquiry — Thinklens Website';
