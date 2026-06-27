@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const emailDomain = (document.getElementById('femail').value.split('@')[1] || '').toLowerCase();
       const leadType = FREE_MAIL.includes(emailDomain) ? 'free' : 'corporate';
       const enquiryType = document.getElementById('fenquiry').value;
-      const isMsa = /^(Master Service Agreement|Sub-Contracting)/.test(enquiryType);
+      const isMsa = /^(MSA|Master Service Agreement|Sub-Contracting)/.test(enquiryType);
       this.querySelector('[name="_subject"]').value = isMsa
         ? 'MSA / Partnership Enquiry — Thinklens Website'
         : 'New Enquiry — Thinklens Website';

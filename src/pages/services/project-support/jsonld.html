@@ -1,0 +1,77 @@
+<!-- ── Structured data (JSON-LD) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://www.thinklens.in/services/project-support/#service",
+      "name": "Project Support & Overflow",
+      "url": "https://www.thinklens.in/services/project-support/",
+      "serviceType": "Project support and overflow IT resourcing",
+      "description": "Senior remote consultants to absorb delivery spikes, cover staffing gaps, and hit deadlines — project support and overflow capacity spun up on short notice, on Time & Materials or fixed-scope terms.",
+      "provider": {"@id": "https://www.thinklens.in/#organization"},
+      "areaServed": [
+        {"@type": "Country", "name": "United States"},
+        {"@type": "Country", "name": "United Kingdom"},
+        {"@type": "Country", "name": "Canada"},
+        {"@type": "Country", "name": "Australia"},
+        {"@type": "Country", "name": "Germany"},
+        {"@type": "Country", "name": "Netherlands"},
+        {"@type": "Country", "name": "Singapore"},
+        {"@type": "Country", "name": "United Arab Emirates"}
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.thinklens.in/#organization",
+      "name": "Thinklens Consulting LLP",
+      "url": "https://www.thinklens.in/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.thinklens.in/services/project-support/#breadcrumb",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.thinklens.in/"},
+        {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://www.thinklens.in/#services"},
+        {"@type": "ListItem", "position": 3, "name": "Project Support & Overflow", "item": "https://www.thinklens.in/services/project-support/"}
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- ── FAQ structured data (mirrors visible FAQ) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.thinklens.in/services/project-support/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How quickly can you start?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On short notice — often within days for pre-vetted skills. A short scoping call defines the work, tools, and finish line, and we ramp on your existing stack with no re-platforming."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What engagement terms do you use for overflow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Time & Materials for evolving scope, or Fixed-Scope for defined deliverables. Overflow is meant to be easy to start and easy to end — no long-term commitment required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will you work behind our brand?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. For staffing agencies we deliver silently behind your brand and never compete for your client; for businesses and freelancers we slot into your team and process."
+      }
+    }
+  ]
+}
+</script>

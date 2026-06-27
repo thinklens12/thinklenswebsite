@@ -1,11 +1,11 @@
 # Thinklens Consulting LLP
 
-> India-based (Hyderabad) offshore Data & BI consulting partner for global IT staffing agencies. We operate as a silent sub-contractor under your MSA — you keep the client relationship, branding, and invoicing; we deliver the technical work to Fortune 500 standards. Core services: data governance, ETL testing, BI report QA, data quality & cleanup, and SAP/Workday data. Engagement models: Time & Materials, Fixed-Scope, MSA Sub-Contracting, and B2B Freelance Consultant. Founded 2025. Site: https://www.thinklens.in/.
+> India-based (Hyderabad) remote IT consulting partner for staffing agencies, freelancers, HR partners, and businesses that need extra technical capacity. We supply senior consultants on long-term, short-term, and overflow mandates, on short notice. Core specialty: data & BI (data governance, ETL testing, BI report QA, data quality & cleanup, SAP/Workday data), plus project support, ongoing support & maintenance, and training. For staffing agencies we can operate as a silent sub-contractor under your MSA. Engagement models: Time & Materials, Fixed-Scope, MSA Sub-Contracting, and B2B Freelance Consultant. Founded 2025. Site: https://www.thinklens.in/.
 
 ## What we are (and aren't)
 
-- **We are:** an offshore delivery partner for staffing firms that already have client contracts and need senior Data, BI, and ETL consultants behind the scenes.
-- **We aren't:** a body-shop, a tool reseller, or a direct-to-end-client consultancy. We don't compete with our staffing-agency partners for the client relationship.
+- **We are:** a remote IT consulting partner that supplies senior Data, BI, and IT consultants on demand — for project support, overflow, ongoing support & maintenance, and training — to staffing agencies, freelancers, HR partners, and businesses.
+- **We aren't:** a faceless body-shop or a tool reseller. When we work behind a staffing agency we stay behind your brand and never compete for your client.
 - **Where we deliver:** India-based team, serving clients in US, UK, Canada, Australia, Germany, Netherlands, Singapore, UAE.
 - **Compliance posture:** aligns to client-side GDPR, HIPAA, SOC 2 controls; operates inside client VDI/VPN when required; NDA before kickoff; authorized under Indian IEC for cross-border services.
 
@@ -22,6 +22,9 @@ Sourced from the page's JSON-LD `knowsAbout` array and visible services chips �
 - Workday Data
 - SQL, data analysis, data cleanup, deduplication, schema remediation
 - B2B Freelance Consulting
+- IT consulting, project support & overflow resourcing
+- Ongoing support & maintenance (monitoring, fixes, enhancements, SLAs)
+- Training & enablement (Power BI, Tableau, Spotfire, SQL, ETL testing, data governance)
 
 ## Engagement models
 
@@ -41,6 +44,9 @@ Typical start: 1–2 weeks from signed SOW; 5 business days for pre-vetted skill
 - [/services/power-bi-tableau-spotfire/](https://www.thinklens.in/services/power-bi-tableau-spotfire/) — Enterprise BI delivery across Power BI, Tableau, and TIBCO Spotfire — semantic modeling, DAX/calculated-fields, performance tuning, dashboard development, report modernization, and embedded analytics.
 - [/services/data-governance-technical-ba/](https://www.thinklens.in/services/data-governance-technical-ba/) — Data governance & Technical BA: stewardship frameworks, master data management, policy/lineage/audit documentation, quality KPIs, and Technical Business Analysts who do source-system analysis, data-model design, and SQL/BI prototyping.
 - [/services/data-quality-cleanup/](https://www.thinklens.in/services/data-quality-cleanup/) — Data quality, analysis & cleanup: data audits and profiling, deduplication with survivorship rules, schema remediation, standardization, SQL-heavy analysis, and migration-ready dataset preparation.
+- [/services/project-support/](https://www.thinklens.in/services/project-support/) — Project support & overflow: senior remote consultants to absorb delivery spikes, cover unfilled contracts and staffing gaps, and hit deadlines on short notice (T&M or fixed-scope).
+- [/services/support-maintenance/](https://www.thinklens.in/services/support-maintenance/) — Ongoing support & maintenance: remote run-the-lights support for data, BI, and IT systems — refresh/pipeline monitoring, bug fixes, enhancements, and SLAs.
+- [/services/training/](https://www.thinklens.in/services/training/) — Training & enablement: hands-on remote training on Power BI, Tableau, Spotfire, SQL, ETL testing, and data governance, as a workshop, bootcamp, or ongoing enablement.
 - [/case-studies/](https://www.thinklens.in/case-studies/) — Three anonymized case studies (Aerospace master-data governance, Biomedical report modernization to clinical standards, CPG multi-region ETL consolidation). Client names withheld under NDA by design; references available in direct conversation.
 - [/engagement-models/](https://www.thinklens.in/engagement-models/) — The four engagement shapes Thinklens supports: T&M, Fixed-Scope, MSA Sub-Contracting (the primary shape), and B2B Freelance Consultant. Also documents the kickoff sequence (discovery → CV/scope → SOW + NDA).
 

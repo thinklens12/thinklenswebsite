@@ -1,0 +1,77 @@
+<!-- ── Structured data (JSON-LD) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://www.thinklens.in/services/training/#service",
+      "name": "Training & Enablement",
+      "url": "https://www.thinklens.in/services/training/",
+      "serviceType": "Remote IT, data and BI training",
+      "description": "Hands-on remote training on Power BI, Tableau, TIBCO Spotfire, SQL, ETL testing, and data governance — practical upskilling for client and internal teams, delivered on short notice.",
+      "provider": {"@id": "https://www.thinklens.in/#organization"},
+      "areaServed": [
+        {"@type": "Country", "name": "United States"},
+        {"@type": "Country", "name": "United Kingdom"},
+        {"@type": "Country", "name": "Canada"},
+        {"@type": "Country", "name": "Australia"},
+        {"@type": "Country", "name": "Germany"},
+        {"@type": "Country", "name": "Netherlands"},
+        {"@type": "Country", "name": "Singapore"},
+        {"@type": "Country", "name": "United Arab Emirates"}
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.thinklens.in/#organization",
+      "name": "Thinklens Consulting LLP",
+      "url": "https://www.thinklens.in/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.thinklens.in/services/training/#breadcrumb",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.thinklens.in/"},
+        {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://www.thinklens.in/#services"},
+        {"@type": "ListItem", "position": 3, "name": "Training & Enablement", "item": "https://www.thinklens.in/services/training/"}
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- ── FAQ structured data (mirrors visible FAQ) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.thinklens.in/services/training/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What can you train our team on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Power BI, Tableau, and TIBCO Spotfire; SQL and data fundamentals; ETL testing and report QA; and data governance and the Technical BA role — pitched at your team's current level."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is training delivered?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Remotely — as a focused half- or full-day workshop, a multi-day bootcamp, or ongoing enablement with office hours — built around your own data and use cases wherever possible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who teaches the sessions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Consultants who deliver the same work in production, so examples are real-world and questions get straight answers — not generic slides."
+      }
+    }
+  ]
+}
+</script>

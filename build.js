@@ -215,6 +215,39 @@ const PAGES = [
     },
   },
   {
+    route: '/services/project-support/',
+    metaFile: 'pages/services/project-support/meta.html',
+    jsonldFile: 'pages/services/project-support/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'services/project-support/body',
+      'common/trust', 'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.9', changefreq: 'monthly' },
+  },
+  {
+    route: '/services/support-maintenance/',
+    metaFile: 'pages/services/support-maintenance/meta.html',
+    jsonldFile: 'pages/services/support-maintenance/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'services/support-maintenance/body',
+      'common/trust', 'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.9', changefreq: 'monthly' },
+  },
+  {
+    route: '/services/training/',
+    metaFile: 'pages/services/training/meta.html',
+    jsonldFile: 'pages/services/training/jsonld.html',
+    partials: [
+      'shared/body-open', 'shared/nav', 'shared/mobile-menu', 'shared/page-top-vis',
+      'services/training/body',
+      'common/trust', 'common/cta', 'common/contact', 'shared/footer', 'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.9', changefreq: 'monthly' },
+  },
+  {
     route: '/case-studies/',
     metaFile: 'pages/case-studies/meta.html',
     jsonldFile: 'pages/case-studies/jsonld.html',
