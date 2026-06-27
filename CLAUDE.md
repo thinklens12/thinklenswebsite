@@ -1,8 +1,14 @@
 # CLAUDE.md — Thinklens website
 
 Marketing site for **Thinklens Consulting LLP** (`https://www.thinklens.in`).
-Multi-page static site (15 URLs) + a custom 404. India-based offshore Data & BI
-consulting partner for global IT staffing agencies. Live routes:
+Multi-page static site (18 URLs) + a custom 404. **Positioning:** a remote IT
+consulting partner for staffing agencies, freelancers, HR partners, and businesses
+needing long-term, short-term, or overflow capacity on short notice. **Data & BI is
+the proven core specialty** (governance, ETL testing, BI, SAP/Workday, data quality);
+project support, ongoing support, and training round it out. MSA / silent-sub-contractor
+is now one engagement model (for agencies), not the whole thesis — keep that copy where
+it describes the agency path; don't reintroduce it as the site-wide proposition.
+Don't claim general-IT capabilities the business doesn't actually deliver. Live routes:
 
 - `/` — homepage (positioning, services list, FAQ, contact)
 - `/about/` — who Thinklens is, how the practice was built
@@ -11,6 +17,9 @@ consulting partner for global IT staffing agencies. Live routes:
 - `/services/power-bi-tableau-spotfire/` — enterprise BI delivery on the three tools
 - `/services/data-governance-technical-ba/` — governance, MDM, Technical BA
 - `/services/data-quality-cleanup/` — audits, dedup, schema remediation, analysis
+- `/services/project-support/` — overflow / deadline / gap cover (on short notice)
+- `/services/support-maintenance/` — run-the-lights monitoring, fixes, enhancements, SLAs
+- `/services/training/` — remote hands-on BI/SQL/ETL/governance training
 - `/case-studies/` — 3 anonymized studies (Aerospace, Biomedical, CPG); outcomes
   are intentionally qualitative — add real metrics only with owner sign-off
 - `/engagement-models/` — T&M, Fixed-Scope, MSA Sub-Contracting, B2B Freelance
