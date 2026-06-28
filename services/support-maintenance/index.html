@@ -1559,6 +1559,32 @@ body::before{
 }
 html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
 @media (prefers-reduced-motion:reduce){body::before{display:none}}
+
+/* ── Shiny CTA: animated shimmer border sweeping the primary button ── */
+@property --ctaAng{syntax:'<angle>';inherits:false;initial-value:0deg}
+.btn-white::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;padding:1.6px;pointer-events:none;
+  background:conic-gradient(from var(--ctaAng),transparent 0deg,var(--accent) 55deg,transparent 135deg,transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  animation:ctaShimmer 4s linear infinite;opacity:.85;
+}
+.btn-white:hover::after{opacity:1}
+@keyframes ctaShimmer{to{--ctaAng:360deg}}
+@media (prefers-reduced-motion:reduce){.btn-white::after{animation:none;opacity:.45}}
+
+/* ── Text-roll (slot-machine) on homepage service item names ──
+   Letters are wrapped by JS (initTextRoll); on row hover the top row rolls up
+   while the cloned row rolls in from below, staggered per letter. */
+.svc-item-name .tr{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.14}
+.svc-item-name .tr-row{display:block;white-space:nowrap}
+.svc-item-name .tr-clone{position:absolute;left:0;top:100%}
+.svc-item-name .tr-letter{
+  display:inline-block;white-space:pre;
+  transition:transform .42s var(--ease);transition-delay:calc(var(--i,0)*16ms);
+}
+.svc-item:hover .svc-item-name .tr-letter{transform:translateY(-100%)}
+@media (prefers-reduced-motion:reduce){.svc-item-name .tr-letter{transition:none}}
 </style>
 </head>
 <body>
@@ -2052,6 +2078,37 @@ document.addEventListener('DOMContentLoaded', function() {
       if (typeof window.gtag === 'function') window.gtag('event', 'theme_toggle', { theme: next });
     });
   })();
+
+  /* ── Text-roll (slot-machine) on homepage service item names ──
+     Wraps each letter in a span (+ a cloned row beneath); CSS handles the
+     staggered roll on hover. Desktop/hover only — mobile keeps plain text. */
+  if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+    document.querySelectorAll('.svc-item-name').forEach((el) => {
+      if (el.dataset.tr) return;
+      el.dataset.tr = '1';
+      const text = el.textContent;
+      const makeRow = (cloneClass) => {
+        const row = document.createElement('span');
+        row.className = 'tr-row' + (cloneClass ? ' ' + cloneClass : '');
+        row.setAttribute('aria-hidden', 'true');
+        Array.from(text).forEach((ch, i) => {
+          const s = document.createElement('span');
+          s.className = 'tr-letter';
+          s.style.setProperty('--i', i);
+          s.textContent = ch === ' ' ? ' ' : ch;
+          row.appendChild(s);
+        });
+        return row;
+      };
+      const wrap = document.createElement('span');
+      wrap.className = 'tr';
+      wrap.setAttribute('aria-label', text);
+      wrap.appendChild(makeRow(''));
+      wrap.appendChild(makeRow('tr-clone'));
+      el.textContent = '';
+      el.appendChild(wrap);
+    });
+  }
 
   /* ── Nav scroll background ── */
   const nav = document.getElementById('nav');

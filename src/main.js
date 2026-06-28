@@ -50,6 +50,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   })();
 
+  /* ── Text-roll (slot-machine) on homepage service item names ──
+     Wraps each letter in a span (+ a cloned row beneath); CSS handles the
+     staggered roll on hover. Desktop/hover only — mobile keeps plain text. */
+  if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+    document.querySelectorAll('.svc-item-name').forEach((el) => {
+      if (el.dataset.tr) return;
+      el.dataset.tr = '1';
+      const text = el.textContent;
+      const makeRow = (cloneClass) => {
+        const row = document.createElement('span');
+        row.className = 'tr-row' + (cloneClass ? ' ' + cloneClass : '');
+        row.setAttribute('aria-hidden', 'true');
+        Array.from(text).forEach((ch, i) => {
+          const s = document.createElement('span');
+          s.className = 'tr-letter';
+          s.style.setProperty('--i', i);
+          s.textContent = ch === ' ' ? ' ' : ch;
+          row.appendChild(s);
+        });
+        return row;
+      };
+      const wrap = document.createElement('span');
+      wrap.className = 'tr';
+      wrap.setAttribute('aria-label', text);
+      wrap.appendChild(makeRow(''));
+      wrap.appendChild(makeRow('tr-clone'));
+      el.textContent = '';
+      el.appendChild(wrap);
+    });
+  }
+
   /* ── Nav scroll background ── */
   const nav = document.getElementById('nav');
   if (nav) window.addEventListener('scroll', () => {
