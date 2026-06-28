@@ -55,64 +55,71 @@
    `--bg-rgb` powers the fade-to-bg gradient masks; `--grid-line` and
    `--overlay-soft` carry the subtle surface tints. Theme via these, not
    hardcoded rgba — so both modes stay in sync. */
+/* ── DARK (default) ── depth comes from surfaces lighter than the bg + hairline
+   borders; shadows are subtle on near-black. */
 :root{
-  --bg:#0a0a0a;
-  --surface:#111113;
-  --card:#161618;
-  --card-hi:#1c1c20;
+  --bg:#0a0a0b;
+  --surface:#121214;
+  --card:#161719;
+  --card-hi:#1e1f22;
   --border:rgba(255,255,255,.08);
-  --border-hi:rgba(255,255,255,.16);
+  --border-hi:rgba(255,255,255,.15);
   --white:#fff;
   --on-accent:#fff;
-  --g100:#e8e8ed;
-  --g200:#c7c7cc;
-  --g300:#aeaeb2;
-  --g400:#8e8e93;
-  --g500:#636366;
-  --g600:#48484a;
-  --accent:#007AFF;        /* Apple iOS blue — the single source of truth */
-  --accent-deep:#006FE6;   /* slightly deeper blue, used only as a fill behind on-accent text (WCAG AA 4.5:1) */
-  --accent2:#1f86ff;       /* very slightly lighter for hover states only */
-  --accent3:#4da2ff;       /* lighter tint — reserved for glows/blobs, never solid text */
-  --accent-glow:rgba(0,122,255,.18);
-  --bg-rgb:10,10,10;
+  --g100:#ececf0;
+  --g200:#c7c7ce;
+  --g300:#a4a4ac;
+  --g400:#8a8a93;
+  --g500:#646470;
+  --g600:#45454d;
+  --accent:#007AFF;        /* Apple iOS blue — the single source of truth, both themes */
+  --accent-deep:#006FE6;   /* fill behind on-accent (white) text — WCAG AA 4.5:1 */
+  --accent2:#1f86ff;       /* hover states only */
+  --accent3:#4da2ff;       /* lighter tint — glows/blobs, never solid text */
+  --accent-glow:rgba(0,122,255,.20);
+  --bg-rgb:10,10,11;
   --grid-line:rgba(255,255,255,.025);
-  --overlay-soft:rgba(255,255,255,.02);
+  --overlay-soft:rgba(255,255,255,.022);
+  --card-shadow:0 4px 18px rgba(0,0,0,.38);
+  --card-shadow-hover:0 14px 38px rgba(0,0,0,.5);
   --ease:cubic-bezier(.25,.1,.25,1);
   --spring:cubic-bezier(.34,1.4,.64,1);
   --slow-spring:cubic-bezier(.16,1,.3,1);
 }
 
-/* ═══════════ LIGHT THEME ═══════════ */
+/* ── LIGHT (soft & airy, Apple/Linear) ── near-white canvas, white cards lifted
+   by soft shadows (borders recede to hairlines), faint blue glows, vivid accent. */
 html[data-theme="light"]{
-  --bg:#f7f8fa;
+  --bg:#fbfbfd;
   --surface:#ffffff;
   --card:#ffffff;
   --card-hi:#ffffff;
-  --border:rgba(0,0,0,.09);
-  --border-hi:rgba(0,0,0,.16);
-  --white:#0a0b0d;         /* strong foreground flips to near-black */
-  --on-accent:#fff;        /* text on blue stays white */
-  --g100:#1d1d1f;
-  --g200:#3a3a3c;
-  --g300:#48484a;
-  --g400:#6a6a70;          /* muted label — AA on the light bg */
-  --g500:#86868b;
-  --g600:#b0b0b6;
-  --accent:#0066d6;        /* a touch deeper for AA against white */
-  --accent-deep:#0a5fcf;
+  --border:rgba(17,24,39,.07);
+  --border-hi:rgba(17,24,39,.12);
+  --white:#101114;         /* strong foreground → near-black */
+  --on-accent:#fff;
+  --g100:#17181c;
+  --g200:#2c2d33;
+  --g300:#43444b;          /* body text — ~9:1 on the canvas */
+  --g400:#6a6b73;          /* muted label — AA */
+  --g500:#8a8b93;
+  --g600:#b6b7bd;
+  --accent:#007AFF;        /* vivid, as chosen */
+  --accent-deep:#0062d6;   /* button fill — AA white text */
   --accent2:#1f86ff;
-  --accent3:#5aa4ff;
-  --accent-glow:rgba(0,122,255,.14);
-  --bg-rgb:247,248,250;
-  --grid-line:rgba(0,0,0,.05);
-  --overlay-soft:rgba(0,0,0,.025);
+  --accent3:#79b4ff;
+  --accent-glow:rgba(0,122,255,.12);
+  --bg-rgb:251,251,253;
+  --grid-line:rgba(17,24,39,.04);
+  --overlay-soft:rgba(17,24,39,.022);
+  --card-shadow:0 1px 2px rgba(16,24,40,.04),0 6px 22px rgba(16,24,40,.06);
+  --card-shadow-hover:0 2px 6px rgba(16,24,40,.06),0 22px 48px rgba(16,24,40,.11);
   color-scheme:light;
 }
 :root{color-scheme:dark}
-html{transition:background-color .35s var(--ease)}
-body,#nav,.nav-cta,.btn,.card,.exp-card,.res-card,.tbadge,.faq-item,.svc-item,.fg input,.fg select,.fg textarea{
-  transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease);
+html{transition:background-color .4s var(--ease)}
+body,#nav,.btn,.exp-card,.res-card,.tbadge,.why-card,.sector-card,.article-cta,.faq-item,.svc-item,.fg input,.fg select,.fg textarea,.theme-toggle{
+  transition:background-color .4s var(--ease),border-color .4s var(--ease),color .4s var(--ease),box-shadow .4s var(--ease);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;font-size:16px;background:var(--bg)}
@@ -1396,6 +1403,27 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:none}
   html,body,#nav,.nav-cta,.btn,.card,.exp-card,.res-card,.tbadge,.faq-item,.svc-item,
   .fg input,.fg select,.fg textarea,.theme-toggle{transition:none}
 }
+
+/* ── Soft elevation (Apple/Linear): cards are shadow-led, esp. in light ── */
+.exp-card,.res-card,.tbadge,.why-card,.sector-card,.article-cta{box-shadow:var(--card-shadow)}
+.exp-card:hover,.res-card:hover,.tbadge:hover{box-shadow:var(--card-shadow-hover)}
+.faq-item{box-shadow:var(--card-shadow)}
+.faq-item[open]{box-shadow:var(--card-shadow-hover)}
+/* In light, lean on shadow not border for cards */
+html[data-theme="light"] .exp-card,
+html[data-theme="light"] .res-card,
+html[data-theme="light"] .tbadge,
+html[data-theme="light"] .faq-item{border-color:transparent}
+html[data-theme="light"] .fg input,
+html[data-theme="light"] .fg select,
+html[data-theme="light"] .fg textarea{box-shadow:0 1px 2px rgba(16,24,40,.04)}
+/* Light nav: soft shadow when scrolled separates it from the white canvas */
+html[data-theme="light"] #nav.scrolled{box-shadow:0 1px 0 var(--border),0 6px 24px rgba(16,24,40,.05)}
+/* Primary CTA button lift in light (it's the dark button on a light page) */
+html[data-theme="light"] .btn-white{box-shadow:var(--card-shadow)}
+html[data-theme="light"] .btn-white:hover{box-shadow:var(--card-shadow-hover)}
+/* Sticky CTA pill lift in light */
+html[data-theme="light"] .sticky-cta{box-shadow:0 10px 30px var(--accent-glow)}
 /* ═══════════ 404 PAGE ═══════════ */
 #notfound{
   min-height:100vh;position:relative;overflow:hidden;
