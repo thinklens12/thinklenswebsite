@@ -605,11 +605,13 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .eyebrow{
   font-size:.7rem;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--g400);margin-bottom:20px;display:inline-block;
-  position:relative;padding-left:28px;
+  text-transform:uppercase;color:var(--g400);margin-bottom:20px;display:inline-flex;align-items:center;
+  position:relative;padding-left:18px;
 }
+/* Editorial vertical accent bar (Wibify-style eyebrow marker) */
 .eyebrow::before{
-  content:'';position:absolute;left:0;top:50%;width:18px;height:1px;background:var(--accent);
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:13px;border-radius:2px;background:var(--accent);
 }
 .section-h2{
   font-family:'Plus Jakarta Sans',sans-serif;
@@ -1388,13 +1390,20 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   background:var(--card);
   border:1px solid var(--border);
   border-radius:16px;
-  padding:32px 28px;
+  padding:32px 28px;position:relative;overflow:hidden;
   transition:border-color .25s var(--ease),background .25s var(--ease),transform .25s var(--ease);
 }
+/* Top-edge accent line that brightens on hover (Wibify service-card-accent) */
+.exp-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--accent),transparent 65%);
+  opacity:.45;transition:opacity .25s var(--ease);
+}
+.exp-card:hover::before{opacity:1}
 .exp-card:hover{
   border-color:var(--border-hi);
   background:var(--card-hi);
-  transform:translateY(-2px);
+  transform:translateY(-3px);
 }
 .exp-card-eyebrow{
   font-size:.7rem;font-weight:700;letter-spacing:.18em;
@@ -1483,6 +1492,28 @@ html[data-theme="light"] .btn-white{box-shadow:var(--card-shadow)}
 html[data-theme="light"] .btn-white:hover{box-shadow:var(--card-shadow-hover)}
 /* Sticky CTA pill lift in light */
 html[data-theme="light"] .sticky-cta{box-shadow:0 10px 30px var(--accent-glow)}
+
+/* ═══════════ WIBIFY-INSPIRED POLISH (palette + type unchanged) ═══════════ */
+/* Hand-drawn wavy underline under emphasis (accent) words — #007AFF in both
+   themes since the accent is unified. Tiles horizontally so amplitude stays
+   constant regardless of word length. */
+.section-h2 .a,.page-h1 .a,.cta-h2 .a,.contact-h2 .a,.hero-h1 .accent,.trust-h2 .a{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='10' viewBox='0 0 28 10'%3E%3Cpath d='M1 7 Q7 1.5 14 7 T27 7' fill='none' stroke='%23007AFF' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:repeat-x;background-position:left bottom;background-size:.85em .34em;
+  padding-bottom:.20em;
+}
+@media (prefers-reduced-motion:no-preference){
+  .hero-h1 .accent{background-size:.85em .34em}
+}
+/* Film grain texture — analog depth over the whole page (Wibify .grain) */
+body::before{
+  content:'';position:fixed;inset:0;z-index:60;pointer-events:none;
+  opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:160px 160px;
+}
+html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
+@media (prefers-reduced-motion:reduce){body::before{display:none}}
 </style>
 </head>
 <body>
