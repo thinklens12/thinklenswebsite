@@ -1350,7 +1350,12 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   .nav-links{display:none}
   .nav-cta{display:none}
   .nav-toggle{display:block}
-  .hero-stats-inner{grid-template-columns:repeat(2,1fr)}
+  /* Hero flows naturally instead of being a fixed-height flex box — otherwise
+     the taller mobile content overflows behind the absolutely-pinned stat bar. */
+  #hero{min-height:auto;display:block;padding-top:108px}
+  .hero-content{padding-top:0;padding-bottom:44px;padding-left:24px;padding-right:24px}
+  .hero-stats{position:static;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .hero-stats-inner{grid-template-columns:repeat(2,1fr);padding:0 24px}
   .hstat{padding-left:20px}
   .about-split{grid-template-columns:1fr}
   .about-vis-col{min-height:340px;border-right:none;border-bottom:1px solid var(--border)}
