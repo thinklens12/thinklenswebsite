@@ -1728,17 +1728,6 @@ html[data-theme="light"] .btn-white:hover{box-shadow:var(--card-shadow-hover)}
 html[data-theme="light"] .sticky-cta{box-shadow:0 10px 30px var(--accent-glow)}
 
 /* ═══════════ WIBIFY-INSPIRED POLISH (palette + type unchanged) ═══════════ */
-/* Hand-drawn wavy underline under emphasis (accent) words — #007AFF in both
-   themes since the accent is unified. Tiles horizontally so amplitude stays
-   constant regardless of word length. */
-.section-h2 .a,.page-h1 .a,.cta-h2 .a,.contact-h2 .a,.hero-h1 .accent,.trust-h2 .a{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='10' viewBox='0 0 28 10'%3E%3Cpath d='M1 7 Q7 1.5 14 7 T27 7' fill='none' stroke='%23007AFF' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:repeat-x;background-position:left bottom;background-size:.85em .34em;
-  padding-bottom:.20em;
-}
-@media (prefers-reduced-motion:no-preference){
-  .hero-h1 .accent{background-size:.85em .34em}
-}
 /* Film grain texture — analog depth over the whole page (Wibify .grain) */
 body::before{
   content:'';position:fixed;inset:0;z-index:60;pointer-events:none;
