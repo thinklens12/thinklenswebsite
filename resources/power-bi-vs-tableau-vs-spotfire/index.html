@@ -172,12 +172,12 @@
 /* ── LIGHT (soft & airy, Apple/Linear) ── near-white canvas, white cards lifted
    by soft shadows (borders recede to hairlines), faint blue glows, vivid accent. */
 html[data-theme="light"]{
-  --bg:#fbfbfd;
-  --surface:#ffffff;
-  --card:#ffffff;
+  --bg:#eceef2;            /* cool grey canvas — depth comes from white cards/bands lifting OFF it (mirrors how dark layers surfaces above near-black) */
+  --surface:#f5f6f9;       /* subtly elevated section band */
+  --card:#ffffff;          /* pure-white cards that visibly float on the grey */
   --card-hi:#ffffff;
-  --border:rgba(17,24,39,.07);
-  --border-hi:rgba(17,24,39,.12);
+  --border:rgba(17,24,39,.08);
+  --border-hi:rgba(17,24,39,.14);
   --white:#101114;         /* strong foreground → near-black */
   --on-accent:#fff;
   --g100:#17181c;
@@ -191,11 +191,11 @@ html[data-theme="light"]{
   --accent2:#1f86ff;
   --accent3:#79b4ff;
   --accent-glow:rgba(0,122,255,.12);
-  --bg-rgb:251,251,253;
-  --grid-line:rgba(17,24,39,.04);
-  --overlay-soft:rgba(17,24,39,.022);
-  --card-shadow:0 1px 2px rgba(16,24,40,.04),0 6px 22px rgba(16,24,40,.06);
-  --card-shadow-hover:0 2px 6px rgba(16,24,40,.06),0 22px 48px rgba(16,24,40,.11);
+  --bg-rgb:236,238,242;
+  --grid-line:rgba(17,24,39,.045);
+  --overlay-soft:rgba(17,24,39,.03);
+  --card-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.08);
+  --card-shadow-hover:0 3px 8px rgba(16,24,40,.08),0 24px 50px rgba(16,24,40,.14);
   color-scheme:light;
 }
 :root{color-scheme:dark}
