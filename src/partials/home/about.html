@@ -16,9 +16,9 @@
           <circle class="ring r3" cx="240" cy="240" r="120" stroke-dasharray="4 4"/>
         </g>
         <!-- Static guide rings -->
-        <circle cx="240" cy="240" r="220" fill="none" stroke="rgba(255,255,255,.04)"/>
-        <circle cx="240" cy="240" r="170" fill="none" stroke="rgba(255,255,255,.04)"/>
-        <circle cx="240" cy="240" r="120" fill="none" stroke="rgba(255,255,255,.04)"/>
+        <circle class="guide-ring" cx="240" cy="240" r="220" fill="none"/>
+        <circle class="guide-ring" cx="240" cy="240" r="170" fill="none"/>
+        <circle class="guide-ring" cx="240" cy="240" r="120" fill="none"/>
         <!-- Orbiting dots -->
         <g class="orbit-dot o1"><circle class="node" cx="240" cy="20" r="6"/></g>
         <g class="orbit-dot o2"><circle class="node--white" cx="410" cy="240" r="5"/></g>
@@ -29,7 +29,7 @@
         <circle class="node" cx="120" cy="360" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.8s" repeatCount="indefinite" begin="1.4s"/></circle>
         <circle class="node" cx="360" cy="360" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.2s" repeatCount="indefinite" begin="2.1s"/></circle>
         <!-- Connecting lines -->
-        <g stroke="rgba(0,122,255,.3)" stroke-width="1" fill="none">
+        <g class="vec-line">
           <line x1="120" y1="120" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite"/></line>
           <line x1="360" y1="120" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="1s"/></line>
           <line x1="120" y1="360" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="2s"/></line>

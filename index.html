@@ -816,6 +816,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* Animated rotating ring composition */
 .about-vis-svg{width:90%;max-width:480px;height:auto;overflow:visible}
 .about-vis-svg .ring{fill:none;stroke:rgba(255,255,255,.08);stroke-width:1}
+.about-vis-svg .guide-ring{stroke:var(--border);stroke-width:1}
 .about-vis-svg .ring.r1{animation:rotateCW 40s linear infinite;transform-origin:center}
 .about-vis-svg .ring.r2{animation:rotateCCW 50s linear infinite;transform-origin:center}
 .about-vis-svg .ring.r3{animation:rotateCW 60s linear infinite;transform-origin:center}
@@ -1595,6 +1596,29 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 @media(prefers-reduced-motion:reduce){
   .page-vis{display:none}
 }
+
+/* ═══════════ VECTOR NETWORK (hero + page-top backdrops) ═══════════
+   Theme-driven so the constellation reads on BOTH canvases. Colors come
+   from --accent; light mode gets higher opacity + a soft node glow + a
+   touch more mesh so the near-white area never looks empty. The faint
+   filled triangles (.vec-mesh) carry the negative space gracefully. */
+.vec-line{stroke:var(--accent);stroke-width:1.25;fill:none}
+.vec-node{fill:var(--accent)}
+.vec-node--soft{fill:var(--accent3)}
+.vec-packet{fill:var(--accent);filter:drop-shadow(0 0 5px var(--accent-glow))}
+.vec-mesh{fill:var(--accent);opacity:.045}
+.hero-net{position:absolute;inset:0;opacity:.6}
+.page-net{opacity:1}
+/* Light: brighter strokes, glowing nodes, slightly stronger mesh fills. */
+html[data-theme="light"] .hero-net{opacity:.92}
+html[data-theme="light"] .page-vis{opacity:.85}
+/* Slightly more present blue glows in light so the corners aren't flat white. */
+html[data-theme="light"] .hero-blob{opacity:.7}
+html[data-theme="light"] .hero-blob.b1{background:radial-gradient(circle,rgba(0,122,255,.28),transparent 62%)}
+html[data-theme="light"] .hero-blob.b2{background:radial-gradient(circle,rgba(0,122,255,.16),transparent 66%)}
+html[data-theme="light"] .vec-line{stroke-width:1.5}
+html[data-theme="light"] .vec-node{filter:drop-shadow(0 0 6px var(--accent-glow))}
+html[data-theme="light"] .vec-mesh{opacity:.06}
 @media(max-width:780px){
   .page-section{padding:60px 0}
 }
@@ -1841,48 +1865,56 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
     <div class="bg-grid"></div>
     <div class="hero-blob b1"></div>
     <div class="hero-blob b2"></div>
-    <!-- Animated constellation SVG -->
-    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;opacity:.5">
-      <defs>
-        <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#007AFF" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#007AFF" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <g stroke="rgba(0,122,255,0.35)" stroke-width="1" fill="none">
-        <line x1="1100" y1="160" x2="1280" y2="240">
-          <animate attributeName="stroke-opacity" values=".2;.7;.2" dur="4s" repeatCount="indefinite"/>
-        </line>
-        <line x1="1280" y1="240" x2="1340" y2="420">
-          <animate attributeName="stroke-opacity" values=".2;.7;.2" dur="5s" repeatCount="indefinite" begin=".5s"/>
-        </line>
-        <line x1="1100" y1="160" x2="1200" y2="380">
-          <animate attributeName="stroke-opacity" values=".2;.6;.2" dur="6s" repeatCount="indefinite" begin="1s"/>
-        </line>
-        <line x1="1200" y1="380" x2="1340" y2="420">
-          <animate attributeName="stroke-opacity" values=".2;.6;.2" dur="4.5s" repeatCount="indefinite" begin="1.5s"/>
-        </line>
-        <line x1="1200" y1="380" x2="1080" y2="560">
-          <animate attributeName="stroke-opacity" values=".2;.5;.2" dur="5.5s" repeatCount="indefinite" begin="2s"/>
-        </line>
-        <line x1="1080" y1="560" x2="1260" y2="640">
-          <animate attributeName="stroke-opacity" values=".2;.6;.2" dur="4s" repeatCount="indefinite" begin="2.5s"/>
-        </line>
-        <line x1="1340" y1="420" x2="1260" y2="640">
-          <animate attributeName="stroke-opacity" values=".2;.5;.2" dur="6s" repeatCount="indefinite" begin="3s"/>
-        </line>
+    <!-- Animated data-mesh — theme-driven (.vec-* classes); spans wide so neither
+         canvas reads empty. Faint triangles carry the negative space. -->
+    <svg class="hero-net" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <!-- soft mesh surfaces -->
+      <g>
+        <polygon class="vec-mesh" points="1100,160 1280,240 1200,380">
+          <animate attributeName="opacity" values=".02;.07;.02" dur="9s" repeatCount="indefinite"/>
+        </polygon>
+        <polygon class="vec-mesh" points="1200,380 1340,420 1260,640">
+          <animate attributeName="opacity" values=".02;.06;.02" dur="11s" repeatCount="indefinite" begin="2s"/>
+        </polygon>
+        <polygon class="vec-mesh" points="820,520 980,460 900,300">
+          <animate attributeName="opacity" values=".015;.05;.015" dur="10s" repeatCount="indefinite" begin="1s"/>
+        </polygon>
       </g>
-      <g fill="#007AFF">
+      <!-- connecting lines -->
+      <g class="vec-line">
+        <line x1="1100" y1="160" x2="1280" y2="240"><animate attributeName="stroke-opacity" values=".25;.75;.25" dur="4s" repeatCount="indefinite"/></line>
+        <line x1="1280" y1="240" x2="1340" y2="420"><animate attributeName="stroke-opacity" values=".25;.75;.25" dur="5s" repeatCount="indefinite" begin=".5s"/></line>
+        <line x1="1100" y1="160" x2="1200" y2="380"><animate attributeName="stroke-opacity" values=".2;.65;.2" dur="6s" repeatCount="indefinite" begin="1s"/></line>
+        <line x1="1200" y1="380" x2="1340" y2="420"><animate attributeName="stroke-opacity" values=".2;.65;.2" dur="4.5s" repeatCount="indefinite" begin="1.5s"/></line>
+        <line x1="1200" y1="380" x2="1080" y2="560"><animate attributeName="stroke-opacity" values=".2;.6;.2" dur="5.5s" repeatCount="indefinite" begin="2s"/></line>
+        <line x1="1080" y1="560" x2="1260" y2="640"><animate attributeName="stroke-opacity" values=".2;.65;.2" dur="4s" repeatCount="indefinite" begin="2.5s"/></line>
+        <line x1="1340" y1="420" x2="1260" y2="640"><animate attributeName="stroke-opacity" values=".2;.6;.2" dur="6s" repeatCount="indefinite" begin="3s"/></line>
+        <!-- bridge toward the center-left so the mesh doesn't sit only top-right -->
+        <line x1="1080" y1="560" x2="980" y2="460"><animate attributeName="stroke-opacity" values=".15;.55;.15" dur="5s" repeatCount="indefinite" begin="1.2s"/></line>
+        <line x1="980" y1="460" x2="900" y2="300"><animate attributeName="stroke-opacity" values=".15;.5;.15" dur="6.5s" repeatCount="indefinite" begin="2.2s"/></line>
+        <line x1="980" y1="460" x2="820" y2="520"><animate attributeName="stroke-opacity" values=".12;.45;.12" dur="5.5s" repeatCount="indefinite" begin="3.2s"/></line>
+        <line x1="900" y1="300" x2="1100" y2="160"><animate attributeName="stroke-opacity" values=".12;.45;.12" dur="7s" repeatCount="indefinite" begin="1.8s"/></line>
+      </g>
+      <!-- nodes -->
+      <g class="vec-node">
         <circle cx="1100" cy="160" r="4"><animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/></circle>
         <circle cx="1280" cy="240" r="5"><animate attributeName="r" values="4;6;4" dur="3.5s" repeatCount="indefinite" begin=".5s"/></circle>
         <circle cx="1340" cy="420" r="4"><animate attributeName="r" values="3;5;3" dur="3.2s" repeatCount="indefinite" begin="1s"/></circle>
         <circle cx="1200" cy="380" r="6"><animate attributeName="r" values="5;7;5" dur="4s" repeatCount="indefinite" begin="1.5s"/></circle>
         <circle cx="1080" cy="560" r="4"><animate attributeName="r" values="3;5;3" dur="3.6s" repeatCount="indefinite" begin="2s"/></circle>
         <circle cx="1260" cy="640" r="5"><animate attributeName="r" values="4;6;4" dur="3.4s" repeatCount="indefinite" begin="2.5s"/></circle>
+        <circle cx="900" cy="300" r="3.5"><animate attributeName="r" values="2.5;4.5;2.5" dur="3.8s" repeatCount="indefinite" begin="1.3s"/></circle>
+        <circle cx="980" cy="460" r="4"><animate attributeName="r" values="3;5;3" dur="4.2s" repeatCount="indefinite" begin="2.3s"/></circle>
       </g>
-      <!-- traveling packet along a polyline path -->
-      <circle r="3.5" fill="#007AFF">
+      <g class="vec-node--soft">
+        <circle cx="820" cy="520" r="3"><animate attributeName="r" values="2;3.5;2" dur="4.6s" repeatCount="indefinite" begin="3.3s"/></circle>
+      </g>
+      <!-- traveling packets -->
+      <circle class="vec-packet" r="3.5">
         <animateMotion dur="9s" repeatCount="indefinite" path="M1100,160 L1280,240 L1340,420 L1200,380 L1080,560 L1260,640 L1340,420 L1280,240 Z"/>
+      </circle>
+      <circle class="vec-packet" r="3">
+        <animateMotion dur="13s" repeatCount="indefinite" begin="2s" path="M900,300 L980,460 L1080,560 L1200,380 L900,300 Z"/>
       </circle>
     </svg>
   </div>
@@ -2000,9 +2032,9 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
           <circle class="ring r3" cx="240" cy="240" r="120" stroke-dasharray="4 4"/>
         </g>
         <!-- Static guide rings -->
-        <circle cx="240" cy="240" r="220" fill="none" stroke="rgba(255,255,255,.04)"/>
-        <circle cx="240" cy="240" r="170" fill="none" stroke="rgba(255,255,255,.04)"/>
-        <circle cx="240" cy="240" r="120" fill="none" stroke="rgba(255,255,255,.04)"/>
+        <circle class="guide-ring" cx="240" cy="240" r="220" fill="none"/>
+        <circle class="guide-ring" cx="240" cy="240" r="170" fill="none"/>
+        <circle class="guide-ring" cx="240" cy="240" r="120" fill="none"/>
         <!-- Orbiting dots -->
         <g class="orbit-dot o1"><circle class="node" cx="240" cy="20" r="6"/></g>
         <g class="orbit-dot o2"><circle class="node--white" cx="410" cy="240" r="5"/></g>
@@ -2013,7 +2045,7 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
         <circle class="node" cx="120" cy="360" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.8s" repeatCount="indefinite" begin="1.4s"/></circle>
         <circle class="node" cx="360" cy="360" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.2s" repeatCount="indefinite" begin="2.1s"/></circle>
         <!-- Connecting lines -->
-        <g stroke="rgba(0,122,255,.3)" stroke-width="1" fill="none">
+        <g class="vec-line">
           <line x1="120" y1="120" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite"/></line>
           <line x1="360" y1="120" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="1s"/></line>
           <line x1="120" y1="360" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="2s"/></line>
