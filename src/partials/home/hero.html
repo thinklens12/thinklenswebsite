@@ -4,58 +4,33 @@
     <div class="bg-grid"></div>
     <div class="hero-blob b1"></div>
     <div class="hero-blob b2"></div>
-    <!-- Animated data-mesh — theme-driven (.vec-* classes); spans wide so neither
-         canvas reads empty. Faint triangles carry the negative space. -->
-    <svg class="hero-net" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-      <!-- soft mesh surfaces -->
-      <g>
-        <polygon class="vec-mesh" points="1100,160 1280,240 1200,380">
-          <animate attributeName="opacity" values=".02;.07;.02" dur="9s" repeatCount="indefinite"/>
-        </polygon>
-        <polygon class="vec-mesh" points="1200,380 1340,420 1260,640">
-          <animate attributeName="opacity" values=".02;.06;.02" dur="11s" repeatCount="indefinite" begin="2s"/>
-        </polygon>
-        <polygon class="vec-mesh" points="820,520 980,460 900,300">
-          <animate attributeName="opacity" values=".015;.05;.015" dur="10s" repeatCount="indefinite" begin="1s"/>
-        </polygon>
-      </g>
-      <!-- connecting lines -->
-      <g class="vec-line">
-        <line x1="1100" y1="160" x2="1280" y2="240"><animate attributeName="stroke-opacity" values=".25;.75;.25" dur="4s" repeatCount="indefinite"/></line>
-        <line x1="1280" y1="240" x2="1340" y2="420"><animate attributeName="stroke-opacity" values=".25;.75;.25" dur="5s" repeatCount="indefinite" begin=".5s"/></line>
-        <line x1="1100" y1="160" x2="1200" y2="380"><animate attributeName="stroke-opacity" values=".2;.65;.2" dur="6s" repeatCount="indefinite" begin="1s"/></line>
-        <line x1="1200" y1="380" x2="1340" y2="420"><animate attributeName="stroke-opacity" values=".2;.65;.2" dur="4.5s" repeatCount="indefinite" begin="1.5s"/></line>
-        <line x1="1200" y1="380" x2="1080" y2="560"><animate attributeName="stroke-opacity" values=".2;.6;.2" dur="5.5s" repeatCount="indefinite" begin="2s"/></line>
-        <line x1="1080" y1="560" x2="1260" y2="640"><animate attributeName="stroke-opacity" values=".2;.65;.2" dur="4s" repeatCount="indefinite" begin="2.5s"/></line>
-        <line x1="1340" y1="420" x2="1260" y2="640"><animate attributeName="stroke-opacity" values=".2;.6;.2" dur="6s" repeatCount="indefinite" begin="3s"/></line>
-        <!-- bridge toward the center-left so the mesh doesn't sit only top-right -->
-        <line x1="1080" y1="560" x2="980" y2="460"><animate attributeName="stroke-opacity" values=".15;.55;.15" dur="5s" repeatCount="indefinite" begin="1.2s"/></line>
-        <line x1="980" y1="460" x2="900" y2="300"><animate attributeName="stroke-opacity" values=".15;.5;.15" dur="6.5s" repeatCount="indefinite" begin="2.2s"/></line>
-        <line x1="980" y1="460" x2="820" y2="520"><animate attributeName="stroke-opacity" values=".12;.45;.12" dur="5.5s" repeatCount="indefinite" begin="3.2s"/></line>
-        <line x1="900" y1="300" x2="1100" y2="160"><animate attributeName="stroke-opacity" values=".12;.45;.12" dur="7s" repeatCount="indefinite" begin="1.8s"/></line>
-      </g>
-      <!-- nodes -->
-      <g class="vec-node">
-        <circle cx="1100" cy="160" r="4"><animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/></circle>
-        <circle cx="1280" cy="240" r="5"><animate attributeName="r" values="4;6;4" dur="3.5s" repeatCount="indefinite" begin=".5s"/></circle>
-        <circle cx="1340" cy="420" r="4"><animate attributeName="r" values="3;5;3" dur="3.2s" repeatCount="indefinite" begin="1s"/></circle>
-        <circle cx="1200" cy="380" r="6"><animate attributeName="r" values="5;7;5" dur="4s" repeatCount="indefinite" begin="1.5s"/></circle>
-        <circle cx="1080" cy="560" r="4"><animate attributeName="r" values="3;5;3" dur="3.6s" repeatCount="indefinite" begin="2s"/></circle>
-        <circle cx="1260" cy="640" r="5"><animate attributeName="r" values="4;6;4" dur="3.4s" repeatCount="indefinite" begin="2.5s"/></circle>
-        <circle cx="900" cy="300" r="3.5"><animate attributeName="r" values="2.5;4.5;2.5" dur="3.8s" repeatCount="indefinite" begin="1.3s"/></circle>
-        <circle cx="980" cy="460" r="4"><animate attributeName="r" values="3;5;3" dur="4.2s" repeatCount="indefinite" begin="2.3s"/></circle>
-      </g>
-      <g class="vec-node--soft">
-        <circle cx="820" cy="520" r="3"><animate attributeName="r" values="2;3.5;2" dur="4.6s" repeatCount="indefinite" begin="3.3s"/></circle>
-      </g>
-      <!-- traveling packets -->
-      <circle class="vec-packet" r="3.5">
-        <animateMotion dur="9s" repeatCount="indefinite" path="M1100,160 L1280,240 L1340,420 L1200,380 L1080,560 L1260,640 L1340,420 L1280,240 Z"/>
-      </circle>
-      <circle class="vec-packet" r="3">
-        <animateMotion dur="13s" repeatCount="indefinite" begin="2s" path="M900,300 L980,460 L1080,560 L1200,380 L900,300 Z"/>
-      </circle>
-    </svg>
+    <!-- Lottie globe (recolored to brand blue, self-hosted). Player is lazy-loaded
+         so only the homepage pulls it; honours prefers-reduced-motion. -->
+    <div class="hero-lottie" id="heroLottie" aria-hidden="true"></div>
+    <script>
+      (function(){
+        var el=document.getElementById('heroLottie');
+        if(!el) return;
+        var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        function init(){
+          if(!window.lottie) return;
+          var anim=window.lottie.loadAnimation({
+            container:el, renderer:'svg', loop:false, autoplay:false,
+            path:'/lottie/globe-blue.json',
+            rendererSettings:{preserveAspectRatio:'xMidYMid meet'}
+          });
+          anim.addEventListener('DOMLoaded',function(){
+            // This file draws the globe ON then erases it to a dot. So we draw it
+            // in once and hold the full globe — motion on load, never empty.
+            if(reduce){ anim.goToAndStop(132,true); return; }
+            anim.playSegments([0,132], true);
+          });
+        }
+        var s=document.createElement('script');
+        s.src='/vendor/lottie_light.min.js'; s.async=true; s.onload=init;
+        document.head.appendChild(s);
+      })();
+    </script>
   </div>
   <div class="hero-content">
     <p class="hero-overline"><span class="pulse-dot"></span>Remote IT Consulting · Support · Training</p>
