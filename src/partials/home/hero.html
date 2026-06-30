@@ -4,9 +4,25 @@
     <div class="bg-grid"></div>
     <div class="hero-blob b1"></div>
     <div class="hero-blob b2"></div>
-    <!-- Lottie globe (recolored to brand blue, self-hosted). Player is lazy-loaded
-         so only the homepage pulls it; honours prefers-reduced-motion. -->
-    <div class="hero-lottie" id="heroLottie" aria-hidden="true"></div>
+    <!-- Lottie line-globe (recolored brand blue, self-hosted, continuous loop).
+         Glowing dots overlaid on grid intersections; left edge fades out via CSS. -->
+    <div class="hero-lottie" id="heroLottie" aria-hidden="true">
+      <svg class="hero-globe-dots" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="dotGlow" x="-120%" y="-120%" width="340%" height="340%">
+            <feGaussianBlur stdDeviation="9" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <g class="hgd" filter="url(#dotGlow)">
+          <circle cx="500" cy="150" r="9"><animate attributeName="opacity" values=".35;1;.35" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="320" cy="360" r="8"><animate attributeName="opacity" values=".3;1;.3" dur="3.6s" begin=".6s" repeatCount="indefinite"/></circle>
+          <circle cx="710" cy="430" r="9"><animate attributeName="opacity" values=".35;1;.35" dur="3.2s" begin="1.1s" repeatCount="indefinite"/></circle>
+          <circle cx="430" cy="640" r="7"><animate attributeName="opacity" values=".3;1;.3" dur="4s" begin="1.7s" repeatCount="indefinite"/></circle>
+          <circle cx="650" cy="700" r="8"><animate attributeName="opacity" values=".3;1;.3" dur="3.4s" begin="2.3s" repeatCount="indefinite"/></circle>
+        </g>
+      </svg>
+    </div>
     <script>
       (function(){
         var el=document.getElementById('heroLottie');
@@ -15,16 +31,11 @@
         function init(){
           if(!window.lottie) return;
           var anim=window.lottie.loadAnimation({
-            container:el, renderer:'svg', loop:false, autoplay:false,
+            container:el, renderer:'svg', loop:true, autoplay:!reduce,
             path:'/lottie/globe-blue.json',
             rendererSettings:{preserveAspectRatio:'xMidYMid meet'}
           });
-          anim.addEventListener('DOMLoaded',function(){
-            // This file draws the globe ON then erases it to a dot. So we draw it
-            // in once and hold the full globe — motion on load, never empty.
-            if(reduce){ anim.goToAndStop(132,true); return; }
-            anim.playSegments([0,132], true);
-          });
+          if(reduce){ anim.addEventListener('DOMLoaded',function(){ anim.goToAndStop(0,true); }); }
         }
         var s=document.createElement('script');
         s.src='/vendor/lottie_light.min.js'; s.async=true; s.onload=init;

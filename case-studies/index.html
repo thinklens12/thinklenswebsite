@@ -366,15 +366,23 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* Animated SVG background layer */
 .hero-svg-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
 .hero-svg-bg svg{width:100%;height:100%;display:block}
-/* Lottie globe — sits right-of-centre behind the hero copy; vignette softens edges */
+/* Lottie line-globe — large, right-of-centre, with a gradient fade on its LEFT
+   edge so it melts into the hero copy; glowing dots overlay the grid. */
 .hero-lottie{
-  position:absolute;top:50%;right:-40px;transform:translateY(-50%);
-  width:min(56vw,720px);aspect-ratio:4/3;z-index:0;pointer-events:none;
+  position:absolute;top:50%;right:-80px;transform:translateY(-50%);
+  width:min(74vw,940px);aspect-ratio:1/1;z-index:0;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to right, transparent 2%, #000 40%);
+  mask-image:linear-gradient(to right, transparent 2%, #000 40%);
 }
 .hero-lottie svg{width:100%!important;height:100%!important;display:block}
+.hero-globe-dots{position:absolute;inset:0;z-index:2;pointer-events:none}
+.hgd circle{fill:#9fd0ff}                              /* bright on the dark globe */
+html[data-theme="light"] .hgd circle{fill:var(--accent)}  /* vivid on the light canvas */
 html[data-theme="light"] .hero-lottie{opacity:.95}
 @media(max-width:900px){
-  .hero-lottie{top:42%;right:50%;transform:translate(50%,-50%);width:118%;max-width:none;opacity:.5}
+  .hero-lottie{top:40%;right:50%;transform:translate(50%,-50%);width:140%;max-width:none;opacity:.45;
+    -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);
+    mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);}
 }
 .hero-blob{
   position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;
