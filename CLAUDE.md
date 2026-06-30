@@ -119,8 +119,18 @@ package.json           npm run build
 - **One brand blue: `--accent #007AFF`** (Apple blue). `--accent-deep #006FE6` is used
   ONLY as a fill behind white text (buttons), for WCAG AA contrast. Never reintroduce
   other blues (e.g. `#3395ff`, `#66b3ff`) on solid text.
-- **Dark-mode first.** Meets **WCAG 2.1 AA** text contrast — small/label text uses
-  `--g400`, not `--g500`/`--g600` (those fail at small sizes). Keep it that way.
+- **Dark-mode first, with a light theme.** Dark is `:root`; light is
+  `html[data-theme="light"]` (token overrides only). **Theme via the tokens, never
+  hardcoded rgba** — `--white` is the strong-foreground/inverted-surface token (flips to
+  near-black in light), `--on-accent` is the only always-white (text on the blue accent
+  fill), `--bg-rgb` powers the fade-to-bg gradient masks, `--grid-line`/`--overlay-soft`
+  carry the subtle surface tints. Both modes meet **WCAG 2.1 AA** — small/label text uses
+  `--g400` (not `--g500/600`). A pre-paint boot script in `head-base.html` + `404-head.html`
+  sets `data-theme` with **no FOUC**: a saved choice (`localStorage.theme`) wins, else
+  **auto by local time** (light 06:00–18:00, dark otherwise); no-JS default is dark. The
+  `#themeToggle` button (in `nav.html`, always visible incl. mobile) flips + persists +
+  updates `theme-color`. Logo text/ring are themed in CSS (`.nav-logo svg`); the footer
+  logo stays muted grey. When adding UI, prefer existing tokens so it themes for free.
 - **Self-hosted fonts** in `/fonts/` (`inter.woff2`, `plusjakarta.woff2` — latin variable,
   SIL OFL). Declared via `@font-face` + `font-display:swap` in `styles.css`, preloaded in
   the heads. **No Google Fonts** — don't add the `<link>` back.

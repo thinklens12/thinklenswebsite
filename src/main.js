@@ -31,6 +31,56 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  /* ── Theme toggle (light/dark) ──
+     The initial theme is set before paint by the boot script in the <head>
+     (saved choice wins, else auto by local time). Here we just wire the
+     button to flip + persist — which then overrides the time-based default
+     on future visits. */
+  (function(){
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    btn.addEventListener('click', () => {
+      const next = (root.getAttribute('data-theme') === 'light') ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      if (meta) meta.setAttribute('content', next === 'light' ? '#f7f8fa' : '#0a0a0a');
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      if (typeof window.gtag === 'function') window.gtag('event', 'theme_toggle', { theme: next });
+    });
+  })();
+
+  /* ── Text-roll (slot-machine) on homepage service item names ──
+     Wraps each letter in a span (+ a cloned row beneath); CSS handles the
+     staggered roll on hover. Desktop/hover only — mobile keeps plain text. */
+  if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+    document.querySelectorAll('.svc-item-name').forEach((el) => {
+      if (el.dataset.tr) return;
+      el.dataset.tr = '1';
+      const text = el.textContent;
+      const makeRow = (cloneClass) => {
+        const row = document.createElement('span');
+        row.className = 'tr-row' + (cloneClass ? ' ' + cloneClass : '');
+        row.setAttribute('aria-hidden', 'true');
+        Array.from(text).forEach((ch, i) => {
+          const s = document.createElement('span');
+          s.className = 'tr-letter';
+          s.style.setProperty('--i', i);
+          s.textContent = ch === ' ' ? ' ' : ch;
+          row.appendChild(s);
+        });
+        return row;
+      };
+      const wrap = document.createElement('span');
+      wrap.className = 'tr';
+      wrap.setAttribute('aria-label', text);
+      wrap.appendChild(makeRow(''));
+      wrap.appendChild(makeRow('tr-clone'));
+      el.textContent = '';
+      el.appendChild(wrap);
+    });
+  }
+
   /* ── Nav scroll background ── */
   const nav = document.getElementById('nav');
   if (nav) window.addEventListener('scroll', () => {

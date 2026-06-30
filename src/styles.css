@@ -11,28 +11,78 @@
 }
 
 /* ═══════════ TOKENS ═══════════ */
+/* Dark is the default theme (:root). Light theme overrides live in the
+   html[data-theme="light"] block below. `--white` is the strong-foreground /
+   inverted-surface token: it flips to near-black in light mode. `--on-accent`
+   is the only "always white" token — text sitting on the blue accent fill.
+   `--bg-rgb` powers the fade-to-bg gradient masks; `--grid-line` and
+   `--overlay-soft` carry the subtle surface tints. Theme via these, not
+   hardcoded rgba — so both modes stay in sync. */
+/* ── DARK (default) ── depth comes from surfaces lighter than the bg + hairline
+   borders; shadows are subtle on near-black. */
 :root{
-  --bg:#0a0a0a;
-  --surface:#111113;
-  --card:#161618;
-  --card-hi:#1c1c20;
+  --bg:#0a0a0b;
+  --surface:#121214;
+  --card:#161719;
+  --card-hi:#1e1f22;
   --border:rgba(255,255,255,.08);
-  --border-hi:rgba(255,255,255,.16);
+  --border-hi:rgba(255,255,255,.15);
   --white:#fff;
-  --g100:#e8e8ed;
-  --g200:#c7c7cc;
-  --g300:#aeaeb2;
-  --g400:#8e8e93;
-  --g500:#636366;
-  --g600:#48484a;
-  --accent:#007AFF;        /* Apple iOS blue — the single source of truth */
-  --accent-deep:#006FE6;   /* slightly deeper blue, used only as a fill behind white text (WCAG AA 4.5:1) */
-  --accent2:#1f86ff;       /* very slightly lighter for hover states only */
-  --accent3:#4da2ff;       /* lighter tint — reserved for glows/blobs, never solid text */
-  --accent-glow:rgba(0,122,255,.18);
+  --on-accent:#fff;
+  --g100:#ececf0;
+  --g200:#c7c7ce;
+  --g300:#a4a4ac;
+  --g400:#8a8a93;
+  --g500:#646470;
+  --g600:#45454d;
+  --accent:#007AFF;        /* Apple iOS blue — the single source of truth, both themes */
+  --accent-deep:#006FE6;   /* fill behind on-accent (white) text — WCAG AA 4.5:1 */
+  --accent2:#1f86ff;       /* hover states only */
+  --accent3:#4da2ff;       /* lighter tint — glows/blobs, never solid text */
+  --accent-glow:rgba(0,122,255,.20);
+  --bg-rgb:10,10,11;
+  --grid-line:rgba(255,255,255,.025);
+  --overlay-soft:rgba(255,255,255,.022);
+  --card-shadow:0 4px 18px rgba(0,0,0,.38);
+  --card-shadow-hover:0 14px 38px rgba(0,0,0,.5);
   --ease:cubic-bezier(.25,.1,.25,1);
   --spring:cubic-bezier(.34,1.4,.64,1);
   --slow-spring:cubic-bezier(.16,1,.3,1);
+}
+
+/* ── LIGHT (soft & airy, Apple/Linear) ── near-white canvas, white cards lifted
+   by soft shadows (borders recede to hairlines), faint blue glows, vivid accent. */
+html[data-theme="light"]{
+  --bg:#eceef2;            /* cool grey canvas — depth comes from white cards/bands lifting OFF it (mirrors how dark layers surfaces above near-black) */
+  --surface:#f5f6f9;       /* subtly elevated section band */
+  --card:#ffffff;          /* pure-white cards that visibly float on the grey */
+  --card-hi:#ffffff;
+  --border:rgba(17,24,39,.08);
+  --border-hi:rgba(17,24,39,.14);
+  --white:#101114;         /* strong foreground → near-black */
+  --on-accent:#fff;
+  --g100:#17181c;
+  --g200:#2c2d33;
+  --g300:#43444b;          /* body text — ~9:1 on the canvas */
+  --g400:#6a6b73;          /* muted label — AA */
+  --g500:#8a8b93;
+  --g600:#b6b7bd;
+  --accent:#007AFF;        /* vivid, as chosen */
+  --accent-deep:#0062d6;   /* button fill — AA white text */
+  --accent2:#1f86ff;
+  --accent3:#79b4ff;
+  --accent-glow:rgba(0,122,255,.12);
+  --bg-rgb:236,238,242;
+  --grid-line:rgba(17,24,39,.045);
+  --overlay-soft:rgba(17,24,39,.03);
+  --card-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.08);
+  --card-shadow-hover:0 3px 8px rgba(16,24,40,.08),0 24px 50px rgba(16,24,40,.14);
+  color-scheme:light;
+}
+:root{color-scheme:dark}
+html{transition:background-color .4s var(--ease)}
+body,#nav,.btn,.exp-card,.res-card,.tbadge,.why-card,.sector-card,.article-cta,.faq-item,.svc-item,.fg input,.fg select,.fg textarea,.theme-toggle{
+  transition:background-color .4s var(--ease),border-color .4s var(--ease),color .4s var(--ease),box-shadow .4s var(--ease);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;font-size:16px;background:var(--bg)}
@@ -51,8 +101,8 @@ button{font-family:inherit}
 .bg-grid{
   position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:
-    linear-gradient(to right, rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.025) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size:60px 60px;
   mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);
   -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);
@@ -66,7 +116,7 @@ button{font-family:inherit}
   border-bottom:1px solid transparent;
 }
 #nav.scrolled{
-  background:rgba(10,10,10,.78);
+  background:rgba(var(--bg-rgb),.78);
   backdrop-filter:blur(20px) saturate(1.4);
   -webkit-backdrop-filter:blur(20px) saturate(1.4);
   border-color:var(--border);
@@ -98,7 +148,7 @@ button{font-family:inherit}
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-cta{
   position:relative;overflow:hidden;
-  font-size:.8rem;font-weight:600;color:var(--white);
+  font-size:.8rem;font-weight:600;color:var(--on-accent);
   background:var(--accent-deep);padding:10px 22px;border-radius:100px;
   transition:transform .25s var(--spring),box-shadow .3s;
 }
@@ -131,7 +181,7 @@ body.menu-open .nav-toggle span:nth-child(3){top:21px;transform:rotate(-45deg)}
 /* ── Mobile menu panel ── */
 #mobileMenu{
   position:fixed;inset:0;z-index:899;
-  background:rgba(10,10,10,.97);
+  background:rgba(var(--bg-rgb),.97);
   backdrop-filter:blur(22px) saturate(1.4);
   -webkit-backdrop-filter:blur(22px) saturate(1.4);
   display:flex;flex-direction:column;justify-content:center;
@@ -243,8 +293,8 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .hero-svg-bg::after{
   content:'';position:absolute;inset:0;
   background:
-    linear-gradient(to right, rgba(10,10,10,.85) 0%, rgba(10,10,10,.55) 55%, rgba(10,10,10,.3) 100%),
-    linear-gradient(to bottom, transparent 50%, rgba(10,10,10,.95) 100%);
+    linear-gradient(to right, rgba(var(--bg-rgb),.85) 0%, rgba(var(--bg-rgb),.55) 55%, rgba(var(--bg-rgb),.3) 100%),
+    linear-gradient(to bottom, transparent 50%, rgba(var(--bg-rgb),.95) 100%);
 }
 .hero-content{
   position:relative;z-index:2;
@@ -304,7 +354,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .btn-white:hover{background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
 .btn-outline{background:transparent;color:var(--g200);border:1px solid var(--border)}
 .btn-outline:hover{border-color:var(--g400);color:var(--white);transform:translateY(-2px)}
-.btn-accent{background:var(--accent-deep);color:var(--white)}
+.btn-accent{background:var(--accent-deep);color:var(--on-accent)}
 .btn-accent:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 12px 28px var(--accent-glow)}
 
 /* Ripple effect (added via JS) */
@@ -320,7 +370,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .hero-stats{
   position:absolute;bottom:0;left:0;right:0;z-index:2;
   border-top:1px solid var(--border);
-  background:rgba(10,10,10,.55);
+  background:rgba(var(--bg-rgb),.55);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
 }
 .hero-stats-inner{
@@ -334,7 +384,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   transition:background .25s;
 }
 .hstat:last-child{border-right:none}
-.hstat:hover{background:rgba(255,255,255,.02)}
+.hstat:hover{background:var(--overlay-soft)}
 .hstat::before{
   content:'';position:absolute;left:0;top:50%;transform:translateY(-50%) scaleY(0);
   width:2px;height:60%;background:var(--accent);
@@ -436,6 +486,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* Animated rotating ring composition */
 .about-vis-svg{width:90%;max-width:480px;height:auto;overflow:visible}
 .about-vis-svg .ring{fill:none;stroke:rgba(255,255,255,.08);stroke-width:1}
+.about-vis-svg .guide-ring{stroke:var(--border);stroke-width:1}
 .about-vis-svg .ring.r1{animation:rotateCW 40s linear infinite;transform-origin:center}
 .about-vis-svg .ring.r2{animation:rotateCCW 50s linear infinite;transform-origin:center}
 .about-vis-svg .ring.r3{animation:rotateCW 60s linear infinite;transform-origin:center}
@@ -459,11 +510,13 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .eyebrow{
   font-size:.7rem;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--g400);margin-bottom:20px;display:inline-block;
-  position:relative;padding-left:28px;
+  text-transform:uppercase;color:var(--g400);margin-bottom:20px;display:inline-flex;align-items:center;
+  position:relative;padding-left:18px;
 }
+/* Editorial vertical accent bar (Wibify-style eyebrow marker) */
 .eyebrow::before{
-  content:'';position:absolute;left:0;top:50%;width:18px;height:1px;background:var(--accent);
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:13px;border-radius:2px;background:var(--accent);
 }
 .section-h2{
   font-family:'Plus Jakarta Sans',sans-serif;
@@ -560,7 +613,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .svc-vis::after{
   content:'';position:absolute;inset:0;z-index:2;
-  background:linear-gradient(to right, rgba(10,10,10,0) 0%, rgba(10,10,10,.4) 35%, rgba(10,10,10,.97) 70%, var(--bg) 100%);
+  background:linear-gradient(to right, rgba(var(--bg-rgb),0) 0%, rgba(var(--bg-rgb),.4) 35%, rgba(var(--bg-rgb),.97) 70%, var(--bg) 100%);
 }
 /* Animated flow lines SVG */
 .svc-flow{
@@ -633,7 +686,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .svc-item-tags{display:flex;gap:6px;flex-wrap:wrap}
 .stag{
   font-size:.65rem;font-weight:600;color:var(--g400);
-  background:rgba(255,255,255,.05);padding:5px 11px;border-radius:100px;
+  background:var(--overlay-soft);padding:5px 11px;border-radius:100px;
   border:1px solid var(--border);transition:all .25s;
 }
 .svc-item:hover .stag{border-color:var(--accent);color:var(--accent);background:rgba(0,122,255,.08)}
@@ -784,15 +837,15 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .cta-bg .grid-pulse{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(to right,rgba(255,255,255,.04) 1px,transparent 1px),
-    linear-gradient(to bottom,rgba(255,255,255,.04) 1px,transparent 1px);
+    linear-gradient(to right,var(--grid-line) 1px,transparent 1px),
+    linear-gradient(to bottom,var(--grid-line) 1px,transparent 1px);
   background-size:48px 48px;
   mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 20%,transparent 70%);
   -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 20%,transparent 70%);
 }
 .cta-bg::after{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(10,10,10,.05) 0%,rgba(10,10,10,.85) 100%);
+  background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(var(--bg-rgb),.05) 0%,rgba(var(--bg-rgb),.85) 100%);
 }
 .cta-content{
   position:relative;z-index:2;text-align:center;
@@ -896,7 +949,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .fsub:hover:not(:disabled){background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
 .fsub:active{transform:translateY(0)}
-.fsub.ok{background:var(--accent-deep);color:var(--white)}
+.fsub.ok{background:var(--accent-deep);color:var(--on-accent)}
 .fsub:disabled{opacity:.6;cursor:wait}
 #formMsg{display:none;margin-top:10px;font-size:.82rem;text-align:center}
 
@@ -974,7 +1027,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   .about-text-col{padding:60px 24px}
   .sector-grid{grid-template-columns:1fr}
   #services .svc-content{width:100%;padding:60px 24px}
-  #services .svc-vis::after{background:linear-gradient(to bottom,rgba(10,10,10,.3),rgba(10,10,10,.95))}
+  #services .svc-vis::after{background:linear-gradient(to bottom,rgba(var(--bg-rgb),.3),rgba(var(--bg-rgb),.95))}
   .why-top{grid-template-columns:1fr;gap:24px}
   .why-cards{grid-template-columns:1fr}
   .trust-layout{grid-template-columns:1fr;gap:48px}
@@ -1031,7 +1084,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     width:8px;height:8px;background:var(--white);
   }
   body.cursor-active #cursor-ring{
-    width:28px;height:28px;border-color:rgba(255,255,255,.8);
+    width:28px;height:28px;border-color:var(--white);
   }
 }
 @media(hover:none),(max-width:768px){
@@ -1119,7 +1172,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 
 /* ═══════════ GENERIC SUB-PAGE SECTION (used by /services/* and /engagement-models/) ═══════════ */
 .page-section{padding:80px 0;position:relative}
-.page-section.alt{background:rgba(255,255,255,.015)}
+.page-section.alt{background:var(--overlay-soft)}
 
 /* ── Citable answer (AEO lead paragraph — first content under H1) ── */
 .citable-answer{padding:8px 0 56px;position:relative}
@@ -1213,6 +1266,29 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 @media(prefers-reduced-motion:reduce){
   .page-vis{display:none}
 }
+
+/* ═══════════ VECTOR NETWORK (hero + page-top backdrops) ═══════════
+   Theme-driven so the constellation reads on BOTH canvases. Colors come
+   from --accent; light mode gets higher opacity + a soft node glow + a
+   touch more mesh so the near-white area never looks empty. The faint
+   filled triangles (.vec-mesh) carry the negative space gracefully. */
+.vec-line{stroke:var(--accent);stroke-width:1.25;fill:none}
+.vec-node{fill:var(--accent)}
+.vec-node--soft{fill:var(--accent3)}
+.vec-packet{fill:var(--accent);filter:drop-shadow(0 0 5px var(--accent-glow))}
+.vec-mesh{fill:var(--accent);opacity:.045}
+.hero-net{position:absolute;inset:0;opacity:.6}
+.page-net{opacity:1}
+/* Light: brighter strokes, glowing nodes, slightly stronger mesh fills. */
+html[data-theme="light"] .hero-net{opacity:.92}
+html[data-theme="light"] .page-vis{opacity:.85}
+/* Slightly more present blue glows in light so the corners aren't flat white. */
+html[data-theme="light"] .hero-blob{opacity:.7}
+html[data-theme="light"] .hero-blob.b1{background:radial-gradient(circle,rgba(0,122,255,.28),transparent 62%)}
+html[data-theme="light"] .hero-blob.b2{background:radial-gradient(circle,rgba(0,122,255,.16),transparent 66%)}
+html[data-theme="light"] .vec-line{stroke-width:1.5}
+html[data-theme="light"] .vec-node{filter:drop-shadow(0 0 6px var(--accent-glow))}
+html[data-theme="light"] .vec-mesh{opacity:.06}
 @media(max-width:780px){
   .page-section{padding:60px 0}
 }
@@ -1229,7 +1305,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 
 /* ═══════════ ABOUT — EXPERTISE ═══════════ */
-#about-expertise{padding:80px 0;position:relative;background:rgba(255,255,255,.015)}
+#about-expertise{padding:80px 0;position:relative;background:var(--overlay-soft)}
 .exp-head{max-width:780px;margin:0 auto 56px;text-align:center}
 .exp-head .eyebrow{padding-left:0}
 .exp-head .eyebrow::before{display:none}
@@ -1242,13 +1318,20 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   background:var(--card);
   border:1px solid var(--border);
   border-radius:16px;
-  padding:32px 28px;
+  padding:32px 28px;position:relative;overflow:hidden;
   transition:border-color .25s var(--ease),background .25s var(--ease),transform .25s var(--ease);
 }
+/* Top-edge accent line that brightens on hover (Wibify service-card-accent) */
+.exp-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--accent),transparent 65%);
+  opacity:.45;transition:opacity .25s var(--ease);
+}
+.exp-card:hover::before{opacity:1}
 .exp-card:hover{
   border-color:var(--border-hi);
   background:var(--card-hi);
-  transform:translateY(-2px);
+  transform:translateY(-3px);
 }
 .exp-card-eyebrow{
   font-size:.7rem;font-weight:700;letter-spacing:.18em;
@@ -1287,3 +1370,90 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 @media(prefers-reduced-motion:reduce){
   .js-fade body{opacity:1 !important}
 }
+
+/* ═══════════ THEME EXTRAS (light overrides, logo, toggle) ═══════════ */
+/* Faint decorative elements that used hardcoded white alphas */
+html[data-theme="light"] .sc-num{color:rgba(0,0,0,.07)}
+html[data-theme="light"] .about-vis-svg .ring{stroke:rgba(0,0,0,.08)}
+html[data-theme="light"] .svc-flow .flow-line--alt{stroke:rgba(0,0,0,.14)}
+html[data-theme="light"] .about-vis-svg .node--white{filter:drop-shadow(0 0 6px rgba(0,0,0,.22))}
+/* Nav logo: text fill + ring stroke flip with the foreground; accent dots stay blue.
+   (Footer logo is muted grey #636366 — reads on both themes, left alone.) */
+.nav-logo svg > g{fill:var(--white)}
+.nav-logo svg > path[stroke="#ffffff"]{stroke:var(--white)}
+
+/* ── Theme toggle button ── */
+.theme-toggle{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;cursor:pointer;padding:0;
+  background:transparent;border:1px solid var(--border);color:var(--g300);
+  transition:color .2s,border-color .2s,background .2s,transform .25s var(--spring);
+}
+.theme-toggle:hover{color:var(--white);border-color:var(--border-hi);transform:scale(1.08)}
+.theme-toggle svg{width:18px;height:18px;display:block}
+.theme-toggle .icon-sun{display:none}
+.theme-toggle .icon-moon{display:block}
+html[data-theme="light"] .theme-toggle .icon-sun{display:block}
+html[data-theme="light"] .theme-toggle .icon-moon{display:none}
+@media (prefers-reduced-motion:reduce){
+  html,body,#nav,.nav-cta,.btn,.card,.exp-card,.res-card,.tbadge,.faq-item,.svc-item,
+  .fg input,.fg select,.fg textarea,.theme-toggle{transition:none}
+}
+
+/* ── Soft elevation (Apple/Linear): cards are shadow-led, esp. in light ── */
+.exp-card,.res-card,.tbadge,.why-card,.sector-card,.article-cta{box-shadow:var(--card-shadow)}
+.exp-card:hover,.res-card:hover,.tbadge:hover{box-shadow:var(--card-shadow-hover)}
+.faq-item{box-shadow:var(--card-shadow)}
+.faq-item[open]{box-shadow:var(--card-shadow-hover)}
+/* In light, lean on shadow not border for cards */
+html[data-theme="light"] .exp-card,
+html[data-theme="light"] .res-card,
+html[data-theme="light"] .tbadge,
+html[data-theme="light"] .faq-item{border-color:transparent}
+html[data-theme="light"] .fg input,
+html[data-theme="light"] .fg select,
+html[data-theme="light"] .fg textarea{box-shadow:0 1px 2px rgba(16,24,40,.04)}
+/* Light nav: soft shadow when scrolled separates it from the white canvas */
+html[data-theme="light"] #nav.scrolled{box-shadow:0 1px 0 var(--border),0 6px 24px rgba(16,24,40,.05)}
+/* Primary CTA button lift in light (it's the dark button on a light page) */
+html[data-theme="light"] .btn-white{box-shadow:var(--card-shadow)}
+html[data-theme="light"] .btn-white:hover{box-shadow:var(--card-shadow-hover)}
+/* Sticky CTA pill lift in light */
+html[data-theme="light"] .sticky-cta{box-shadow:0 10px 30px var(--accent-glow)}
+
+/* ═══════════ WIBIFY-INSPIRED POLISH (palette + type unchanged) ═══════════ */
+/* Film grain texture — analog depth over the whole page (Wibify .grain) */
+body::before{
+  content:'';position:fixed;inset:0;z-index:60;pointer-events:none;
+  opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:160px 160px;
+}
+html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
+@media (prefers-reduced-motion:reduce){body::before{display:none}}
+
+/* ── Shiny CTA: animated shimmer border sweeping the primary button ── */
+@property --ctaAng{syntax:'<angle>';inherits:false;initial-value:0deg}
+.btn-white::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;padding:1.6px;pointer-events:none;
+  background:conic-gradient(from var(--ctaAng),transparent 0deg,var(--accent) 55deg,transparent 135deg,transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  animation:ctaShimmer 4s linear infinite;opacity:.85;
+}
+.btn-white:hover::after{opacity:1}
+@keyframes ctaShimmer{to{--ctaAng:360deg}}
+@media (prefers-reduced-motion:reduce){.btn-white::after{animation:none;opacity:.45}}
+
+/* ── Text-roll (slot-machine) on homepage service item names ──
+   Letters are wrapped by JS (initTextRoll); on row hover the top row rolls up
+   while the cloned row rolls in from below, staggered per letter. */
+.svc-item-name .tr{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.14}
+.svc-item-name .tr-row{display:block;white-space:nowrap}
+.svc-item-name .tr-clone{position:absolute;left:0;top:100%}
+.svc-item-name .tr-letter{
+  display:inline-block;white-space:pre;
+  transition:transform .42s var(--ease);transition-delay:calc(var(--i,0)*16ms);
+}
+.svc-item:hover .svc-item-name .tr-letter{transform:translateY(-100%)}
+@media (prefers-reduced-motion:reduce){.svc-item-name .tr-letter{transition:none}}
