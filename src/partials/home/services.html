@@ -1,50 +1,20 @@
 <!-- ══════════ SERVICES ══════════ -->
 <div id="services">
   <div class="svc-vis">
-    <!-- "How we plug in": the Thinklens team block connects a plug into your
-         stack's socket — spark on contact, then work packets flow through the
-         cord. With reduced motion it renders statically plugged in. -->
-    <svg class="svc-flow" viewBox="0 0 720 600" preserveAspectRatio="xMidYMid slice">
-      <!-- Ambient throughput lines -->
-      <path class="flow-line" d="M20,110 Q170,60 320,110 T620,110"/>
-      <path class="flow-line flow-line--alt" d="M20,500 Q200,555 380,500 T680,500"/>
-      <circle class="flow-node" cx="320" cy="110" r="4"/>
-      <circle class="flow-node flow-node--alt" cx="380" cy="500" r="4"/>
-      <!-- Your stack (the socket) -->
-      <g class="socket-grp">
-        <rect class="blk" x="430" y="252" width="96" height="96" rx="20"/>
-        <rect class="socket-slot" x="424" y="279" width="12" height="9" rx="3"/>
-        <rect class="socket-slot" x="424" y="312" width="12" height="9" rx="3"/>
-        <path class="blk-detail" d="M456 282 h44 M456 300 h44 M456 318 h30"/>
-      </g>
-      <!-- Thinklens (the team) -->
-      <g class="src-grp">
-        <rect class="blk" x="36" y="264" width="76" height="72" rx="16"/>
-        <circle class="src-dot" cx="60" cy="288" r="5"/>
-        <circle class="src-dot" cx="88" cy="288" r="5"/>
-        <circle class="src-dot" cx="60" cy="312" r="5"/>
-        <circle class="src-dot d-hi" cx="88" cy="312" r="5"/>
-      </g>
-      <!-- Cord + plug slide in together; the cord's left end hides under the team block -->
-      <g class="plug-grp">
-        <path class="cord" d="M96,300 C 190,318 290,318 352,300"/>
-        <rect class="plug-body" x="352" y="278" width="48" height="44" rx="11"/>
-        <rect class="prong" x="400" y="279.5" width="32" height="8" rx="3"/>
-        <rect class="prong" x="400" y="312.5" width="32" height="8" rx="3"/>
-      </g>
-      <!-- Contact spark -->
-      <g class="spark" transform="translate(430,300)">
-        <line x1="8" y1="-18" x2="14" y2="-26"/>
-        <line x1="12" y1="0" x2="20" y2="0"/>
-        <line x1="8" y1="18" x2="14" y2="26"/>
-      </g>
-      <!-- Work flowing once connected -->
-      <g class="flow-gate">
-        <circle class="flow-packet fp1" r="4"/>
-        <circle class="flow-packet fp2" r="4"/>
-        <circle class="flow-packet fp3" r="4"/>
-      </g>
-    </svg>
+    <!-- "How we plug in" — the plug docks into your stack's socket; the panel
+         lights up while connected (theme-aware, tl- prefix). -->
+    <div class="tl-plug-scene" aria-hidden="true">
+      <div class="tl-plug-stage">
+        <div class="tl-device"><i></i><i></i><i></i></div>
+        <div class="tl-plug-group">
+          <div class="tl-cable"></div>
+          <div class="tl-plug"><i></i><i></i></div>
+        </div>
+        <div class="tl-spark"></div>
+        <div class="tl-panel"><i></i><i></i><i></i></div>
+        <div class="tl-socket"><i></i><i></i></div>
+      </div>
+    </div>
   </div>
   <div class="svc-content">
     <span class="eyebrow">What We Do</span>
