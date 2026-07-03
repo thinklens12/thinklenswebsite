@@ -409,6 +409,7 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   33%{transform:translate(40px,-30px) scale(1.05)}
   66%{transform:translate(-30px,20px) scale(.95)}
 }
+@media (prefers-reduced-motion:reduce){.hero-blob{animation:none}}
 /* Hero overlay vignette */
 .hero-svg-bg::after{
   content:'';position:absolute;inset:0;
@@ -474,8 +475,6 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .btn-white:hover{background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
 .btn-outline{background:transparent;color:var(--g200);border:1px solid var(--border)}
 .btn-outline:hover{border-color:var(--g400);color:var(--white);transform:translateY(-2px)}
-.btn-accent{background:var(--accent-deep);color:var(--on-accent)}
-.btn-accent:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 12px 28px var(--accent-glow)}
 
 /* Ripple effect (added via JS) */
 .btn .ripple{
@@ -1116,17 +1115,6 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 }
 .foot-logo{display:flex;align-items:center;line-height:0;transition:opacity .2s}
 .foot-logo:hover{opacity:.85}
-.foot-nav{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
-.foot-nav a{
-  font-size:.78rem;font-weight:500;color:var(--g400);
-  position:relative;transition:color .2s;
-}
-.foot-nav a::after{
-  content:'';position:absolute;left:0;bottom:-3px;height:1px;width:0;
-  background:var(--accent);transition:width .3s var(--ease);
-}
-.foot-nav a:hover{color:var(--g100)}
-.foot-nav a:hover::after{width:100%}
 .foot-copy{font-size:.72rem;color:var(--g400);text-align:right;line-height:1.6}
 
 /* ═══════════ ANIMATIONS ═══════════ */
@@ -1402,10 +1390,8 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .vec-node--soft{fill:var(--accent3)}
 .vec-packet{fill:var(--accent);filter:drop-shadow(0 0 5px var(--accent-glow))}
 .vec-mesh{fill:var(--accent);opacity:.045}
-.hero-net{position:absolute;inset:0;opacity:.6}
 .page-net{opacity:1}
 /* Light: brighter strokes, glowing nodes, slightly stronger mesh fills. */
-html[data-theme="light"] .hero-net{opacity:.92}
 html[data-theme="light"] .page-vis{opacity:.85}
 /* Light hero blobs: bigger + more saturated — they're the hero's "flow" and
    must survive the pale canvas (they already drift via blobFloat). */
