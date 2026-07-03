@@ -149,12 +149,12 @@
 /* ── LIGHT (soft & airy, Apple/Linear) ── near-white canvas, white cards lifted
    by soft shadows (borders recede to hairlines), faint blue glows, vivid accent. */
 html[data-theme="light"]{
-  --bg:#eceef2;            /* cool grey canvas — depth comes from white cards/bands lifting OFF it (mirrors how dark layers surfaces above near-black) */
-  --surface:#f5f6f9;       /* subtly elevated section band */
+  --bg:#e8ebf1;            /* cool grey canvas, a touch deeper — white cards/bands must visibly lift OFF it (mirrors how dark layers surfaces above near-black) */
+  --surface:#f3f5f9;       /* elevated section band — wider tonal step from the canvas */
   --card:#ffffff;          /* pure-white cards that visibly float on the grey */
   --card-hi:#ffffff;
-  --border:rgba(17,24,39,.08);
-  --border-hi:rgba(17,24,39,.14);
+  --border:rgba(17,24,39,.1);
+  --border-hi:rgba(17,24,39,.16);
   --white:#101114;         /* strong foreground → near-black */
   --on-accent:#fff;
   --g100:#17181c;
@@ -167,12 +167,12 @@ html[data-theme="light"]{
   --accent-deep:#0062d6;   /* button fill — AA white text */
   --accent2:#1f86ff;
   --accent3:#79b4ff;
-  --accent-glow:rgba(0,122,255,.12);
-  --bg-rgb:236,238,242;
-  --grid-line:rgba(17,24,39,.045);
-  --overlay-soft:rgba(17,24,39,.03);
-  --card-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.08);
-  --card-shadow-hover:0 3px 8px rgba(16,24,40,.08),0 24px 50px rgba(16,24,40,.14);
+  --accent-glow:rgba(0,122,255,.16);
+  --bg-rgb:232,235,241;
+  --grid-line:rgba(17,24,39,.055);
+  --overlay-soft:rgba(17,24,39,.035);
+  --card-shadow:0 1px 2px rgba(16,24,40,.06),0 10px 28px rgba(16,24,40,.1);
+  --card-shadow-hover:0 4px 10px rgba(16,24,40,.09),0 28px 56px rgba(16,24,40,.16);
   color-scheme:light;
 }
 :root{color-scheme:dark}
@@ -379,6 +379,11 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .hgd circle{fill:#9fd0ff}                              /* bright on the dark globe */
 html[data-theme="light"] .hgd circle{fill:var(--accent)}  /* vivid on the light canvas */
 html[data-theme="light"] .hero-lottie{opacity:.95}
+/* ≤900px the globe sits BEHIND the copy — keep it a whisper in light too
+   (this light override otherwise out-specifies the mobile .45 rule below) */
+@media(max-width:900px){
+  html[data-theme="light"] .hero-lottie{opacity:.5}
+}
 @media(max-width:900px){
   .hero-lottie{top:40%;right:50%;transform:translate(50%,-50%);width:140%;max-width:none;opacity:.45;
     -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);
@@ -1491,10 +1496,13 @@ html[data-theme="light"] .vec-mesh{opacity:.06}
 }
 
 /* ═══════════ THEME EXTRAS (light overrides, logo, toggle) ═══════════ */
-/* Faint decorative elements that used hardcoded white alphas */
-html[data-theme="light"] .sc-num{color:rgba(0,0,0,.07)}
-html[data-theme="light"] .about-vis-svg .ring{stroke:rgba(0,0,0,.08)}
-html[data-theme="light"] .svc-flow .flow-line--alt{stroke:rgba(0,0,0,.14)}
+/* Decorative elements that used hardcoded white alphas — redrawn at INK
+   strength for light: on a pale canvas a ghost-opacity stroke reads as
+   emptiness, not subtlety. */
+html[data-theme="light"] .sc-num{color:rgba(16,24,40,.11)}
+html[data-theme="light"] .about-vis-svg .ring{stroke:rgba(16,24,40,.17);stroke-width:1.25}
+html[data-theme="light"] .about-vis-svg .guide-ring{stroke:rgba(16,24,40,.09)}
+html[data-theme="light"] .svc-flow .flow-line--alt{stroke:rgba(16,24,40,.26)}
 html[data-theme="light"] .about-vis-svg .node--white{filter:drop-shadow(0 0 6px rgba(0,0,0,.22))}
 /* Nav logo: text fill + ring stroke flip with the foreground; accent dots stay blue.
    (Footer logo is muted grey #636366 — reads on both themes, left alone.) */
@@ -1524,11 +1532,12 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:none}
 .exp-card:hover,.res-card:hover,.tbadge:hover{box-shadow:var(--card-shadow-hover)}
 .faq-item{box-shadow:var(--card-shadow)}
 .faq-item[open]{box-shadow:var(--card-shadow-hover)}
-/* In light, lean on shadow not border for cards */
+/* In light, cards are shadow-led but keep a whisper border — fully transparent
+   edges left white-on-near-white cards reading as fog, not elevation. */
 html[data-theme="light"] .exp-card,
 html[data-theme="light"] .res-card,
 html[data-theme="light"] .tbadge,
-html[data-theme="light"] .faq-item{border-color:transparent}
+html[data-theme="light"] .faq-item{border-color:rgba(17,24,39,.06)}
 html[data-theme="light"] .fg input,
 html[data-theme="light"] .fg select,
 html[data-theme="light"] .fg textarea{box-shadow:0 1px 2px rgba(16,24,40,.04)}
@@ -1539,6 +1548,62 @@ html[data-theme="light"] .btn-white{box-shadow:var(--card-shadow)}
 html[data-theme="light"] .btn-white:hover{box-shadow:var(--card-shadow-hover)}
 /* Sticky CTA pill lift in light */
 html[data-theme="light"] .sticky-cta{box-shadow:0 10px 30px var(--accent-glow)}
+
+/* ═══════════ LIGHT-MODE DEPTH OVERHAUL ═══════════
+   Dark mode's depth is LUMINOSITY — glowing washes on near-black. Those same
+   rgba(accent,.1x) radials are imperceptible on a pale canvas, so light mode
+   gets its own depth language instead of a faded copy of dark:
+     1. legible tonal banding (hairline edges + gradient bands per section)
+     2. more saturated ambient tints where dark uses glow pools
+     3. ink-strength decorative strokes (handled in THEME EXTRAS above)
+     4. high-contrast kinetic + watermark type
+   Everything is scoped to [data-theme="light"] — dark rendering unchanged. */
+
+/* 1 · Section banding: hairlines make band edges legible on near-white */
+html[data-theme="light"] #sectors,
+html[data-theme="light"] #trust,
+html[data-theme="light"] #contact{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+
+/* 2 · Hero: cool vertical falloff so the viewport isn't one flat grey field */
+html[data-theme="light"] #hero{
+  background:linear-gradient(180deg,#f4f6fa 0%,#edf0f5 55%,var(--bg) 100%);
+}
+
+/* 3 · Kinetic: bright paper band; unlit words go paler so lit words SNAP.
+   (Dark's dim-until-lit trick needs a big value gap to read as intentional.) */
+html[data-theme="light"] #kinetic{
+  background:linear-gradient(180deg,#f9fafc,#eef1f6);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+html[data-theme="light"] .kinetic-text{color:#c4c8d2}
+html[data-theme="light"] .kinetic-text .kw.lit{color:#101114}
+html[data-theme="light"] .kinetic-text .kw.accent-lit{text-shadow:none}
+
+/* 4 · About visual panel: saturated tint + directional gradient — the orbital
+   composition sits in a designed pool of light instead of empty grey */
+html[data-theme="light"] .about-vis-col{
+  background:
+    radial-gradient(ellipse 70% 70% at 30% 50%, rgba(0,122,255,.17), transparent 70%),
+    linear-gradient(160deg,#f6f8fb,#e6eaf2);
+}
+
+/* 5 · Services flow: stronger focal wash + more present accent lines */
+html[data-theme="light"] .svc-vis::before{
+  background:radial-gradient(ellipse 60% 80% at 25% 50%, rgba(0,122,255,.22), transparent 62%);
+}
+html[data-theme="light"] .svc-flow .flow-line{stroke:rgba(0,122,255,.62);stroke-width:1.3}
+
+/* 6 · CTA: a visible pool of light behind the closing pitch */
+html[data-theme="light"] .cta-bg{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,122,255,.2), transparent 70%),
+    linear-gradient(180deg,#eef1f6,#e5e9f0);
+}
+
+/* 7 · Pull-quote tint needs more chroma on white */
+html[data-theme="light"] .pull-quote{background:rgba(0,122,255,.08)}
 
 /* ═══════════ WIBIFY-INSPIRED POLISH (palette + type unchanged) ═══════════ */
 /* Film grain texture — analog depth over the whole page (Wibify .grain) */
