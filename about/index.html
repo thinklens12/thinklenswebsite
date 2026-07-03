@@ -602,26 +602,55 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   display:grid;place-items:center;
   border-right:1px solid var(--border);
 }
-/* Animated rotating ring composition */
+/* "Extra hands, on short notice" — specialists dock onto the team ring
+   around a ticking clock core. Hands arrive staggered (one every 2s of an
+   8s cycle); with animation off they all render docked. */
 .about-vis-svg{width:90%;max-width:480px;height:auto;overflow:visible}
 .about-vis-svg .ring{fill:none;stroke:rgba(255,255,255,.08);stroke-width:1}
 .about-vis-svg .guide-ring{stroke:var(--border);stroke-width:1}
 .about-vis-svg .ring.r1{animation:rotateCW 40s linear infinite;transform-origin:center}
-.about-vis-svg .ring.r2{animation:rotateCCW 50s linear infinite;transform-origin:center}
-.about-vis-svg .ring.r3{animation:rotateCW 60s linear infinite;transform-origin:center}
-.about-vis-svg .node{fill:var(--accent);filter:drop-shadow(0 0 8px var(--accent-glow))}
-.about-vis-svg .node--white{fill:var(--white);filter:drop-shadow(0 0 6px rgba(255,255,255,.4))}
+.about-vis-svg .ring.r2{animation:rotateCCW 55s linear infinite;transform-origin:center}
+.about-vis-svg .slot{fill:none;stroke:var(--border-hi);stroke-width:1.2;stroke-dasharray:3 4}
 .about-vis-svg .core{fill:var(--accent);animation:coreBreath 4s ease-in-out infinite}
-.about-vis-svg .orbit-dot{transform-origin:240px 240px}
-.about-vis-svg .orbit-dot.o1{animation:orbit 14s linear infinite}
-.about-vis-svg .orbit-dot.o2{animation:orbit 22s linear infinite reverse}
-.about-vis-svg .orbit-dot.o3{animation:orbit 18s linear infinite}
+.about-vis-svg .clock-hr,.about-vis-svg .clock-min{stroke:var(--accent-deep);stroke-width:2.4;stroke-linecap:round}
+.about-vis-svg .clock-pin{fill:var(--accent-deep)}
+.about-vis-svg .hand-link{
+  stroke:var(--accent);stroke-width:1.5;stroke-dasharray:1;stroke-dashoffset:0;
+  animation:handLink 8s var(--ease) infinite;
+}
+.about-vis-svg .hand-node{
+  transform-box:fill-box;transform-origin:center;
+  animation:handDock 8s var(--ease) infinite;
+}
+.about-vis-svg .hn-c{fill:var(--accent);filter:drop-shadow(0 0 8px var(--accent-glow))}
+.about-vis-svg .hn-head,.about-vis-svg .hn-body{fill:var(--on-accent)}
+.about-vis-svg .h2 .hand-node,.about-vis-svg .h2 .hand-link{animation-delay:2s}
+.about-vis-svg .h3 .hand-node,.about-vis-svg .h3 .hand-link{animation-delay:4s}
+.about-vis-svg .h4 .hand-node,.about-vis-svg .h4 .hand-link{animation-delay:6s}
+@keyframes handDock{
+  0%{opacity:0;transform:translate(var(--fx),var(--fy)) scale(.5)}
+  5%{opacity:1}
+  14%{transform:translate(0,0) scale(1.16)}
+  18%{transform:translate(0,0) scale(1)}
+  86%{opacity:1;transform:translate(0,0) scale(1)}
+  94%,100%{opacity:0;transform:translate(0,0) scale(.7)}
+}
+@keyframes handLink{
+  0%,13%{stroke-dashoffset:1;opacity:0}
+  17%{opacity:.85}
+  28%{stroke-dashoffset:0;opacity:.85}
+  86%{stroke-dashoffset:0;opacity:.85}
+  94%,100%{stroke-dashoffset:1;opacity:0}
+}
 @keyframes rotateCW{to{transform:rotate(360deg)}}
 @keyframes rotateCCW{to{transform:rotate(-360deg)}}
-@keyframes orbit{to{transform:rotate(360deg)}}
 @keyframes coreBreath{
   0%,100%{filter:drop-shadow(0 0 12px var(--accent)) brightness(1)}
   50%{filter:drop-shadow(0 0 28px var(--accent)) brightness(1.3)}
+}
+@media(prefers-reduced-motion:reduce){
+  .about-vis-svg .hand-node,.about-vis-svg .hand-link,
+  .about-vis-svg .ring,.about-vis-svg .core{animation:none}
 }
 .about-text-col{
   padding:100px 40px 100px 60px;
@@ -734,7 +763,9 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   content:'';position:absolute;inset:0;z-index:2;
   background:linear-gradient(to right, rgba(var(--bg-rgb),0) 0%, rgba(var(--bg-rgb),.4) 35%, rgba(var(--bg-rgb),.97) 70%, var(--bg) 100%);
 }
-/* Animated flow lines SVG */
+/* "How we plug in" — the team block's plug docks into your stack's socket
+   (spark on contact), then work packets flow through the cord. 9s cycle;
+   with animation off it renders statically plugged in. */
 .svc-flow{
   position:absolute;left:0;top:0;width:60%;height:100%;
 }
@@ -754,20 +785,59 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   0%,100%{transform:scale(1);opacity:.9}
   50%{transform:scale(1.4);opacity:1;filter:drop-shadow(0 0 8px var(--accent))}
 }
+.svc-flow .blk{fill:var(--card);stroke:var(--border-hi);stroke-width:1.4}
+.svc-flow .blk-detail{stroke:var(--g500);stroke-width:2;stroke-linecap:round;fill:none}
+.svc-flow .socket-slot{fill:var(--g600)}
+.svc-flow .src-dot{fill:var(--accent);opacity:.9}
+.svc-flow .src-dot.d-hi{animation:nodePulse 3s ease-in-out infinite}
+.svc-flow .plug-grp{animation:plugDock 9s var(--ease) infinite}
+.svc-flow .cord{stroke:var(--accent);stroke-width:3;fill:none;stroke-linecap:round;opacity:.9}
+.svc-flow .plug-body{fill:var(--accent)}
+.svc-flow .prong{fill:var(--g400)}
+.svc-flow .spark line{stroke:var(--accent2);stroke-width:2.5;stroke-linecap:round}
+.svc-flow .spark{
+  opacity:0;transform-box:fill-box;transform-origin:left center;
+  animation:sparkPop 9s ease-out infinite;
+}
+.svc-flow .flow-gate{animation:gateOn 9s linear infinite}
 .svc-flow .flow-packet{
   fill:var(--accent);
   filter:drop-shadow(0 0 8px var(--accent));
   offset-rotate:0deg;
+  offset-path:path('M96,300 C 190,318 290,318 352,300');
+  animation:packetMove 2.1s ease-in-out infinite;
 }
-.svc-flow .pkt1{offset-path:path('M40,120 Q160,40 280,120 T520,120');animation:packetMove 5s ease-in-out infinite}
-.svc-flow .pkt2{offset-path:path('M40,250 Q200,160 360,250 T620,250');animation:packetMove 6s ease-in-out infinite .8s}
-.svc-flow .pkt3{offset-path:path('M40,370 Q160,470 300,370 T560,370');animation:packetMove 7s ease-in-out infinite 1.6s}
-.svc-flow .pkt4{offset-path:path('M40,490 Q200,580 360,490 T620,490');animation:packetMove 6.5s ease-in-out infinite 2.4s}
+.svc-flow .fp2{animation-delay:.7s}
+.svc-flow .fp3{animation-delay:1.4s}
 @keyframes packetMove{
   0%{offset-distance:0%;opacity:0}
-  10%{opacity:1}
-  90%{opacity:1}
+  12%{opacity:1}
+  85%{opacity:1}
   100%{offset-distance:100%;opacity:0}
+}
+@keyframes plugDock{
+  0%{transform:translateX(-28px)}
+  6%{transform:translateX(3px)}
+  10%{transform:translateX(0)}
+  88%{transform:translateX(0)}
+  96%,100%{transform:translateX(-28px)}
+}
+@keyframes sparkPop{
+  0%,6%{opacity:0;transform:scale(.4)}
+  9%{opacity:1;transform:scale(1.1)}
+  15%{opacity:0;transform:scale(1.5)}
+  100%{opacity:0}
+}
+@keyframes gateOn{
+  0%,12%{opacity:0}
+  17%,86%{opacity:1}
+  91%,100%{opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .svc-flow .plug-grp,.svc-flow .spark,.svc-flow .flow-gate,
+  .svc-flow .flow-packet,.svc-flow .flow-line,.svc-flow .flow-node,
+  .svc-flow .src-dot{animation:none}
+  .svc-flow .flow-packet,.svc-flow .spark{opacity:0}
 }
 .svc-content{
   position:relative;z-index:3;margin-left:auto;
@@ -1496,7 +1566,6 @@ html[data-theme="light"] .sc-num{color:rgba(16,24,40,.11)}
 html[data-theme="light"] .about-vis-svg .ring{stroke:rgba(16,24,40,.17);stroke-width:1.25}
 html[data-theme="light"] .about-vis-svg .guide-ring{stroke:rgba(16,24,40,.09)}
 html[data-theme="light"] .svc-flow .flow-line--alt{stroke:rgba(16,24,40,.26)}
-html[data-theme="light"] .about-vis-svg .node--white{filter:drop-shadow(0 0 6px rgba(0,0,0,.22))}
 /* Nav logo: text fill + ring stroke flip with the foreground; accent dots stay blue.
    (Footer logo is muted grey #636366 — reads on both themes, left alone.) */
 .nav-logo svg > g{fill:var(--white)}

@@ -2,6 +2,9 @@
 <section id="about">
   <div class="about-split">
     <div class="about-vis-col">
+      <!-- "Extra hands, on short notice": specialist nodes fly in and dock onto
+           the team ring one after another, around a ticking clock core. With
+           reduced motion all four render statically docked. -->
       <svg class="about-vis-svg" viewBox="0 0 480 480">
         <defs>
           <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
@@ -9,35 +12,62 @@
             <stop offset="100%" stop-color="#007AFF"/>
           </radialGradient>
         </defs>
-        <!-- Concentric rotating rings -->
+        <!-- Slow ambient rings -->
         <g style="transform-box:fill-box;transform-origin:center">
-          <circle class="ring r1" cx="240" cy="240" r="220" stroke-dasharray="2 8"/>
-          <circle class="ring r2" cx="240" cy="240" r="170" stroke-dasharray="1 14"/>
-          <circle class="ring r3" cx="240" cy="240" r="120" stroke-dasharray="4 4"/>
+          <circle class="ring r1" cx="240" cy="240" r="212" stroke-dasharray="2 9"/>
+          <circle class="ring r2" cx="240" cy="240" r="164" stroke-dasharray="1 13"/>
         </g>
-        <!-- Static guide rings -->
-        <circle class="guide-ring" cx="240" cy="240" r="220" fill="none"/>
-        <circle class="guide-ring" cx="240" cy="240" r="170" fill="none"/>
+        <!-- The team ring, with four open seats -->
         <circle class="guide-ring" cx="240" cy="240" r="120" fill="none"/>
-        <!-- Orbiting dots -->
-        <g class="orbit-dot o1"><circle class="node" cx="240" cy="20" r="6"/></g>
-        <g class="orbit-dot o2"><circle class="node--white" cx="410" cy="240" r="5"/></g>
-        <g class="orbit-dot o3"><circle class="node" cx="240" cy="360" r="4"/></g>
-        <!-- Connecting nodes -->
-        <circle class="node" cx="120" cy="120" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/></circle>
-        <circle class="node" cx="360" cy="120" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.5s" repeatCount="indefinite" begin=".7s"/></circle>
-        <circle class="node" cx="120" cy="360" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.8s" repeatCount="indefinite" begin="1.4s"/></circle>
-        <circle class="node" cx="360" cy="360" r="4"><animate attributeName="opacity" values=".4;1;.4" dur="3.2s" repeatCount="indefinite" begin="2.1s"/></circle>
-        <!-- Connecting lines -->
-        <g class="vec-line">
-          <line x1="120" y1="120" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite"/></line>
-          <line x1="360" y1="120" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="1s"/></line>
-          <line x1="120" y1="360" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="2s"/></line>
-          <line x1="360" y1="360" x2="240" y2="240"><animate attributeName="stroke-opacity" values=".15;.6;.15" dur="4s" repeatCount="indefinite" begin="3s"/></line>
+        <circle class="slot" cx="325" cy="155" r="14"/>
+        <circle class="slot" cx="155" cy="155" r="14"/>
+        <circle class="slot" cx="155" cy="325" r="14"/>
+        <circle class="slot" cx="325" cy="325" r="14"/>
+        <!-- Extra hands docking in -->
+        <g class="hand h1" transform="translate(325,155)">
+          <line class="hand-link" x1="-7" y1="7" x2="-62" y2="62" pathLength="1"/>
+          <g class="hand-node" style="--fx:120px;--fy:-95px">
+            <circle class="hn-c" r="10"/>
+            <circle class="hn-head" cy="-3.2" r="3"/>
+            <path class="hn-body" d="M-5,5.5 C-5,0.8 5,0.8 5,5.5 Z"/>
+          </g>
         </g>
-        <!-- Core -->
-        <circle class="core" cx="240" cy="240" r="26" fill="url(#coreGlow)"/>
-        <circle cx="240" cy="240" r="14" fill="#fff" opacity=".9"/>
+        <g class="hand h2" transform="translate(155,155)">
+          <line class="hand-link" x1="7" y1="7" x2="62" y2="62" pathLength="1"/>
+          <g class="hand-node" style="--fx:-120px;--fy:-90px">
+            <circle class="hn-c" r="10"/>
+            <circle class="hn-head" cy="-3.2" r="3"/>
+            <path class="hn-body" d="M-5,5.5 C-5,0.8 5,0.8 5,5.5 Z"/>
+          </g>
+        </g>
+        <g class="hand h3" transform="translate(155,325)">
+          <line class="hand-link" x1="7" y1="-7" x2="62" y2="-62" pathLength="1"/>
+          <g class="hand-node" style="--fx:-115px;--fy:95px">
+            <circle class="hn-c" r="10"/>
+            <circle class="hn-head" cy="-3.2" r="3"/>
+            <path class="hn-body" d="M-5,5.5 C-5,0.8 5,0.8 5,5.5 Z"/>
+          </g>
+        </g>
+        <g class="hand h4" transform="translate(325,325)">
+          <line class="hand-link" x1="-7" y1="-7" x2="-62" y2="-62" pathLength="1"/>
+          <g class="hand-node" style="--fx:115px;--fy:100px">
+            <circle class="hn-c" r="10"/>
+            <circle class="hn-head" cy="-3.2" r="3"/>
+            <path class="hn-body" d="M-5,5.5 C-5,0.8 5,0.8 5,5.5 Z"/>
+          </g>
+        </g>
+        <!-- Core: the clock — ready when you are -->
+        <circle class="core" cx="240" cy="240" r="30" fill="url(#coreGlow)"/>
+        <circle cx="240" cy="240" r="20" fill="#fff" opacity=".95"/>
+        <g transform="translate(240,240)">
+          <line class="clock-hr" x1="0" y1="0" x2="0" y2="-9">
+            <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="36s" repeatCount="indefinite"/>
+          </line>
+          <line class="clock-min" x1="0" y1="0" x2="0" y2="-14">
+            <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="6s" repeatCount="indefinite"/>
+          </line>
+          <circle class="clock-pin" r="2"/>
+        </g>
       </svg>
     </div>
     <div class="about-text-col">
