@@ -1451,10 +1451,11 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 /* Light: brighter strokes, glowing nodes, slightly stronger mesh fills. */
 html[data-theme="light"] .hero-net{opacity:.92}
 html[data-theme="light"] .page-vis{opacity:.85}
-/* Slightly more present blue glows in light so the corners aren't flat white. */
-html[data-theme="light"] .hero-blob{opacity:.7}
-html[data-theme="light"] .hero-blob.b1{background:radial-gradient(circle,rgba(0,122,255,.28),transparent 62%)}
-html[data-theme="light"] .hero-blob.b2{background:radial-gradient(circle,rgba(0,122,255,.16),transparent 66%)}
+/* Light hero blobs: bigger + more saturated — they're the hero's "flow" and
+   must survive the pale canvas (they already drift via blobFloat). */
+html[data-theme="light"] .hero-blob{opacity:.85}
+html[data-theme="light"] .hero-blob.b1{width:640px;height:640px;background:radial-gradient(circle,rgba(0,122,255,.34),transparent 62%)}
+html[data-theme="light"] .hero-blob.b2{width:600px;height:600px;background:radial-gradient(circle,rgba(0,122,255,.2),transparent 66%)}
 html[data-theme="light"] .vec-line{stroke-width:1.5}
 html[data-theme="light"] .vec-node{filter:drop-shadow(0 0 6px var(--accent-glow))}
 html[data-theme="light"] .vec-mesh{opacity:.06}
@@ -1649,6 +1650,102 @@ html[data-theme="light"] .cta-bg{
 
 /* 7 · Pull-quote tint needs more chroma on white */
 html[data-theme="light"] .pull-quote{background:rgba(0,122,255,.08)}
+
+/* 8 · Flowing aurora gradients — the negative space itself moves.
+   Each roomy section gets an oversized ::before holding 2-3 soft blue
+   radials, drifting via transform (composited — no per-frame repaint,
+   unlike background-position animation). Layers sit at z-index:0 under
+   each section's raised content; durations are staggered and some run
+   in reverse so bands never move in lockstep. */
+@keyframes auroraDrift{
+  0%,100%{transform:translate3d(-6%,-4%,0) rotate(-2deg) scale(1)}
+  50%{transform:translate3d(6%,5%,0) rotate(2deg) scale(1.15)}
+}
+/* Containment + stacking (theme-agnostic; zero visual change in dark):
+   raise in-flow content above the z0 aurora layer, and give the two
+   sections that lacked it a positioning/clipping box. */
+#faq{overflow:hidden}
+#contact{position:relative;overflow:hidden}
+.about-split,#why .wrap,#faq .wrap,#trust .wrap,#contact .wrap{position:relative;z-index:1}
+
+html[data-theme="light"] #kinetic::before,
+html[data-theme="light"] #about::before,
+html[data-theme="light"] #sectors::before,
+html[data-theme="light"] #services::before,
+html[data-theme="light"] #why::before,
+html[data-theme="light"] #trust::before,
+html[data-theme="light"] #faq::before,
+html[data-theme="light"] #contact::before,
+html[data-theme="light"] .cta-bg::before{
+  content:'';position:absolute;inset:-18%;z-index:0;pointer-events:none;
+  animation:auroraDrift 26s ease-in-out infinite;
+  will-change:transform;
+}
+html[data-theme="light"] #kinetic::before{
+  background:
+    radial-gradient(42% 40% at 18% 30%, rgba(0,122,255,.12), transparent 70%),
+    radial-gradient(46% 44% at 80% 72%, rgba(121,180,255,.16), transparent 72%);
+  animation-duration:22s;
+}
+html[data-theme="light"] #about::before{
+  background:
+    radial-gradient(40% 46% at 72% 20%, rgba(0,122,255,.1), transparent 70%),
+    radial-gradient(36% 40% at 88% 80%, rgba(121,180,255,.13), transparent 72%);
+  animation-duration:30s;animation-direction:reverse;
+}
+html[data-theme="light"] #sectors::before{
+  background:
+    radial-gradient(44% 42% at 14% 70%, rgba(0,122,255,.09), transparent 70%),
+    radial-gradient(38% 40% at 84% 18%, rgba(121,180,255,.13), transparent 72%);
+  animation-duration:26s;
+}
+html[data-theme="light"] #services::before{
+  background:
+    radial-gradient(40% 44% at 76% 26%, rgba(121,180,255,.14), transparent 72%),
+    radial-gradient(38% 38% at 55% 85%, rgba(0,122,255,.08), transparent 70%);
+  animation-duration:24s;animation-direction:reverse;
+}
+html[data-theme="light"] #why::before{
+  background:
+    radial-gradient(42% 44% at 22% 22%, rgba(0,122,255,.1), transparent 70%),
+    radial-gradient(44% 46% at 82% 78%, rgba(121,180,255,.14), transparent 72%);
+  animation-duration:28s;
+}
+html[data-theme="light"] #trust::before{
+  background:
+    radial-gradient(40% 44% at 80% 30%, rgba(0,122,255,.09), transparent 70%),
+    radial-gradient(38% 40% at 16% 78%, rgba(121,180,255,.12), transparent 72%);
+  animation-duration:23s;animation-direction:reverse;
+}
+html[data-theme="light"] #faq::before{
+  background:
+    radial-gradient(44% 40% at 20% 26%, rgba(121,180,255,.13), transparent 72%),
+    radial-gradient(40% 44% at 82% 76%, rgba(0,122,255,.08), transparent 70%);
+  animation-duration:27s;
+}
+html[data-theme="light"] #contact::before{
+  background:
+    radial-gradient(42% 44% at 18% 24%, rgba(0,122,255,.09), transparent 70%),
+    radial-gradient(40% 42% at 84% 70%, rgba(121,180,255,.12), transparent 72%);
+  animation-duration:25s;animation-direction:reverse;
+}
+html[data-theme="light"] .cta-bg::before{
+  background:
+    radial-gradient(40% 46% at 30% 34%, rgba(0,122,255,.14), transparent 70%),
+    radial-gradient(44% 48% at 72% 66%, rgba(121,180,255,.18), transparent 72%);
+  animation-duration:21s;
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="light"] #kinetic::before,
+  html[data-theme="light"] #about::before,
+  html[data-theme="light"] #sectors::before,
+  html[data-theme="light"] #services::before,
+  html[data-theme="light"] #why::before,
+  html[data-theme="light"] #trust::before,
+  html[data-theme="light"] #faq::before,
+  html[data-theme="light"] #contact::before,
+  html[data-theme="light"] .cta-bg::before{animation:none}
+}
 
 /* ═══════════ WIBIFY-INSPIRED POLISH (palette + type unchanged) ═══════════ */
 /* Film grain texture — analog depth over the whole page (Wibify .grain) */
