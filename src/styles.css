@@ -53,12 +53,12 @@
 /* ── LIGHT (soft & airy, Apple/Linear) ── near-white canvas, white cards lifted
    by soft shadows (borders recede to hairlines), faint blue glows, vivid accent. */
 html[data-theme="light"]{
-  --bg:#eceef2;            /* cool grey canvas — depth comes from white cards/bands lifting OFF it (mirrors how dark layers surfaces above near-black) */
-  --surface:#f5f6f9;       /* subtly elevated section band */
+  --bg:#e8ebf1;            /* cool grey canvas, a touch deeper — white cards/bands must visibly lift OFF it (mirrors how dark layers surfaces above near-black) */
+  --surface:#f3f5f9;       /* elevated section band — wider tonal step from the canvas */
   --card:#ffffff;          /* pure-white cards that visibly float on the grey */
   --card-hi:#ffffff;
-  --border:rgba(17,24,39,.08);
-  --border-hi:rgba(17,24,39,.14);
+  --border:rgba(17,24,39,.1);
+  --border-hi:rgba(17,24,39,.16);
   --white:#101114;         /* strong foreground → near-black */
   --on-accent:#fff;
   --g100:#17181c;
@@ -71,12 +71,12 @@ html[data-theme="light"]{
   --accent-deep:#0062d6;   /* button fill — AA white text */
   --accent2:#1f86ff;
   --accent3:#79b4ff;
-  --accent-glow:rgba(0,122,255,.12);
-  --bg-rgb:236,238,242;
-  --grid-line:rgba(17,24,39,.045);
-  --overlay-soft:rgba(17,24,39,.03);
-  --card-shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.08);
-  --card-shadow-hover:0 3px 8px rgba(16,24,40,.08),0 24px 50px rgba(16,24,40,.14);
+  --accent-glow:rgba(0,122,255,.16);
+  --bg-rgb:232,235,241;
+  --grid-line:rgba(17,24,39,.055);
+  --overlay-soft:rgba(17,24,39,.035);
+  --card-shadow:0 1px 2px rgba(16,24,40,.06),0 10px 28px rgba(16,24,40,.1);
+  --card-shadow-hover:0 4px 10px rgba(16,24,40,.09),0 28px 56px rgba(16,24,40,.16);
   color-scheme:light;
 }
 :root{color-scheme:dark}
@@ -283,6 +283,11 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .hgd circle{fill:#9fd0ff}                              /* bright on the dark globe */
 html[data-theme="light"] .hgd circle{fill:var(--accent)}  /* vivid on the light canvas */
 html[data-theme="light"] .hero-lottie{opacity:.95}
+/* ≤900px the globe sits BEHIND the copy — keep it a whisper in light too
+   (this light override otherwise out-specifies the mobile .45 rule below) */
+@media(max-width:900px){
+  html[data-theme="light"] .hero-lottie{opacity:.5}
+}
 @media(max-width:900px){
   .hero-lottie{top:40%;right:50%;transform:translate(50%,-50%);width:140%;max-width:none;opacity:.45;
     -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);
@@ -307,6 +312,7 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   33%{transform:translate(40px,-30px) scale(1.05)}
   66%{transform:translate(-30px,20px) scale(.95)}
 }
+@media (prefers-reduced-motion:reduce){.hero-blob{animation:none}}
 /* Hero overlay vignette */
 .hero-svg-bg::after{
   content:'';position:absolute;inset:0;
@@ -372,8 +378,6 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .btn-white:hover{background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
 .btn-outline{background:transparent;color:var(--g200);border:1px solid var(--border)}
 .btn-outline:hover{border-color:var(--g400);color:var(--white);transform:translateY(-2px)}
-.btn-accent{background:var(--accent-deep);color:var(--on-accent)}
-.btn-accent:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 12px 28px var(--accent-glow)}
 
 /* Ripple effect (added via JS) */
 .btn .ripple{
@@ -501,26 +505,55 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   display:grid;place-items:center;
   border-right:1px solid var(--border);
 }
-/* Animated rotating ring composition */
+/* "Extra hands, on short notice" — specialists dock onto the team ring
+   around a ticking clock core. Hands arrive staggered (one every 2s of an
+   8s cycle); with animation off they all render docked. */
 .about-vis-svg{width:90%;max-width:480px;height:auto;overflow:visible}
 .about-vis-svg .ring{fill:none;stroke:rgba(255,255,255,.08);stroke-width:1}
 .about-vis-svg .guide-ring{stroke:var(--border);stroke-width:1}
 .about-vis-svg .ring.r1{animation:rotateCW 40s linear infinite;transform-origin:center}
-.about-vis-svg .ring.r2{animation:rotateCCW 50s linear infinite;transform-origin:center}
-.about-vis-svg .ring.r3{animation:rotateCW 60s linear infinite;transform-origin:center}
-.about-vis-svg .node{fill:var(--accent);filter:drop-shadow(0 0 8px var(--accent-glow))}
-.about-vis-svg .node--white{fill:var(--white);filter:drop-shadow(0 0 6px rgba(255,255,255,.4))}
+.about-vis-svg .ring.r2{animation:rotateCCW 55s linear infinite;transform-origin:center}
+.about-vis-svg .slot{fill:none;stroke:var(--border-hi);stroke-width:1.2;stroke-dasharray:3 4}
 .about-vis-svg .core{fill:var(--accent);animation:coreBreath 4s ease-in-out infinite}
-.about-vis-svg .orbit-dot{transform-origin:240px 240px}
-.about-vis-svg .orbit-dot.o1{animation:orbit 14s linear infinite}
-.about-vis-svg .orbit-dot.o2{animation:orbit 22s linear infinite reverse}
-.about-vis-svg .orbit-dot.o3{animation:orbit 18s linear infinite}
+.about-vis-svg .clock-hr,.about-vis-svg .clock-min{stroke:var(--accent-deep);stroke-width:2.4;stroke-linecap:round}
+.about-vis-svg .clock-pin{fill:var(--accent-deep)}
+.about-vis-svg .hand-link{
+  stroke:var(--accent);stroke-width:1.5;stroke-dasharray:1;stroke-dashoffset:0;
+  animation:handLink 8s var(--ease) infinite;
+}
+.about-vis-svg .hand-node{
+  transform-box:fill-box;transform-origin:center;
+  animation:handDock 8s var(--ease) infinite;
+}
+.about-vis-svg .hn-c{fill:var(--accent);filter:drop-shadow(0 0 8px var(--accent-glow))}
+.about-vis-svg .hn-head,.about-vis-svg .hn-body{fill:var(--on-accent)}
+.about-vis-svg .h2 .hand-node,.about-vis-svg .h2 .hand-link{animation-delay:2s}
+.about-vis-svg .h3 .hand-node,.about-vis-svg .h3 .hand-link{animation-delay:4s}
+.about-vis-svg .h4 .hand-node,.about-vis-svg .h4 .hand-link{animation-delay:6s}
+@keyframes handDock{
+  0%{opacity:0;transform:translate(var(--fx),var(--fy)) scale(.5)}
+  5%{opacity:1}
+  14%{transform:translate(0,0) scale(1.16)}
+  18%{transform:translate(0,0) scale(1)}
+  86%{opacity:1;transform:translate(0,0) scale(1)}
+  94%,100%{opacity:0;transform:translate(0,0) scale(.7)}
+}
+@keyframes handLink{
+  0%,13%{stroke-dashoffset:1;opacity:0}
+  17%{opacity:.85}
+  28%{stroke-dashoffset:0;opacity:.85}
+  86%{stroke-dashoffset:0;opacity:.85}
+  94%,100%{stroke-dashoffset:1;opacity:0}
+}
 @keyframes rotateCW{to{transform:rotate(360deg)}}
 @keyframes rotateCCW{to{transform:rotate(-360deg)}}
-@keyframes orbit{to{transform:rotate(360deg)}}
 @keyframes coreBreath{
   0%,100%{filter:drop-shadow(0 0 12px var(--accent)) brightness(1)}
   50%{filter:drop-shadow(0 0 28px var(--accent)) brightness(1.3)}
+}
+@media(prefers-reduced-motion:reduce){
+  .about-vis-svg .hand-node,.about-vis-svg .hand-link,
+  .about-vis-svg .ring,.about-vis-svg .core{animation:none}
 }
 .about-text-col{
   padding:100px 40px 100px 60px;
@@ -633,7 +666,9 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   content:'';position:absolute;inset:0;z-index:2;
   background:linear-gradient(to right, rgba(var(--bg-rgb),0) 0%, rgba(var(--bg-rgb),.4) 35%, rgba(var(--bg-rgb),.97) 70%, var(--bg) 100%);
 }
-/* Animated flow lines SVG */
+/* "How we plug in" — the team block's plug docks into your stack's socket
+   (spark on contact), then work packets flow through the cord. 9s cycle;
+   with animation off it renders statically plugged in. */
 .svc-flow{
   position:absolute;left:0;top:0;width:60%;height:100%;
 }
@@ -653,20 +688,59 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   0%,100%{transform:scale(1);opacity:.9}
   50%{transform:scale(1.4);opacity:1;filter:drop-shadow(0 0 8px var(--accent))}
 }
+.svc-flow .blk{fill:var(--card);stroke:var(--border-hi);stroke-width:1.4}
+.svc-flow .blk-detail{stroke:var(--g500);stroke-width:2;stroke-linecap:round;fill:none}
+.svc-flow .socket-slot{fill:var(--g600)}
+.svc-flow .src-dot{fill:var(--accent);opacity:.9}
+.svc-flow .src-dot.d-hi{animation:nodePulse 3s ease-in-out infinite}
+.svc-flow .plug-grp{animation:plugDock 9s var(--ease) infinite}
+.svc-flow .cord{stroke:var(--accent);stroke-width:3;fill:none;stroke-linecap:round;opacity:.9}
+.svc-flow .plug-body{fill:var(--accent)}
+.svc-flow .prong{fill:var(--g400)}
+.svc-flow .spark line{stroke:var(--accent2);stroke-width:2.5;stroke-linecap:round}
+.svc-flow .spark{
+  opacity:0;transform-box:fill-box;transform-origin:left center;
+  animation:sparkPop 9s ease-out infinite;
+}
+.svc-flow .flow-gate{animation:gateOn 9s linear infinite}
 .svc-flow .flow-packet{
   fill:var(--accent);
   filter:drop-shadow(0 0 8px var(--accent));
   offset-rotate:0deg;
+  offset-path:path('M96,300 C 190,318 290,318 352,300');
+  animation:packetMove 2.1s ease-in-out infinite;
 }
-.svc-flow .pkt1{offset-path:path('M40,120 Q160,40 280,120 T520,120');animation:packetMove 5s ease-in-out infinite}
-.svc-flow .pkt2{offset-path:path('M40,250 Q200,160 360,250 T620,250');animation:packetMove 6s ease-in-out infinite .8s}
-.svc-flow .pkt3{offset-path:path('M40,370 Q160,470 300,370 T560,370');animation:packetMove 7s ease-in-out infinite 1.6s}
-.svc-flow .pkt4{offset-path:path('M40,490 Q200,580 360,490 T620,490');animation:packetMove 6.5s ease-in-out infinite 2.4s}
+.svc-flow .fp2{animation-delay:.7s}
+.svc-flow .fp3{animation-delay:1.4s}
 @keyframes packetMove{
   0%{offset-distance:0%;opacity:0}
-  10%{opacity:1}
-  90%{opacity:1}
+  12%{opacity:1}
+  85%{opacity:1}
   100%{offset-distance:100%;opacity:0}
+}
+@keyframes plugDock{
+  0%{transform:translateX(-28px)}
+  6%{transform:translateX(3px)}
+  10%{transform:translateX(0)}
+  88%{transform:translateX(0)}
+  96%,100%{transform:translateX(-28px)}
+}
+@keyframes sparkPop{
+  0%,6%{opacity:0;transform:scale(.4)}
+  9%{opacity:1;transform:scale(1.1)}
+  15%{opacity:0;transform:scale(1.5)}
+  100%{opacity:0}
+}
+@keyframes gateOn{
+  0%,12%{opacity:0}
+  17%,86%{opacity:1}
+  91%,100%{opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .svc-flow .plug-grp,.svc-flow .spark,.svc-flow .flow-gate,
+  .svc-flow .flow-packet,.svc-flow .flow-line,.svc-flow .flow-node,
+  .svc-flow .src-dot{animation:none}
+  .svc-flow .flow-packet,.svc-flow .spark{opacity:0}
 }
 .svc-content{
   position:relative;z-index:3;margin-left:auto;
@@ -1014,17 +1088,6 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 }
 .foot-logo{display:flex;align-items:center;line-height:0;transition:opacity .2s}
 .foot-logo:hover{opacity:.85}
-.foot-nav{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
-.foot-nav a{
-  font-size:.78rem;font-weight:500;color:var(--g400);
-  position:relative;transition:color .2s;
-}
-.foot-nav a::after{
-  content:'';position:absolute;left:0;bottom:-3px;height:1px;width:0;
-  background:var(--accent);transition:width .3s var(--ease);
-}
-.foot-nav a:hover{color:var(--g100)}
-.foot-nav a:hover::after{width:100%}
 .foot-copy{font-size:.72rem;color:var(--g400);text-align:right;line-height:1.6}
 
 /* ═══════════ ANIMATIONS ═══════════ */
@@ -1300,15 +1363,19 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .vec-node--soft{fill:var(--accent3)}
 .vec-packet{fill:var(--accent);filter:drop-shadow(0 0 5px var(--accent-glow))}
 .vec-mesh{fill:var(--accent);opacity:.045}
-.hero-net{position:absolute;inset:0;opacity:.6}
 .page-net{opacity:1}
 /* Light: brighter strokes, glowing nodes, slightly stronger mesh fills. */
-html[data-theme="light"] .hero-net{opacity:.92}
 html[data-theme="light"] .page-vis{opacity:.85}
-/* Slightly more present blue glows in light so the corners aren't flat white. */
-html[data-theme="light"] .hero-blob{opacity:.7}
-html[data-theme="light"] .hero-blob.b1{background:radial-gradient(circle,rgba(0,122,255,.28),transparent 62%)}
-html[data-theme="light"] .hero-blob.b2{background:radial-gradient(circle,rgba(0,122,255,.16),transparent 66%)}
+/* Light hero blobs: bigger + more saturated — they're the hero's "flow" and
+   must survive the pale canvas (they already drift via blobFloat). */
+@keyframes blobFloatLight{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(130px,-90px) scale(1.16)}
+  66%{transform:translate(-100px,70px) scale(.9)}
+}
+html[data-theme="light"] .hero-blob{opacity:.85;animation:blobFloatLight 13s ease-in-out infinite}
+html[data-theme="light"] .hero-blob.b1{width:640px;height:640px;background:radial-gradient(circle,rgba(0,122,255,.34),transparent 62%)}
+html[data-theme="light"] .hero-blob.b2{width:600px;height:600px;background:radial-gradient(circle,rgba(0,122,255,.2),transparent 66%)}
 html[data-theme="light"] .vec-line{stroke-width:1.5}
 html[data-theme="light"] .vec-node{filter:drop-shadow(0 0 6px var(--accent-glow))}
 html[data-theme="light"] .vec-mesh{opacity:.06}
@@ -1395,11 +1462,13 @@ html[data-theme="light"] .vec-mesh{opacity:.06}
 }
 
 /* ═══════════ THEME EXTRAS (light overrides, logo, toggle) ═══════════ */
-/* Faint decorative elements that used hardcoded white alphas */
-html[data-theme="light"] .sc-num{color:rgba(0,0,0,.07)}
-html[data-theme="light"] .about-vis-svg .ring{stroke:rgba(0,0,0,.08)}
-html[data-theme="light"] .svc-flow .flow-line--alt{stroke:rgba(0,0,0,.14)}
-html[data-theme="light"] .about-vis-svg .node--white{filter:drop-shadow(0 0 6px rgba(0,0,0,.22))}
+/* Decorative elements that used hardcoded white alphas — redrawn at INK
+   strength for light: on a pale canvas a ghost-opacity stroke reads as
+   emptiness, not subtlety. */
+html[data-theme="light"] .sc-num{color:rgba(16,24,40,.11)}
+html[data-theme="light"] .about-vis-svg .ring{stroke:rgba(16,24,40,.17);stroke-width:1.25}
+html[data-theme="light"] .about-vis-svg .guide-ring{stroke:rgba(16,24,40,.09)}
+html[data-theme="light"] .svc-flow .flow-line--alt{stroke:rgba(16,24,40,.26)}
 /* Nav logo: text fill + ring stroke flip with the foreground; accent dots stay blue.
    (Footer logo is muted grey #636366 — reads on both themes, left alone.) */
 .nav-logo svg > g{fill:var(--white)}
@@ -1428,11 +1497,12 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:none}
 .exp-card:hover,.res-card:hover,.tbadge:hover{box-shadow:var(--card-shadow-hover)}
 .faq-item{box-shadow:var(--card-shadow)}
 .faq-item[open]{box-shadow:var(--card-shadow-hover)}
-/* In light, lean on shadow not border for cards */
+/* In light, cards are shadow-led but keep a whisper border — fully transparent
+   edges left white-on-near-white cards reading as fog, not elevation. */
 html[data-theme="light"] .exp-card,
 html[data-theme="light"] .res-card,
 html[data-theme="light"] .tbadge,
-html[data-theme="light"] .faq-item{border-color:transparent}
+html[data-theme="light"] .faq-item{border-color:rgba(17,24,39,.06)}
 html[data-theme="light"] .fg input,
 html[data-theme="light"] .fg select,
 html[data-theme="light"] .fg textarea{box-shadow:0 1px 2px rgba(16,24,40,.04)}
@@ -1443,6 +1513,159 @@ html[data-theme="light"] .btn-white{box-shadow:var(--card-shadow)}
 html[data-theme="light"] .btn-white:hover{box-shadow:var(--card-shadow-hover)}
 /* Sticky CTA pill lift in light */
 html[data-theme="light"] .sticky-cta{box-shadow:0 10px 30px var(--accent-glow)}
+
+/* ═══════════ LIGHT-MODE DEPTH OVERHAUL ═══════════
+   Dark mode's depth is LUMINOSITY — glowing washes on near-black. Those same
+   rgba(accent,.1x) radials are imperceptible on a pale canvas, so light mode
+   gets its own depth language instead of a faded copy of dark:
+     1. legible tonal banding (hairline edges + gradient bands per section)
+     2. more saturated ambient tints where dark uses glow pools
+     3. ink-strength decorative strokes (handled in THEME EXTRAS above)
+     4. high-contrast kinetic + watermark type
+   Everything is scoped to [data-theme="light"] — dark rendering unchanged. */
+
+/* 1 · Section banding: hairlines make band edges legible on near-white */
+html[data-theme="light"] #sectors,
+html[data-theme="light"] #trust,
+html[data-theme="light"] #contact{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+
+/* 2 · Hero: cool vertical falloff so the viewport isn't one flat grey field */
+html[data-theme="light"] #hero{
+  background:linear-gradient(180deg,#f4f6fa 0%,#edf0f5 55%,var(--bg) 100%);
+}
+
+/* 3 · Kinetic: bright paper band; unlit words go paler so lit words SNAP.
+   (Dark's dim-until-lit trick needs a big value gap to read as intentional.) */
+html[data-theme="light"] #kinetic{
+  background:linear-gradient(180deg,#f9fafc,#eef1f6);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+html[data-theme="light"] .kinetic-text{color:#c4c8d2}
+html[data-theme="light"] .kinetic-text .kw.lit{color:#101114}
+html[data-theme="light"] .kinetic-text .kw.accent-lit{text-shadow:none}
+
+/* 4 · About visual panel: saturated tint + directional gradient — the orbital
+   composition sits in a designed pool of light instead of empty grey */
+html[data-theme="light"] .about-vis-col{
+  background:
+    radial-gradient(ellipse 70% 70% at 30% 50%, rgba(0,122,255,.17), transparent 70%),
+    linear-gradient(160deg,#f6f8fb,#e6eaf2);
+}
+
+/* 5 · Services flow: stronger focal wash + more present accent lines */
+html[data-theme="light"] .svc-vis::before{
+  background:radial-gradient(ellipse 60% 80% at 25% 50%, rgba(0,122,255,.22), transparent 62%);
+}
+html[data-theme="light"] .svc-flow .flow-line{stroke:rgba(0,122,255,.62);stroke-width:1.3}
+
+/* 6 · CTA: a visible pool of light behind the closing pitch */
+html[data-theme="light"] .cta-bg{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,122,255,.2), transparent 70%),
+    linear-gradient(180deg,#eef1f6,#e5e9f0);
+}
+
+/* 7 · Pull-quote tint needs more chroma on white */
+html[data-theme="light"] .pull-quote{background:rgba(0,122,255,.08)}
+
+/* 8 · Flowing aurora gradients — the negative space itself moves.
+   Each roomy section gets an oversized ::before holding 2-3 soft blue
+   radials, drifting via transform (composited — no per-frame repaint,
+   unlike background-position animation). Layers sit at z-index:0 under
+   each section's raised content; durations are staggered and some run
+   in reverse so bands never move in lockstep. */
+@keyframes auroraDrift{
+  0%,100%{transform:translate3d(-13%,-9%,0) rotate(-4deg) scale(1)}
+  33%{transform:translate3d(9%,6%,0) rotate(1deg) scale(1.2)}
+  66%{transform:translate3d(13%,10%,0) rotate(4deg) scale(1.05)}
+}
+/* Containment + stacking (theme-agnostic; zero visual change in dark):
+   raise in-flow content above the z0 aurora layer, and give the two
+   sections that lacked it a positioning/clipping box. */
+#faq{overflow:hidden}
+#contact{position:relative;overflow:hidden}
+.about-split,#why .wrap,#faq .wrap,#trust .wrap,#contact .wrap{position:relative;z-index:1}
+
+html[data-theme="light"] #kinetic::before,
+html[data-theme="light"] #about::before,
+html[data-theme="light"] #sectors::before,
+html[data-theme="light"] #services::before,
+html[data-theme="light"] #why::before,
+html[data-theme="light"] #trust::before,
+html[data-theme="light"] #faq::before,
+html[data-theme="light"] #contact::before,
+html[data-theme="light"] .cta-bg::before{
+  content:'';position:absolute;inset:-32%;z-index:0;pointer-events:none;
+  animation:auroraDrift 16s ease-in-out infinite;
+  will-change:transform;
+}
+html[data-theme="light"] #kinetic::before{
+  background:
+    radial-gradient(42% 40% at 18% 30%, rgba(0,122,255,.17), transparent 66%),
+    radial-gradient(46% 44% at 80% 72%, rgba(121,180,255,.22), transparent 68%);
+  animation-duration:14s;
+}
+html[data-theme="light"] #about::before{
+  background:
+    radial-gradient(40% 46% at 72% 20%, rgba(0,122,255,.14), transparent 66%),
+    radial-gradient(36% 40% at 88% 80%, rgba(121,180,255,.18), transparent 68%);
+  animation-duration:19s;animation-direction:reverse;
+}
+html[data-theme="light"] #sectors::before{
+  background:
+    radial-gradient(44% 42% at 14% 70%, rgba(0,122,255,.13), transparent 66%),
+    radial-gradient(38% 40% at 84% 18%, rgba(121,180,255,.18), transparent 68%);
+  animation-duration:16s;
+}
+html[data-theme="light"] #services::before{
+  background:
+    radial-gradient(40% 44% at 76% 26%, rgba(121,180,255,.19), transparent 68%),
+    radial-gradient(38% 38% at 55% 85%, rgba(0,122,255,.12), transparent 66%);
+  animation-duration:15s;animation-direction:reverse;
+}
+html[data-theme="light"] #why::before{
+  background:
+    radial-gradient(42% 44% at 22% 22%, rgba(0,122,255,.14), transparent 66%),
+    radial-gradient(44% 46% at 82% 78%, rgba(121,180,255,.19), transparent 68%);
+  animation-duration:18s;
+}
+html[data-theme="light"] #trust::before{
+  background:
+    radial-gradient(40% 44% at 80% 30%, rgba(0,122,255,.13), transparent 66%),
+    radial-gradient(38% 40% at 16% 78%, rgba(121,180,255,.17), transparent 68%);
+  animation-duration:13s;animation-direction:reverse;
+}
+html[data-theme="light"] #faq::before{
+  background:
+    radial-gradient(44% 40% at 20% 26%, rgba(121,180,255,.18), transparent 68%),
+    radial-gradient(40% 44% at 82% 76%, rgba(0,122,255,.12), transparent 66%);
+  animation-duration:17s;
+}
+html[data-theme="light"] #contact::before{
+  background:
+    radial-gradient(42% 44% at 18% 24%, rgba(0,122,255,.13), transparent 66%),
+    radial-gradient(40% 42% at 84% 70%, rgba(121,180,255,.17), transparent 68%);
+  animation-duration:15.5s;animation-direction:reverse;
+}
+html[data-theme="light"] .cta-bg::before{
+  background:
+    radial-gradient(40% 46% at 30% 34%, rgba(0,122,255,.18), transparent 66%),
+    radial-gradient(44% 48% at 72% 66%, rgba(121,180,255,.24), transparent 68%);
+  animation-duration:12s;
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="light"] #kinetic::before,
+  html[data-theme="light"] #about::before,
+  html[data-theme="light"] #sectors::before,
+  html[data-theme="light"] #services::before,
+  html[data-theme="light"] #why::before,
+  html[data-theme="light"] #trust::before,
+  html[data-theme="light"] #faq::before,
+  html[data-theme="light"] #contact::before,
+  html[data-theme="light"] .cta-bg::before{animation:none}
+}
 
 /* ═══════════ WIBIFY-INSPIRED POLISH (palette + type unchanged) ═══════════ */
 /* Film grain texture — analog depth over the whole page (Wibify .grain) */
