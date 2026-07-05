@@ -16,8 +16,56 @@
           <div class="cmeta"><div class="cmeta-l">IEC Authorization</div><div class="cmeta-v">Approved for International Trade in Services</div></div>
           <div class="cmeta"><div class="cmeta-l">Engagement Types</div><div class="cmeta-v">T&amp;M · Fixed Scope · MSA Sub-Contracting · B2B Freelance Consultant</div></div>
         </div>
+        <!-- Reciprocity: useful material before any ask — no email wall -->
+        <div class="give-first r">
+          <div class="gf-kicker">Before you even say hello</div>
+          <p class="gf-p">Take these with you — free, no email wall, no strings:</p>
+          <a class="gf-link" href="{{HOME}}resources/etl-testing-tools-checklist/">ETL Testing Tools Checklist <span aria-hidden="true">&#8594;</span></a>
+          <a class="gf-link" href="{{HOME}}resources/power-bi-vs-tableau-vs-spotfire/">Power BI vs Tableau vs Spotfire <span aria-hidden="true">&#8594;</span></a>
+          <a class="gf-link" href="{{HOME}}resources/what-is-etl-testing/">What is ETL Testing? A plain-English guide <span aria-hidden="true">&#8594;</span></a>
+        </div>
       </div>
       <form class="cform r" id="contactForm">
+        <!-- Goal gradient: the bar never starts at 0% — smart defaults pre-complete
+             the first steps, so visitors finish rather than start. -->
+        <div class="fj-progress">
+          <div class="fj-track" aria-hidden="true"><div class="fj-fill" id="fjFill"></div></div>
+          <span class="fj-pct" id="fjPct" aria-live="polite"></span>
+        </div>
+        <!-- IKEA effect: shape the engagement before sending — chips feed hidden
+             fields (submitted with the form) and the message hint. -->
+        <div class="fj-build">
+          <div class="fj-group" data-multi="0">
+            <span class="fj-label">Engagement</span>
+            <input type="hidden" name="engagement_model" id="fjModel" value="Time & Materials">
+            <div class="fj-chips">
+              <button type="button" class="chip on">Time &amp; Materials</button>
+              <button type="button" class="chip">Fixed-Scope</button>
+              <button type="button" class="chip">MSA Sub-Contract</button>
+            </div>
+          </div>
+          <div class="fj-group" data-multi="1">
+            <span class="fj-label">Expertise needed</span>
+            <input type="hidden" name="expertise" id="fjSkills" value="">
+            <div class="fj-chips">
+              <button type="button" class="chip">Power BI</button>
+              <button type="button" class="chip">Tableau</button>
+              <button type="button" class="chip">ETL Testing</button>
+              <button type="button" class="chip">Data Engineering</button>
+              <button type="button" class="chip">Technical BA</button>
+              <button type="button" class="chip">Training</button>
+            </div>
+          </div>
+          <div class="fj-group" data-multi="0">
+            <span class="fj-label">Start window</span>
+            <input type="hidden" name="start_window" id="fjStart" value="">
+            <div class="fj-chips">
+              <button type="button" class="chip">ASAP</button>
+              <button type="button" class="chip">2&#8211;4 weeks</button>
+              <button type="button" class="chip">Just exploring</button>
+            </div>
+          </div>
+        </div>
         <div class="frow">
           <div class="fg"><label for="fname">Name</label><input id="fname" name="name" type="text" placeholder="John Smith" required></div>
           <div class="fg"><label for="fcompany">Company</label><input id="fcompany" name="company" type="text" placeholder="Staffing Agency Inc." required></div>
@@ -27,7 +75,7 @@
           <label for="fregion">Region</label>
           <select id="fregion" name="region" required>
             <option value="">Select region…</option>
-            <option>United States</option><option>United Kingdom</option><option>Canada</option>
+            <option selected>United States</option><option>United Kingdom</option><option>Canada</option>
             <option>Australia</option><option>Germany</option><option>Netherlands</option>
             <option>Singapore</option><option>UAE / Middle East</option><option>Other</option>
           </select>
@@ -36,7 +84,7 @@
           <label for="fenquiry">Enquiry Type</label>
           <select id="fenquiry" name="enquiry_type" required>
             <option value="">Select type…</option>
-            <option>Project Support / Overflow</option>
+            <option selected>Project Support / Overflow</option>
             <option>Support &amp; Maintenance</option>
             <option>Training &amp; Enablement</option>
             <option>Data &amp; BI Project</option>

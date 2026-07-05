@@ -348,6 +348,68 @@ document.addEventListener('DOMContentLoaded', function() {
     track('cta_click', { label: (cta.textContent || '').trim().slice(0, 60) });
   });
 
+  /* ── Form journey: smart defaults + goal-gradient progress + build-your-engagement chips ──
+     The selects ship pre-filled and the "Time & Materials" chip ships selected, so the
+     progress bar never starts at 0%. Chip choices post with the form (hidden fields)
+     and personalize the message hint. */
+  (() => {
+    const journeyForm = document.getElementById('contactForm');
+    if (!journeyForm || !document.getElementById('fjFill')) return;
+    const fill = document.getElementById('fjFill');
+    const pctEl = document.getElementById('fjPct');
+    const msgField = document.getElementById('fmessage');
+    const defaultHint = msgField.placeholder;
+    const groups = journeyForm.querySelectorAll('.fj-group');
+
+    const val = (id) => (document.getElementById(id) || { value: '' }).value;
+    function syncHint() {
+      const model = val('fjModel'), skills = val('fjSkills'), start = val('fjStart');
+      msgField.placeholder = (model || skills || start)
+        ? 'e.g., We need ' + (skills || 'a senior consultant') + (model ? ' on a ' + model + ' basis' : '') + (start ? ', starting ' + (start === 'ASAP' ? start : start.toLowerCase()) : '') + ' — plus any client or pipeline context.'
+        : defaultHint;
+    }
+    const steps = [
+      () => !!val('fjModel'),
+      () => !!val('fjSkills'),
+      () => !!val('fregion'),
+      () => !!val('fenquiry'),
+      () => !!val('fname').trim(),
+      () => !!val('femail').trim(),
+      () => !!msgField.value.trim(),
+    ];
+    function update() {
+      const done = steps.filter((f) => f()).length;
+      const p = Math.round((done / steps.length) * 100);
+      fill.style.width = p + '%';
+      pctEl.textContent = p >= 100
+        ? "100% — ready. Don't lose it."
+        : p + '% there — ' + (steps.length - done) + ' quick ' + (steps.length - done === 1 ? 'step' : 'steps') + ' left';
+    }
+    groups.forEach((g) => {
+      const multi = g.dataset.multi === '1';
+      const hidden = g.querySelector('input[type="hidden"]');
+      g.querySelectorAll('.chip').forEach((ch) => ch.addEventListener('click', () => {
+        if (multi) ch.classList.toggle('on');
+        else { g.querySelectorAll('.chip').forEach((c) => c.classList.remove('on')); ch.classList.add('on'); }
+        hidden.value = [...g.querySelectorAll('.chip.on')].map((c) => c.textContent.trim()).join(', ');
+        syncHint(); update();
+      }));
+    });
+    // The submit handler calls form.reset() on success — restore chips/defaults too.
+    const origReset = journeyForm.reset.bind(journeyForm);
+    journeyForm.reset = () => {
+      origReset();
+      groups.forEach((g) => {
+        const hidden = g.querySelector('input[type="hidden"]');
+        g.querySelectorAll('.chip').forEach((c) => c.classList.toggle('on', !!hidden.defaultValue && c.textContent.trim() === hidden.defaultValue));
+        hidden.value = hidden.defaultValue;
+      });
+      syncHint(); update();
+    };
+    journeyForm.addEventListener('input', update);
+    syncHint(); update();
+  })();
+
   /* ── Form submission via Formspree ── */
   const FORMSPREE_ID = 'xdapybyb';
   // Consumer mail providers — anything else is treated as a corporate domain.

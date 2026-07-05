@@ -1593,6 +1593,60 @@ html[data-theme="light"] .vec-mesh{opacity:.06}
   .exp-card{padding:24px 22px}
 }
 
+
+/* ═══════════ FORM JOURNEY (smart defaults + goal gradient + IKEA chips) ═══════════ */
+.fj-progress{display:flex;align-items:center;gap:12px;margin-bottom:2px}
+.fj-track{flex:1;height:6px;border-radius:100px;background:var(--overlay-soft);border:1px solid var(--border);overflow:hidden}
+.fj-fill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent3));transition:width .5s var(--ease)}
+.fj-pct{font-size:.72rem;font-weight:600;color:var(--g400);white-space:nowrap}
+.fj-build{
+  display:flex;flex-direction:column;gap:14px;
+  padding:16px 18px;border:1px dashed var(--border-hi);border-radius:12px;
+  background:var(--overlay-soft);
+}
+.fj-group{display:flex;flex-direction:column;gap:8px}
+.fj-label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g400)}
+.fj-chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-family:inherit;font-size:.78rem;font-weight:600;color:var(--g300);
+  background:var(--card);border:1px solid var(--border);border-radius:100px;
+  padding:8px 14px;cursor:pointer;
+  transition:color .2s,border-color .2s,background .2s,transform .2s var(--spring);
+}
+.chip:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.chip.on{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ═══════════ GIVE-FIRST (reciprocity: free guides, no email wall) ═══════════ */
+.give-first{
+  margin-top:18px;padding:20px 22px;border-radius:12px;
+  background:var(--card);border:1px solid var(--border);
+  border-left:3px solid var(--accent);box-shadow:var(--card-shadow);
+}
+.gf-kicker{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.gf-p{font-size:.85rem;color:var(--g400);margin-bottom:10px;line-height:1.6}
+.gf-link{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font-size:.85rem;font-weight:600;color:var(--g100);
+  padding:8px 0;border-top:1px solid var(--border);
+  transition:color .2s,padding-left .2s;
+}
+.gf-link:first-of-type{border-top:none}
+.gf-link:hover{color:var(--accent);padding-left:4px}
+
+/* ═══════════ ANCHOR COMPARE (contrast effect: expensive alternative first) ═══════════ */
+.anchor-compare{display:grid;grid-template-columns:1.05fr 1fr;gap:20px;max-width:1100px;margin:0 auto}
+.ac-card{border-radius:16px;padding:34px 30px;border:1px solid var(--border);background:var(--card);box-shadow:var(--card-shadow)}
+.ac-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g400);margin-bottom:12px}
+.ac-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2rem,4vw,2.9rem);font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:14px}
+.ac-per{font-size:1rem;font-weight:600;color:var(--g400);letter-spacing:0}
+.ac-p{font-size:.92rem;color:var(--g400);line-height:1.75}
+.ac-anchor .ac-price{color:var(--g300)}
+.ac-ours{border-color:rgba(0,122,255,.45);position:relative;overflow:hidden}
+.ac-ours::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--accent),transparent 70%)}
+.ac-ours .ac-price{color:var(--accent)}
+@media(max-width:780px){.anchor-compare{grid-template-columns:1fr}}
+
 /* ═══════════ PAGE TRANSITIONS ═══════════ */
 /* .js-fade is added to <html> by a tiny head script, so no-JS users are never
    left with a hidden page. Body fades in on load and out on internal nav. */
@@ -2015,7 +2069,7 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
   <div class="cta-content r">
     <span class="eyebrow">Get Started</span>
     <h2 class="cta-h2">Need extra hands,<br><span class="a">on short notice?</span></h2>
-    <p class="cta-sub">Tell us your gap — long-term, short-term, or overflow — and we'll line up the right senior consultant, remotely, with fast ramp-up.</p>
+    <p class="cta-sub">An unfilled seat isn't neutral — every week it stays empty is a slipped deadline or a client conversation you'd rather not have. Tell us the gap before it costs you one, and we'll line up the right senior consultant, remotely, with fast ramp-up.</p>
     <div class="cta-actions">
       <a href="#contact" class="btn btn-white" data-magnetic data-ripple>
         Start the Conversation
@@ -2046,8 +2100,56 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
           <div class="cmeta"><div class="cmeta-l">IEC Authorization</div><div class="cmeta-v">Approved for International Trade in Services</div></div>
           <div class="cmeta"><div class="cmeta-l">Engagement Types</div><div class="cmeta-v">T&amp;M · Fixed Scope · MSA Sub-Contracting · B2B Freelance Consultant</div></div>
         </div>
+        <!-- Reciprocity: useful material before any ask — no email wall -->
+        <div class="give-first r">
+          <div class="gf-kicker">Before you even say hello</div>
+          <p class="gf-p">Take these with you — free, no email wall, no strings:</p>
+          <a class="gf-link" href="/resources/etl-testing-tools-checklist/">ETL Testing Tools Checklist <span aria-hidden="true">&#8594;</span></a>
+          <a class="gf-link" href="/resources/power-bi-vs-tableau-vs-spotfire/">Power BI vs Tableau vs Spotfire <span aria-hidden="true">&#8594;</span></a>
+          <a class="gf-link" href="/resources/what-is-etl-testing/">What is ETL Testing? A plain-English guide <span aria-hidden="true">&#8594;</span></a>
+        </div>
       </div>
       <form class="cform r" id="contactForm">
+        <!-- Goal gradient: the bar never starts at 0% — smart defaults pre-complete
+             the first steps, so visitors finish rather than start. -->
+        <div class="fj-progress">
+          <div class="fj-track" aria-hidden="true"><div class="fj-fill" id="fjFill"></div></div>
+          <span class="fj-pct" id="fjPct" aria-live="polite"></span>
+        </div>
+        <!-- IKEA effect: shape the engagement before sending — chips feed hidden
+             fields (submitted with the form) and the message hint. -->
+        <div class="fj-build">
+          <div class="fj-group" data-multi="0">
+            <span class="fj-label">Engagement</span>
+            <input type="hidden" name="engagement_model" id="fjModel" value="Time & Materials">
+            <div class="fj-chips">
+              <button type="button" class="chip on">Time &amp; Materials</button>
+              <button type="button" class="chip">Fixed-Scope</button>
+              <button type="button" class="chip">MSA Sub-Contract</button>
+            </div>
+          </div>
+          <div class="fj-group" data-multi="1">
+            <span class="fj-label">Expertise needed</span>
+            <input type="hidden" name="expertise" id="fjSkills" value="">
+            <div class="fj-chips">
+              <button type="button" class="chip">Power BI</button>
+              <button type="button" class="chip">Tableau</button>
+              <button type="button" class="chip">ETL Testing</button>
+              <button type="button" class="chip">Data Engineering</button>
+              <button type="button" class="chip">Technical BA</button>
+              <button type="button" class="chip">Training</button>
+            </div>
+          </div>
+          <div class="fj-group" data-multi="0">
+            <span class="fj-label">Start window</span>
+            <input type="hidden" name="start_window" id="fjStart" value="">
+            <div class="fj-chips">
+              <button type="button" class="chip">ASAP</button>
+              <button type="button" class="chip">2&#8211;4 weeks</button>
+              <button type="button" class="chip">Just exploring</button>
+            </div>
+          </div>
+        </div>
         <div class="frow">
           <div class="fg"><label for="fname">Name</label><input id="fname" name="name" type="text" placeholder="John Smith" required></div>
           <div class="fg"><label for="fcompany">Company</label><input id="fcompany" name="company" type="text" placeholder="Staffing Agency Inc." required></div>
@@ -2057,7 +2159,7 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
           <label for="fregion">Region</label>
           <select id="fregion" name="region" required>
             <option value="">Select region…</option>
-            <option>United States</option><option>United Kingdom</option><option>Canada</option>
+            <option selected>United States</option><option>United Kingdom</option><option>Canada</option>
             <option>Australia</option><option>Germany</option><option>Netherlands</option>
             <option>Singapore</option><option>UAE / Middle East</option><option>Other</option>
           </select>
@@ -2066,7 +2168,7 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
           <label for="fenquiry">Enquiry Type</label>
           <select id="fenquiry" name="enquiry_type" required>
             <option value="">Select type…</option>
-            <option>Project Support / Overflow</option>
+            <option selected>Project Support / Overflow</option>
             <option>Support &amp; Maintenance</option>
             <option>Training &amp; Enablement</option>
             <option>Data &amp; BI Project</option>
@@ -2519,6 +2621,68 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!cta) return;
     track('cta_click', { label: (cta.textContent || '').trim().slice(0, 60) });
   });
+
+  /* ── Form journey: smart defaults + goal-gradient progress + build-your-engagement chips ──
+     The selects ship pre-filled and the "Time & Materials" chip ships selected, so the
+     progress bar never starts at 0%. Chip choices post with the form (hidden fields)
+     and personalize the message hint. */
+  (() => {
+    const journeyForm = document.getElementById('contactForm');
+    if (!journeyForm || !document.getElementById('fjFill')) return;
+    const fill = document.getElementById('fjFill');
+    const pctEl = document.getElementById('fjPct');
+    const msgField = document.getElementById('fmessage');
+    const defaultHint = msgField.placeholder;
+    const groups = journeyForm.querySelectorAll('.fj-group');
+
+    const val = (id) => (document.getElementById(id) || { value: '' }).value;
+    function syncHint() {
+      const model = val('fjModel'), skills = val('fjSkills'), start = val('fjStart');
+      msgField.placeholder = (model || skills || start)
+        ? 'e.g., We need ' + (skills || 'a senior consultant') + (model ? ' on a ' + model + ' basis' : '') + (start ? ', starting ' + (start === 'ASAP' ? start : start.toLowerCase()) : '') + ' — plus any client or pipeline context.'
+        : defaultHint;
+    }
+    const steps = [
+      () => !!val('fjModel'),
+      () => !!val('fjSkills'),
+      () => !!val('fregion'),
+      () => !!val('fenquiry'),
+      () => !!val('fname').trim(),
+      () => !!val('femail').trim(),
+      () => !!msgField.value.trim(),
+    ];
+    function update() {
+      const done = steps.filter((f) => f()).length;
+      const p = Math.round((done / steps.length) * 100);
+      fill.style.width = p + '%';
+      pctEl.textContent = p >= 100
+        ? "100% — ready. Don't lose it."
+        : p + '% there — ' + (steps.length - done) + ' quick ' + (steps.length - done === 1 ? 'step' : 'steps') + ' left';
+    }
+    groups.forEach((g) => {
+      const multi = g.dataset.multi === '1';
+      const hidden = g.querySelector('input[type="hidden"]');
+      g.querySelectorAll('.chip').forEach((ch) => ch.addEventListener('click', () => {
+        if (multi) ch.classList.toggle('on');
+        else { g.querySelectorAll('.chip').forEach((c) => c.classList.remove('on')); ch.classList.add('on'); }
+        hidden.value = [...g.querySelectorAll('.chip.on')].map((c) => c.textContent.trim()).join(', ');
+        syncHint(); update();
+      }));
+    });
+    // The submit handler calls form.reset() on success — restore chips/defaults too.
+    const origReset = journeyForm.reset.bind(journeyForm);
+    journeyForm.reset = () => {
+      origReset();
+      groups.forEach((g) => {
+        const hidden = g.querySelector('input[type="hidden"]');
+        g.querySelectorAll('.chip').forEach((c) => c.classList.toggle('on', !!hidden.defaultValue && c.textContent.trim() === hidden.defaultValue));
+        hidden.value = hidden.defaultValue;
+      });
+      syncHint(); update();
+    };
+    journeyForm.addEventListener('input', update);
+    syncHint(); update();
+  })();
 
   /* ── Form submission via Formspree ── */
   const FORMSPREE_ID = 'xdapybyb';
