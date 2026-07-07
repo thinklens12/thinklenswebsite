@@ -1010,14 +1010,15 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .fg{display:flex;flex-direction:column;gap:6px;position:relative}
 /* ── Contact-form mode toggle (enquiry vs book-a-call) ── */
 .cform-tabs{
-  display:grid;grid-template-columns:1fr 1fr;gap:4px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:4px;
   background:var(--card);border:1px solid var(--border);border-radius:12px;
   padding:4px;margin-bottom:8px;
 }
 .cform-tab{
-  cursor:pointer;border:0;border-radius:9px;padding:11px 14px;
+  cursor:pointer;border:0;border-radius:9px;padding:11px 10px;min-height:46px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
   background:transparent;color:var(--g300);
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:.92rem;font-weight:600;letter-spacing:-.005em;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.86rem;font-weight:600;letter-spacing:-.005em;line-height:1.2;
   transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease);
 }
 .cform-tab:hover{color:var(--white)}
@@ -1026,6 +1027,87 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .cform-panel{display:flex;flex-direction:column;gap:14px}
 .cform-panel[hidden]{display:none}
 .cform-panel-deck{font-size:.95rem;line-height:1.65;color:var(--g300);margin:0}
+/* ── WhatsApp preview inside an iPhone mockup (whatsapp panel) ──
+   WhatsApp's own dark palette, self-contained; the phone bezel is black in
+   both site themes (as phones are). */
+[data-panel="whatsapp"]{
+  --wa-header:#1f2c34;--wa-bg:#0b141a;--wa-in:#1f2c34;--wa-out:#005c4b;
+  --wa-text:#e9edef;--wa-sub:#8696a0;--wa-green:#25d366;
+}
+.wa-mock-wrap{display:flex;justify-content:center;padding:6px 0 2px}
+.iphone{
+  position:relative;width:310px;padding:11px;
+  background:#0a0a0b;border-radius:46px;
+  box-shadow:0 0 0 2px #2a2a2e,0 26px 60px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.iphone-island{
+  position:absolute;top:20px;left:50%;transform:translateX(-50%);
+  width:92px;height:26px;background:#000;border-radius:16px;z-index:4;
+}
+.iphone-screen{
+  position:relative;border-radius:38px;overflow:hidden;background:var(--wa-bg);
+  aspect-ratio:9 / 19.5;display:flex;flex-direction:column;
+  font-family:'Inter',-apple-system,sans-serif;
+}
+/* status bar */
+.wa-statusbar{
+  background:var(--wa-header);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 22px 6px;font-size:.78rem;font-weight:600;
+}
+.wa-sysicons{display:flex;align-items:center;gap:5px}
+/* chats-list header */
+.wa-list-header{
+  background:var(--wa-header);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;padding:6px 16px 12px;
+}
+.wa-list-title{font-size:1.35rem;font-weight:700;letter-spacing:-.01em}
+.wa-list-actions{display:flex;align-items:center;gap:18px;color:var(--wa-green)}
+.wa-list-actions svg{width:20px;height:20px}
+/* search bar */
+.wa-search{
+  display:flex;align-items:center;gap:9px;margin:2px 12px 8px;
+  background:#2a3942;color:var(--wa-sub);border-radius:10px;padding:8px 13px;font-size:.82rem;
+}
+.wa-search svg{width:15px;height:15px;flex:0 0 auto}
+/* chat list */
+.wa-chatlist{flex:1;background:var(--wa-bg)}
+.wa-chat-row{
+  display:flex;align-items:center;gap:12px;padding:11px 14px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.wa-avatar{
+  position:relative;width:48px;height:48px;flex:0 0 auto;border-radius:50%;
+  background:radial-gradient(circle at 50% 40%,#12242f,#0a151c);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.wa-dp-mark{width:60%;height:60%;display:block}
+.wa-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--wa-green);flex:0 0 auto;
+  animation:waBlink 1.5s ease-in-out infinite;
+}
+@keyframes waBlink{
+  0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(37,211,102,.55)}
+  50%{opacity:.4;box-shadow:0 0 0 4px rgba(37,211,102,0)}
+}
+.wa-row-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.wa-row-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.wa-row-name{
+  font-size:.86rem;font-weight:600;color:#fff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.wa-row-time{font-size:.66rem;color:var(--wa-sub);flex:0 0 auto}
+.wa-row-bot{display:flex;align-items:center;gap:7px;min-height:16px}
+.wa-online{font-size:.76rem;font-weight:500;color:var(--wa-green)}
+/* the one primary action in this mode — WhatsApp green.
+   .fsub.wa-cta out-specifies the base .fsub (white) that follows in source. */
+.fsub.wa-cta{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--wa-green);color:#0b141a;
+}
+.wa-cta svg{width:19px;height:19px}
+.fsub.wa-cta:hover:not(:disabled){background:#1ebe5a;color:#062012;box-shadow:0 12px 28px rgba(37,211,102,.28)}
+@media(prefers-reduced-motion:reduce){.wa-dot{animation:none}}
 /* ── Cal.com inline calendar (book-a-call panel) ── */
 .cal-embed{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
 .cal-embed[hidden]{display:none}

@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const panels = {
       enquiry: document.getElementById('panelEnquiry'),
       call: document.getElementById('panelCall'),
+      whatsapp: document.getElementById('panelWhatsapp'),
     };
     const setMode = (mode) => {
       cformTabs.forEach((t) => {
