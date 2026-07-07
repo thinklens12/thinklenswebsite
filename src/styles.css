@@ -1008,20 +1008,25 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .cform{display:flex;flex-direction:column;gap:14px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg{display:flex;flex-direction:column;gap:6px;position:relative}
-/* ── Date & Time field → Cal.com inline ── */
-.dt-trigger{
-  display:flex;align-items:center;gap:10px;width:100%;cursor:pointer;text-align:left;
-  background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;
-  font-family:'Inter',sans-serif;font-size:.92rem;font-weight:500;color:var(--g200);
-  transition:border-color .25s,background .25s,box-shadow .25s,color .25s;
+/* ── Contact-form mode toggle (enquiry vs book-a-call) ── */
+.cform-tabs{
+  display:grid;grid-template-columns:1fr 1fr;gap:4px;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:4px;margin-bottom:22px;
 }
-.dt-trigger:hover{border-color:var(--border-hi);color:var(--white)}
-.dt-trigger.is-open{border-color:var(--accent);background:rgba(0,122,255,.04);box-shadow:0 0 0 4px rgba(0,122,255,.12)}
-.dt-cal-icon{width:18px;height:18px;flex-shrink:0;color:var(--accent);fill:none}
-.dt-trigger-text{flex:1}
-.dt-chevron{width:18px;height:18px;flex-shrink:0;color:var(--g400);fill:none;transition:transform .3s var(--ease)}
-.dt-trigger.is-open .dt-chevron{transform:rotate(180deg)}
-.cal-embed{margin-top:8px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
+.cform-tab{
+  cursor:pointer;border:0;border-radius:9px;padding:11px 14px;
+  background:transparent;color:var(--g300);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.92rem;font-weight:600;letter-spacing:-.005em;
+  transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease);
+}
+.cform-tab:hover{color:var(--white)}
+.cform-tab.is-active{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 14px rgba(0,122,255,.28)}
+@media(prefers-reduced-motion:reduce){.cform-tab{transition:none}}
+.cform-panel[hidden]{display:none}
+.cform-panel-deck{font-size:.95rem;line-height:1.65;color:var(--g300);margin:0 0 16px}
+/* ── Cal.com inline calendar (book-a-call panel) ── */
+.cal-embed{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
 .cal-embed[hidden]{display:none}
 #cal-inline-form{position:relative;width:100%;min-height:580px;background:var(--card)}
 .cal-embed.is-loaded #cal-inline-form{min-height:0}

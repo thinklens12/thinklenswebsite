@@ -145,11 +145,14 @@ document.addEventListener('DOMContentLoaded', function() {
     updateSticky();
   }
 
-  /* ── "Date & Time" form field → reveal + lazy-load the Cal.com calendar ── */
-  const dtTrigger = document.getElementById('dtTrigger');
+  /* ── Contact-form mode toggle → "Send an enquiry" vs "Book a call" ──
+     Only one primary button is ever visible; the Cal.com calendar is
+     lazy-mounted the first time the "Book a call" tab is opened. */
   const calForm = document.getElementById('calForm');
   const calMount = document.getElementById('cal-inline-form');
-  if (dtTrigger && calForm && calMount) {
+  const cformTabs = document.querySelectorAll('.cform-tab');
+  const tabCall = document.getElementById('tabCall');
+  if (calForm && calMount && cformTabs.length) {
     const CAL_LINK = 'think-lens-consulting-kui4bb/30min';
     let scriptReady = false, mounted = false;
     // Load the embed script + preload data (safe to run before the container is shown)
@@ -186,22 +189,27 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof window.gtag === 'function') window.gtag('event', 'book_appointment', { method: 'cal.com' });
       }});
     };
-    dtTrigger.addEventListener('click', () => {
-      const opening = calForm.hasAttribute('hidden');
-      if (opening) {
-        calForm.removeAttribute('hidden');
-        dtTrigger.setAttribute('aria-expanded', 'true');
-        dtTrigger.classList.add('is-open');
-        mountCal();
-      } else {
-        calForm.setAttribute('hidden', '');
-        dtTrigger.setAttribute('aria-expanded', 'false');
-        dtTrigger.classList.remove('is-open');
-      }
-    });
+    const panels = {
+      enquiry: document.getElementById('panelEnquiry'),
+      call: document.getElementById('panelCall'),
+    };
+    const setMode = (mode) => {
+      cformTabs.forEach((t) => {
+        const active = t.dataset.mode === mode;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      Object.keys(panels).forEach((k) => {
+        if (panels[k]) panels[k].toggleAttribute('hidden', k !== mode);
+      });
+      if (mode === 'call') mountCal();
+    };
+    cformTabs.forEach((t) => t.addEventListener('click', () => setMode(t.dataset.mode)));
     // Warm the script on hover/focus intent so the first open is instant
-    dtTrigger.addEventListener('pointerenter', warmCal, { once: true });
-    dtTrigger.addEventListener('focus', warmCal, { once: true });
+    if (tabCall) {
+      tabCall.addEventListener('pointerenter', warmCal, { once: true });
+      tabCall.addEventListener('focus', warmCal, { once: true });
+    }
   }
 
   /* ── Count-up animation ── */
