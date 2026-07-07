@@ -1129,14 +1129,15 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .fg{display:flex;flex-direction:column;gap:6px;position:relative}
 /* ── Contact-form mode toggle (enquiry vs book-a-call) ── */
 .cform-tabs{
-  display:grid;grid-template-columns:1fr 1fr;gap:4px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:4px;
   background:var(--card);border:1px solid var(--border);border-radius:12px;
   padding:4px;margin-bottom:8px;
 }
 .cform-tab{
-  cursor:pointer;border:0;border-radius:9px;padding:11px 14px;
+  cursor:pointer;border:0;border-radius:9px;padding:11px 10px;min-height:46px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
   background:transparent;color:var(--g300);
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:.92rem;font-weight:600;letter-spacing:-.005em;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.86rem;font-weight:600;letter-spacing:-.005em;line-height:1.2;
   transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease);
 }
 .cform-tab:hover{color:var(--white)}
@@ -1145,6 +1146,106 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .cform-panel{display:flex;flex-direction:column;gap:14px}
 .cform-panel[hidden]{display:none}
 .cform-panel-deck{font-size:.95rem;line-height:1.65;color:var(--g300);margin:0}
+/* ── WhatsApp preview inside an iPhone mockup (whatsapp panel) ──
+   WhatsApp's own dark palette, self-contained; the phone bezel is black in
+   both site themes (as phones are). */
+[data-panel="whatsapp"]{
+  --wa-header:#1f2c34;--wa-bg:#0b141a;--wa-in:#1f2c34;--wa-out:#005c4b;
+  --wa-text:#e9edef;--wa-sub:#8696a0;--wa-green:#25d366;
+}
+.wa-mock-wrap{display:flex;justify-content:center;padding:6px 0 2px}
+.iphone{
+  position:relative;width:310px;padding:11px;
+  background:#0a0a0b;border-radius:46px;
+  box-shadow:0 0 0 2px #2a2a2e,0 26px 60px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.iphone-island{
+  position:absolute;top:20px;left:50%;transform:translateX(-50%);
+  width:92px;height:26px;background:#000;border-radius:16px;z-index:4;
+}
+.iphone-screen{
+  position:relative;border-radius:36px;overflow:hidden;background:var(--wa-bg);
+  height:544px;display:flex;flex-direction:column;
+  font-family:'Inter',-apple-system,sans-serif;
+}
+/* status bar */
+.wa-statusbar{
+  background:var(--wa-header);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 22px 6px;font-size:.78rem;font-weight:600;
+}
+.wa-sysicons{display:flex;align-items:center;gap:5px}
+/* chat header */
+.wa-header{
+  background:var(--wa-header);color:var(--wa-text);
+  display:flex;align-items:center;gap:8px;padding:6px 10px 10px;
+}
+.wa-back{width:18px;height:18px;flex:0 0 auto;color:var(--wa-text)}
+.wa-avatar{
+  width:34px;height:34px;flex:0 0 auto;border-radius:50%;
+  background:linear-gradient(135deg,#2a3942,#374850);
+  display:flex;align-items:center;justify-content:center;color:#aebac1;
+}
+.wa-avatar svg{width:22px;height:22px}
+.wa-peer{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
+.wa-name{font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-presence{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--wa-sub)}
+.wa-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--wa-green);flex:0 0 auto;
+  animation:waBlink 1.5s ease-in-out infinite;
+}
+@keyframes waBlink{
+  0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(37,211,102,.55)}
+  50%{opacity:.35;box-shadow:0 0 0 5px rgba(37,211,102,0)}
+}
+.wa-head-actions{display:flex;align-items:center;gap:12px;color:var(--wa-text)}
+.wa-head-actions svg{width:18px;height:18px}
+/* chat body */
+.wa-chat{
+  flex:1;overflow:hidden;padding:12px 10px;
+  display:flex;flex-direction:column;gap:8px;
+  background:var(--wa-bg);
+  background-image:radial-gradient(rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:18px 18px;
+}
+.wa-daysep{text-align:center;margin:2px 0 4px}
+.wa-daysep span{
+  display:inline-block;background:rgba(31,44,52,.85);color:var(--wa-sub);
+  font-size:.62rem;font-weight:600;letter-spacing:.06em;padding:4px 10px;border-radius:8px;
+}
+.wa-bubble{
+  position:relative;max-width:80%;padding:7px 9px 5px;border-radius:9px;
+  font-size:.8rem;line-height:1.4;color:var(--wa-text);
+  box-shadow:0 1px 1px rgba(0,0,0,.2);
+}
+.wa-bubble p{margin:0;padding-right:6px}
+.wa-in{align-self:flex-start;background:var(--wa-in);border-top-left-radius:2px}
+.wa-out{align-self:flex-end;background:var(--wa-out);border-top-right-radius:2px}
+.wa-meta{display:block;text-align:right;font-size:.6rem;color:var(--wa-sub);margin-top:1px}
+.wa-out .wa-meta{color:rgba(233,237,239,.6)}
+.wa-ticks{display:inline-block;width:15px;height:10px;vertical-align:-1px;color:#53bdeb}
+/* input bar */
+.wa-inputbar{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--wa-header);
+}
+.wa-input{
+  flex:1;background:#2a3942;color:var(--wa-sub);border-radius:20px;
+  padding:9px 14px;font-size:.8rem;
+}
+.wa-mic{
+  width:38px;height:38px;flex:0 0 auto;border-radius:50%;background:var(--wa-green);
+  display:flex;align-items:center;justify-content:center;color:#0b141a;
+}
+.wa-mic svg{width:20px;height:20px}
+/* the one primary action in this mode — WhatsApp green.
+   .fsub.wa-cta out-specifies the base .fsub (white) that follows in source. */
+.fsub.wa-cta{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--wa-green);color:#0b141a;
+}
+.wa-cta svg{width:19px;height:19px}
+.fsub.wa-cta:hover:not(:disabled){background:#1ebe5a;color:#062012;box-shadow:0 12px 28px rgba(37,211,102,.28)}
+@media(prefers-reduced-motion:reduce){.wa-dot{animation:none}}
 /* ── Cal.com inline calendar (book-a-call panel) ── */
 .cal-embed{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
 .cal-embed[hidden]{display:none}
@@ -2133,6 +2234,7 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
         <div class="cform-tabs" role="tablist" aria-label="How would you like to start?">
           <button type="button" class="cform-tab is-active" id="tabEnquiry" role="tab" aria-selected="true" aria-controls="panelEnquiry" data-mode="enquiry">Send an enquiry</button>
           <button type="button" class="cform-tab" id="tabCall" role="tab" aria-selected="false" aria-controls="panelCall" data-mode="call">Book a call</button>
+          <button type="button" class="cform-tab" id="tabWhatsapp" role="tab" aria-selected="false" aria-controls="panelWhatsapp" data-mode="whatsapp">WhatsApp Chat</button>
         </div>
         <!-- ── Enquiry mode ── -->
         <div class="cform-panel" id="panelEnquiry" data-panel="enquiry" role="tabpanel" aria-labelledby="tabEnquiry">
@@ -2219,6 +2321,52 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
             </div>
           </div>
         </div><!-- /panelCall -->
+        <!-- ── WhatsApp-chat mode: a WhatsApp preview inside an iPhone mockup,
+             with the single "Open WhatsApp" primary action. -->
+        <div class="cform-panel" id="panelWhatsapp" data-panel="whatsapp" role="tabpanel" aria-labelledby="tabWhatsapp" hidden>
+          <p class="cform-panel-deck">Prefer a quick chat? Message us on WhatsApp — we usually reply within the hour.</p>
+          <div class="wa-mock-wrap">
+            <div class="iphone" aria-hidden="true">
+              <span class="iphone-island"></span>
+              <div class="iphone-screen">
+                <div class="wa-statusbar">
+                  <span class="wa-time">9:41</span>
+                  <span class="wa-sysicons">
+                    <svg viewBox="0 0 20 12" width="18" height="11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+                    <svg viewBox="0 0 16 12" width="16" height="11" fill="currentColor"><path d="M8 2.5c2.3 0 4.4.9 6 2.4l1.2-1.3A10.4 10.4 0 0 0 8 .8 10.4 10.4 0 0 0 .8 3.6L2 4.9A8.4 8.4 0 0 1 8 2.5Zm0 3.6c1.3 0 2.5.5 3.4 1.4l1.2-1.3A6.7 6.7 0 0 0 8 4.1a6.7 6.7 0 0 0-4.6 2.1l1.2 1.3A4.7 4.7 0 0 1 8 6.1Zm0 3.5 1.9-2a2.7 2.7 0 0 0-3.8 0l1.9 2Z"/></svg>
+                    <svg viewBox="0 0 26 12" width="24" height="11"><rect x="0.5" y="1" width="21" height="10" rx="3" fill="none" stroke="currentColor" stroke-opacity=".5"/><rect x="2" y="2.5" width="17" height="7" rx="1.5" fill="currentColor"/><rect x="23" y="4" width="2" height="4" rx="1" fill="currentColor" fill-opacity=".5"/></svg>
+                  </span>
+                </div>
+                <div class="wa-header">
+                  <svg class="wa-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  <span class="wa-avatar"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span>
+                  <div class="wa-peer">
+                    <span class="wa-name">Thinklens Consulting</span>
+                    <span class="wa-presence"><span class="wa-dot"></span>online</span>
+                  </div>
+                  <span class="wa-head-actions">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m23 7-7 5 7 5V7Z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+                  </span>
+                </div>
+                <div class="wa-chat">
+                  <div class="wa-daysep"><span>TODAY</span></div>
+                  <div class="wa-bubble wa-in"><p>Hi 👋 Thanks for reaching out to Thinklens.</p><span class="wa-meta">9:41 AM</span></div>
+                  <div class="wa-bubble wa-in"><p>Need senior IT or data hands on short notice? Tell us the gap — we'll line up the right consultant.</p><span class="wa-meta">9:41 AM</span></div>
+                  <div class="wa-bubble wa-out"><p>Perfect — I'd like to discuss an overflow project.</p><span class="wa-meta">9:42 AM <svg class="wa-ticks" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 6.5 3 3 6.5-7"/><path d="m7 9.5 6.5-7"/></svg></span></div>
+                </div>
+                <div class="wa-inputbar">
+                  <span class="wa-input">Message</span>
+                  <span class="wa-mic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M18 12a6 6 0 0 1-12 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 18v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="fsub wa-cta" href="https://wa.me/919676291788?text=Hi%20Thinklens%20—%20I%27d%20like%20to%20discuss%20an%20engagement." target="_blank" rel="noopener" data-ripple>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Open WhatsApp Chat
+          </a>
+        </div><!-- /panelWhatsapp -->
       </form>
     </div>
   </div>
@@ -2490,6 +2638,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const panels = {
       enquiry: document.getElementById('panelEnquiry'),
       call: document.getElementById('panelCall'),
+      whatsapp: document.getElementById('panelWhatsapp'),
     };
     const setMode = (mode) => {
       cformTabs.forEach((t) => {
