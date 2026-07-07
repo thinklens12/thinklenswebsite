@@ -1049,7 +1049,7 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .cform-tabs{
   display:grid;grid-template-columns:1fr 1fr;gap:4px;
   background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:4px;margin-bottom:22px;
+  padding:4px;margin-bottom:8px;
 }
 .cform-tab{
   cursor:pointer;border:0;border-radius:9px;padding:11px 14px;
@@ -1060,8 +1060,9 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .cform-tab:hover{color:var(--white)}
 .cform-tab.is-active{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 14px rgba(0,122,255,.28)}
 @media(prefers-reduced-motion:reduce){.cform-tab{transition:none}}
+.cform-panel{display:flex;flex-direction:column;gap:14px}
 .cform-panel[hidden]{display:none}
-.cform-panel-deck{font-size:.95rem;line-height:1.65;color:var(--g300);margin:0 0 16px}
+.cform-panel-deck{font-size:.95rem;line-height:1.65;color:var(--g300);margin:0}
 /* ── Cal.com inline calendar (book-a-call panel) ── */
 .cal-embed{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
 .cal-embed[hidden]{display:none}
