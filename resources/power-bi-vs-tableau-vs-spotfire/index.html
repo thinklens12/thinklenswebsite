@@ -1127,20 +1127,25 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .cform{display:flex;flex-direction:column;gap:14px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg{display:flex;flex-direction:column;gap:6px;position:relative}
-/* ── Date & Time field → Cal.com inline ── */
-.dt-trigger{
-  display:flex;align-items:center;gap:10px;width:100%;cursor:pointer;text-align:left;
-  background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;
-  font-family:'Inter',sans-serif;font-size:.92rem;font-weight:500;color:var(--g200);
-  transition:border-color .25s,background .25s,box-shadow .25s,color .25s;
+/* ── Contact-form mode toggle (enquiry vs book-a-call) ── */
+.cform-tabs{
+  display:grid;grid-template-columns:1fr 1fr;gap:4px;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:4px;margin-bottom:22px;
 }
-.dt-trigger:hover{border-color:var(--border-hi);color:var(--white)}
-.dt-trigger.is-open{border-color:var(--accent);background:rgba(0,122,255,.04);box-shadow:0 0 0 4px rgba(0,122,255,.12)}
-.dt-cal-icon{width:18px;height:18px;flex-shrink:0;color:var(--accent);fill:none}
-.dt-trigger-text{flex:1}
-.dt-chevron{width:18px;height:18px;flex-shrink:0;color:var(--g400);fill:none;transition:transform .3s var(--ease)}
-.dt-trigger.is-open .dt-chevron{transform:rotate(180deg)}
-.cal-embed{margin-top:8px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
+.cform-tab{
+  cursor:pointer;border:0;border-radius:9px;padding:11px 14px;
+  background:transparent;color:var(--g300);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.92rem;font-weight:600;letter-spacing:-.005em;
+  transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease);
+}
+.cform-tab:hover{color:var(--white)}
+.cform-tab.is-active{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 14px rgba(0,122,255,.28)}
+@media(prefers-reduced-motion:reduce){.cform-tab{transition:none}}
+.cform-panel[hidden]{display:none}
+.cform-panel-deck{font-size:.95rem;line-height:1.65;color:var(--g300);margin:0 0 16px}
+/* ── Cal.com inline calendar (book-a-call panel) ── */
+.cal-embed{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
 .cal-embed[hidden]{display:none}
 #cal-inline-form{position:relative;width:100%;min-height:580px;background:var(--card)}
 .cal-embed.is-loaded #cal-inline-form{min-height:0}
@@ -2131,6 +2136,14 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
         </div>
       </div>
       <form class="cform r" id="contactForm">
+        <!-- Two distinct conversions, one visible at a time — no competing submit
+             buttons. "Send an enquiry" shows the form; "Book a call" shows Cal.com. -->
+        <div class="cform-tabs" role="tablist" aria-label="How would you like to start?">
+          <button type="button" class="cform-tab is-active" id="tabEnquiry" role="tab" aria-selected="true" aria-controls="panelEnquiry" data-mode="enquiry">Send an enquiry</button>
+          <button type="button" class="cform-tab" id="tabCall" role="tab" aria-selected="false" aria-controls="panelCall" data-mode="call">Book a call</button>
+        </div>
+        <!-- ── Enquiry mode ── -->
+        <div class="cform-panel" id="panelEnquiry" data-panel="enquiry" role="tabpanel" aria-labelledby="tabEnquiry">
         <!-- Goal gradient: the bar never starts at 0% — smart defaults pre-complete
              the first steps, so visitors finish rather than start. -->
         <div class="fj-progress">
@@ -2197,25 +2210,23 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
             <option>General Enquiry</option>
           </select>
         </div>
-        <div class="fg">
-          <label>Date &amp; Time</label>
-          <button type="button" class="dt-trigger" id="dtTrigger" aria-expanded="false" aria-controls="calForm">
-            <svg class="dt-cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18"/><path d="M8 2.5v4"/><path d="M16 2.5v4"/></svg>
-            <span class="dt-trigger-text">Pick a 30-minute slot for a call</span>
-            <svg class="dt-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="cal-embed" id="calForm" hidden>
-            <div id="cal-inline-form" role="region" aria-label="Booking calendar">
-              <div class="cal-loading"><span class="cal-spinner" aria-hidden="true"></span><span>Loading calendar…</span></div>
-            </div>
-          </div>
-        </div>
         <div class="fg"><label for="fmessage">Message</label><textarea id="fmessage" name="message" placeholder="Tell us about your pipeline, team size, or engagement scope…"></textarea></div>
         <input type="text" name="_gotcha" style="display:none">
         <input type="hidden" name="_subject" value="New Enquiry — Thinklens Website">
         <input type="hidden" name="_replyto" id="replyto">
         <button type="submit" class="fsub" id="submitBtn" data-ripple>Send Enquiry</button>
         <p id="formMsg"></p>
+        </div><!-- /panelEnquiry -->
+        <!-- ── Book-a-call mode: the Cal.com calendar is the entire panel; its own
+             Confirm button is the only primary action here (lazy-mounted on open). -->
+        <div class="cform-panel" id="panelCall" data-panel="call" role="tabpanel" aria-labelledby="tabCall" hidden>
+          <p class="cform-panel-deck">Pick a 30-minute slot that suits you — we'll meet remotely, no prep needed.</p>
+          <div class="cal-embed" id="calForm">
+            <div id="cal-inline-form" role="region" aria-label="Booking calendar">
+              <div class="cal-loading"><span class="cal-spinner" aria-hidden="true"></span><span>Loading calendar…</span></div>
+            </div>
+          </div>
+        </div><!-- /panelCall -->
       </form>
     </div>
   </div>
@@ -2440,11 +2451,14 @@ document.addEventListener('DOMContentLoaded', function() {
     updateSticky();
   }
 
-  /* ── "Date & Time" form field → reveal + lazy-load the Cal.com calendar ── */
-  const dtTrigger = document.getElementById('dtTrigger');
+  /* ── Contact-form mode toggle → "Send an enquiry" vs "Book a call" ──
+     Only one primary button is ever visible; the Cal.com calendar is
+     lazy-mounted the first time the "Book a call" tab is opened. */
   const calForm = document.getElementById('calForm');
   const calMount = document.getElementById('cal-inline-form');
-  if (dtTrigger && calForm && calMount) {
+  const cformTabs = document.querySelectorAll('.cform-tab');
+  const tabCall = document.getElementById('tabCall');
+  if (calForm && calMount && cformTabs.length) {
     const CAL_LINK = 'think-lens-consulting-kui4bb/30min';
     let scriptReady = false, mounted = false;
     // Load the embed script + preload data (safe to run before the container is shown)
@@ -2481,22 +2495,27 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof window.gtag === 'function') window.gtag('event', 'book_appointment', { method: 'cal.com' });
       }});
     };
-    dtTrigger.addEventListener('click', () => {
-      const opening = calForm.hasAttribute('hidden');
-      if (opening) {
-        calForm.removeAttribute('hidden');
-        dtTrigger.setAttribute('aria-expanded', 'true');
-        dtTrigger.classList.add('is-open');
-        mountCal();
-      } else {
-        calForm.setAttribute('hidden', '');
-        dtTrigger.setAttribute('aria-expanded', 'false');
-        dtTrigger.classList.remove('is-open');
-      }
-    });
+    const panels = {
+      enquiry: document.getElementById('panelEnquiry'),
+      call: document.getElementById('panelCall'),
+    };
+    const setMode = (mode) => {
+      cformTabs.forEach((t) => {
+        const active = t.dataset.mode === mode;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      Object.keys(panels).forEach((k) => {
+        if (panels[k]) panels[k].toggleAttribute('hidden', k !== mode);
+      });
+      if (mode === 'call') mountCal();
+    };
+    cformTabs.forEach((t) => t.addEventListener('click', () => setMode(t.dataset.mode)));
     // Warm the script on hover/focus intent so the first open is instant
-    dtTrigger.addEventListener('pointerenter', warmCal, { once: true });
-    dtTrigger.addEventListener('focus', warmCal, { once: true });
+    if (tabCall) {
+      tabCall.addEventListener('pointerenter', warmCal, { once: true });
+      tabCall.addEventListener('focus', warmCal, { once: true });
+    }
   }
 
   /* ── Count-up animation ── */

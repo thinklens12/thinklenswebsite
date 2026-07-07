@@ -26,6 +26,14 @@
         </div>
       </div>
       <form class="cform r" id="contactForm">
+        <!-- Two distinct conversions, one visible at a time — no competing submit
+             buttons. "Send an enquiry" shows the form; "Book a call" shows Cal.com. -->
+        <div class="cform-tabs" role="tablist" aria-label="How would you like to start?">
+          <button type="button" class="cform-tab is-active" id="tabEnquiry" role="tab" aria-selected="true" aria-controls="panelEnquiry" data-mode="enquiry">Send an enquiry</button>
+          <button type="button" class="cform-tab" id="tabCall" role="tab" aria-selected="false" aria-controls="panelCall" data-mode="call">Book a call</button>
+        </div>
+        <!-- ── Enquiry mode ── -->
+        <div class="cform-panel" id="panelEnquiry" data-panel="enquiry" role="tabpanel" aria-labelledby="tabEnquiry">
         <!-- Goal gradient: the bar never starts at 0% — smart defaults pre-complete
              the first steps, so visitors finish rather than start. -->
         <div class="fj-progress">
@@ -92,25 +100,23 @@
             <option>General Enquiry</option>
           </select>
         </div>
-        <div class="fg">
-          <label>Date &amp; Time</label>
-          <button type="button" class="dt-trigger" id="dtTrigger" aria-expanded="false" aria-controls="calForm">
-            <svg class="dt-cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18"/><path d="M8 2.5v4"/><path d="M16 2.5v4"/></svg>
-            <span class="dt-trigger-text">Pick a 30-minute slot for a call</span>
-            <svg class="dt-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="cal-embed" id="calForm" hidden>
-            <div id="cal-inline-form" role="region" aria-label="Booking calendar">
-              <div class="cal-loading"><span class="cal-spinner" aria-hidden="true"></span><span>Loading calendar…</span></div>
-            </div>
-          </div>
-        </div>
         <div class="fg"><label for="fmessage">Message</label><textarea id="fmessage" name="message" placeholder="Tell us about your pipeline, team size, or engagement scope…"></textarea></div>
         <input type="text" name="_gotcha" style="display:none">
         <input type="hidden" name="_subject" value="New Enquiry — Thinklens Website">
         <input type="hidden" name="_replyto" id="replyto">
         <button type="submit" class="fsub" id="submitBtn" data-ripple>Send Enquiry</button>
         <p id="formMsg"></p>
+        </div><!-- /panelEnquiry -->
+        <!-- ── Book-a-call mode: the Cal.com calendar is the entire panel; its own
+             Confirm button is the only primary action here (lazy-mounted on open). -->
+        <div class="cform-panel" id="panelCall" data-panel="call" role="tabpanel" aria-labelledby="tabCall" hidden>
+          <p class="cform-panel-deck">Pick a 30-minute slot that suits you — we'll meet remotely, no prep needed.</p>
+          <div class="cal-embed" id="calForm">
+            <div id="cal-inline-form" role="region" aria-label="Booking calendar">
+              <div class="cal-loading"><span class="cal-spinner" aria-hidden="true"></span><span>Loading calendar…</span></div>
+            </div>
+          </div>
+        </div><!-- /panelCall -->
       </form>
     </div>
   </div>
