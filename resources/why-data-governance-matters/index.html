@@ -2633,6 +2633,16 @@ document.addEventListener('DOMContentLoaded', function() {
       call: document.getElementById('panelCall'),
       whatsapp: document.getElementById('panelWhatsapp'),
     };
+    // WhatsApp mockup shows the visitor's own local time (status bar + chat row).
+    const syncWaTime = () => {
+      const wa = panels.whatsapp;
+      if (!wa) return;
+      const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      const row = wa.querySelector('.wa-row-time');
+      const bar = wa.querySelector('.wa-time');
+      if (row) row.textContent = t;
+      if (bar) bar.textContent = t.replace(/\s?[AP]M$/i, ''); // status bar has no AM/PM
+    };
     const setMode = (mode) => {
       cformTabs.forEach((t) => {
         const active = t.dataset.mode === mode;
@@ -2643,7 +2653,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (panels[k]) panels[k].toggleAttribute('hidden', k !== mode);
       });
       if (mode === 'call') mountCal();
+      if (mode === 'whatsapp') syncWaTime();
     };
+    syncWaTime();
     cformTabs.forEach((t) => t.addEventListener('click', () => setMode(t.dataset.mode)));
     // Warm the script on hover/focus intent so the first open is instant
     if (tabCall) {
