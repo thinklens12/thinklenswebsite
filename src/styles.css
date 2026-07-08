@@ -1099,6 +1099,11 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .wa-row-time{font-size:.66rem;color:var(--wa-sub);flex:0 0 auto}
 .wa-row-bot{display:flex;align-items:center;gap:7px;min-height:16px}
 .wa-online{font-size:.76rem;font-weight:500;color:var(--wa-green)}
+.wa-offline{font-size:.76rem;color:var(--wa-sub);display:none}
+/* Outside 9 AM–9 PM IST: hide the online dot/label, show a muted last-seen. */
+.wa-row-bot.is-offline .wa-dot,
+.wa-row-bot.is-offline .wa-online{display:none}
+.wa-row-bot.is-offline .wa-offline{display:inline}
 /* the one primary action in this mode — WhatsApp green.
    .fsub.wa-cta out-specifies the base .fsub (white) that follows in source. */
 .fsub.wa-cta{
