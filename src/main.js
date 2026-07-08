@@ -194,15 +194,22 @@ document.addEventListener('DOMContentLoaded', function() {
       call: document.getElementById('panelCall'),
       whatsapp: document.getElementById('panelWhatsapp'),
     };
-    // WhatsApp mockup shows the visitor's own local time (status bar + chat row).
+    // WhatsApp mockup shows the visitor's own local time (status bar + chat row),
+    // and "online" only during Thinklens hours: 9 AM–9 PM IST.
     const syncWaTime = () => {
       const wa = panels.whatsapp;
       if (!wa) return;
-      const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      const now = new Date();
+      const t = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
       const row = wa.querySelector('.wa-row-time');
       const bar = wa.querySelector('.wa-time');
       if (row) row.textContent = t;
       if (bar) bar.textContent = t.replace(/\s?[AP]M$/i, ''); // status bar has no AM/PM
+      // Current hour in IST (UTC+5:30, no DST), regardless of the visitor's zone.
+      const istHour = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getHours();
+      const online = istHour >= 9 && istHour < 21;
+      const bot = wa.querySelector('.wa-row-bot');
+      if (bot) bot.classList.toggle('is-offline', !online);
     };
     const setMode = (mode) => {
       cformTabs.forEach((t) => {
