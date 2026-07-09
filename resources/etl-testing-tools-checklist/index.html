@@ -1102,7 +1102,7 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 /* ── Bento grid: heading + form + contact + availability + guides ── */
 .contact-bento{
   display:grid;
-  grid-template-columns:0.9fr 0.9fr 1.2fr;
+  grid-template-columns:minmax(0,0.8fr) minmax(0,0.8fr) minmax(0,1.9fr);
   grid-template-areas:
     "head    head   form"
     "contact avail  form"
@@ -1154,7 +1154,7 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 }
 .creach-ic svg{width:17px;height:17px}
 .creach-wa{color:#25d366}
-.creach-v{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.creach-v{min-width:0;overflow-wrap:anywhere}
 /* Availability tile — live 9 AM–9 PM IST presence */
 .bt-avail{display:flex;flex-direction:column}
 .avail-status{display:flex;align-items:center;gap:8px;margin-bottom:8px}
