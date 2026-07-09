@@ -194,23 +194,26 @@ document.addEventListener('DOMContentLoaded', function() {
       call: document.getElementById('panelCall'),
       whatsapp: document.getElementById('panelWhatsapp'),
     };
-    // WhatsApp mockup shows the visitor's own local time (status bar + chat row),
-    // and "online" only during Thinklens hours: 9 AM–9 PM IST.
+    // Thinklens is "online" 9 AM–9 PM IST (UTC+5:30, no DST), computed from the
+    // visitor's clock regardless of their zone. Drives both the WhatsApp mockup
+    // presence and the availability bento tile.
+    const availTile = document.getElementById('availTile');
+    const isOnlineIST = () =>
+      (h => h >= 9 && h < 21)(new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getHours());
     const syncWaTime = () => {
+      const online = isOnlineIST();
+      if (availTile) availTile.classList.toggle('is-offline', !online);
       const wa = panels.whatsapp;
       if (!wa) return;
-      const now = new Date();
-      const t = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
       const row = wa.querySelector('.wa-row-time');
       const bar = wa.querySelector('.wa-time');
       if (row) row.textContent = t;
       if (bar) bar.textContent = t.replace(/\s?[AP]M$/i, ''); // status bar has no AM/PM
-      // Current hour in IST (UTC+5:30, no DST), regardless of the visitor's zone.
-      const istHour = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getHours();
-      const online = istHour >= 9 && istHour < 21;
       const bot = wa.querySelector('.wa-row-bot');
       if (bot) bot.classList.toggle('is-offline', !online);
     };
+    setInterval(syncWaTime, 60000); // keep time + presence fresh if left open
     const setMode = (mode) => {
       cformTabs.forEach((t) => {
         const active = t.dataset.mode === mode;
@@ -510,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
       requestAnimationFrame(animateRing);
     })();
 
-    const hoverTargets = document.querySelectorAll('a, button, .sector-card, .why-card, .tbadge, .svc-item, .cmeta, input, select, textarea');
+    const hoverTargets = document.querySelectorAll('a, button, .sector-card, .why-card, .tbadge, .svc-item, input, select, textarea');
     hoverTargets.forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));

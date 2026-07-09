@@ -1099,29 +1099,76 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 
 /* ═══════════ CONTACT ═══════════ */
 #contact{padding:140px 40px;background:var(--surface)}
-.contact-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:100px;align-items:start}
+/* ── Bento grid: heading + form + contact + availability + guides ── */
+.contact-bento{
+  display:grid;
+  grid-template-columns:0.9fr 0.9fr 1.2fr;
+  grid-template-areas:
+    "head    head   form"
+    "contact avail  form"
+    "guides  guides form";
+  gap:16px;align-items:stretch;
+}
+.bt-head{grid-area:head}
+.cform{grid-area:form}
+.bt-contact{grid-area:contact}
+.bt-avail{grid-area:avail}
+.bt-guides{grid-area:guides}
+/* Shared tile shell */
+.bt{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;box-shadow:var(--card-shadow);padding:24px;
+}
+.bt-label{
+  display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--g400);margin-bottom:14px;
+}
+/* Heading tile — soft accent wash behind the title */
+.bt-head{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(135deg,var(--card),var(--card)),radial-gradient(120% 140% at 100% 0,var(--accent-glow),transparent 60%);
+  padding:30px;
+}
+.bt-head .eyebrow{padding-left:0}
+.bt-head .eyebrow::before{display:none}
 .contact-h2{
   font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:clamp(2rem,4vw,3.4rem);font-weight:800;letter-spacing:-.04em;line-height:1.08;color:var(--white);margin-bottom:16px;
+  font-size:clamp(1.9rem,3.4vw,3rem);font-weight:800;letter-spacing:-.04em;line-height:1.06;color:var(--white);margin:6px 0 14px;
 }
 .contact-h2 .a{color:var(--accent)}
-.contact-deck{font-size:.95rem;color:var(--g400);line-height:1.8;margin-bottom:36px}
-.cmeta-list{display:flex;flex-direction:column;gap:10px}
-.cmeta{
-  padding:18px 22px;background:var(--card);
-  border:1px solid var(--border);border-radius:12px;
-  transition:border-color .2s,background .2s,transform .2s;
-  cursor:default;
+.contact-deck{font-size:.95rem;color:var(--g400);line-height:1.7;margin:0}
+/* Contact tile — three direct channels as compact rows */
+.bt-contact{display:flex;flex-direction:column}
+.creach{
+  display:flex;align-items:center;gap:12px;padding:9px 0;
+  color:var(--g100);text-decoration:none;font-size:.88rem;font-weight:500;
+  border-top:1px solid var(--border);transition:color .2s,padding-left .2s;
 }
-.cmeta:hover{border-color:var(--border-hi);background:var(--card-hi);transform:translateX(4px)}
-.cmeta-l{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g400);margin-bottom:4px}
-.cmeta-v{font-size:.9rem;font-weight:500;color:var(--g100)}
-.cmeta-link{
-  display:inline-flex;align-items:center;gap:7px;
-  color:var(--g100);text-decoration:none;transition:color .2s;
+.creach:first-of-type{border-top:none}
+.creach:hover{color:var(--accent);padding-left:3px}
+.creach-ic{
+  flex:0 0 auto;width:34px;height:34px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--overlay-soft);border:1px solid var(--border);color:var(--accent);
 }
-.cmeta-link svg{color:var(--accent)}
-.cmeta-link:hover{color:var(--accent)}
+.creach-ic svg{width:17px;height:17px}
+.creach-wa{color:#25d366}
+.creach-v{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Availability tile — live 9 AM–9 PM IST presence */
+.bt-avail{display:flex;flex-direction:column}
+.avail-status{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.avail-dot{
+  width:9px;height:9px;border-radius:50%;background:#25d366;flex:0 0 auto;
+  animation:waBlink 1.5s ease-in-out infinite;
+}
+.avail-online{font-size:1rem;font-weight:700;color:var(--white)}
+.avail-offline{font-size:1rem;font-weight:700;color:var(--g300);display:none}
+.bt-avail.is-offline .avail-dot,.bt-avail.is-offline .avail-online{display:none}
+.bt-avail.is-offline .avail-offline{display:inline}
+.avail-reply{font-size:.85rem;color:var(--g300);line-height:1.55;margin:0 0 auto}
+.avail-trust{font-size:.72rem;color:var(--g400);line-height:1.5;margin:14px 0 0}
+@media(prefers-reduced-motion:reduce){.avail-dot{animation:none}}
 
 /* Form */
 .cform{display:flex;flex-direction:column;gap:14px}
@@ -1353,7 +1400,7 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   .why-cards{grid-template-columns:1fr}
   .trust-layout{grid-template-columns:1fr;gap:48px}
   .trust-grid{grid-template-columns:1fr}
-  .contact-layout{grid-template-columns:1fr;gap:48px;align-items:start}
+  .contact-bento{grid-template-columns:1fr;grid-template-areas:"head" "form" "contact" "avail" "guides";gap:14px}
   .frow{grid-template-columns:1fr}
   .foot-inner{gap:36px}
   .foot-cols{grid-template-columns:1fr 1fr;gap:28px}
@@ -1724,12 +1771,9 @@ html[data-theme="light"] .vec-mesh{opacity:.06}
 .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ═══════════ GIVE-FIRST (reciprocity: free guides, no email wall) ═══════════ */
-.give-first{
-  margin-top:18px;padding:20px 22px;border-radius:12px;
-  background:var(--card);border:1px solid var(--border);
-  border-left:3px solid var(--accent);box-shadow:var(--card-shadow);
-}
-.gf-kicker{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+/* Now a bento tile (.bt.bt-guides) with a subtle accent edge. */
+.bt-guides{border-left:3px solid var(--accent);display:flex;flex-direction:column}
+.gf-kicker{display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
 .gf-p{font-size:.85rem;color:var(--g400);margin-bottom:10px;line-height:1.6}
 .gf-link{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -2191,31 +2235,49 @@ html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
 <!-- ══════════ CONTACT ══════════ -->
 <section id="contact">
   <div class="wrap">
-    <div class="contact-layout">
-      <div>
-        <span class="eyebrow r">Get In Touch</span>
-        <h2 class="contact-h2 r">Ready to expand<br>your <span class="a">capacity?</span></h2>
-        <p class="contact-deck r">An overflow crunch, a long-term mandate, ongoing support, or training — tell us what you need and we'll move fast.</p>
-        <div class="cmeta-list r">
-          <div class="cmeta"><div class="cmeta-l">Email</div><div class="cmeta-v">thinklensconsulting@gmail.com</div></div>
-          <div class="cmeta"><div class="cmeta-l">Phone</div><div class="cmeta-v">+91 96762 91788</div></div>
-          <div class="cmeta"><div class="cmeta-l">WhatsApp</div><div class="cmeta-v"><a class="cmeta-link" href="https://wa.me/919676291788?text=Hi%20Thinklens%20—%20I%27d%20like%20to%20discuss%20an%20engagement." target="_blank" rel="noopener">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            Chat on WhatsApp</a></div></div>
-          <div class="cmeta"><div class="cmeta-l">Delivery Base</div><div class="cmeta-v">India — Serving Global Partners</div></div>
-          <div class="cmeta"><div class="cmeta-l">IEC Authorization</div><div class="cmeta-v">Approved for International Trade in Services</div></div>
-          <div class="cmeta"><div class="cmeta-l">Engagement Types</div><div class="cmeta-v">T&amp;M · Fixed Scope · MSA Sub-Contracting · B2B Freelance Consultant</div></div>
-        </div>
-        <!-- Reciprocity: useful material before any ask — no email wall -->
-        <div class="give-first r">
-          <div class="gf-kicker">Before you even say hello</div>
-          <p class="gf-p">Take these with you — free, no email wall, no strings:</p>
-          <a class="gf-link" href="/resources/etl-testing-tools-checklist/">ETL Testing Tools Checklist <span aria-hidden="true">&#8594;</span></a>
-          <a class="gf-link" href="/resources/power-bi-vs-tableau-vs-spotfire/">Power BI vs Tableau vs Spotfire <span aria-hidden="true">&#8594;</span></a>
-          <a class="gf-link" href="/resources/what-is-etl-testing/">What is ETL Testing? A plain-English guide <span aria-hidden="true">&#8594;</span></a>
-        </div>
+    <div class="contact-bento">
+      <!-- Heading tile -->
+      <div class="bt bt-head r">
+        <span class="eyebrow">Get In Touch</span>
+        <h2 class="contact-h2">Ready to expand<br>your <span class="a">capacity?</span></h2>
+        <p class="contact-deck">An overflow crunch, a long-term mandate, ongoing support, or training — tell us what you need and we'll move fast.</p>
       </div>
-      <form class="cform r" id="contactForm">
+      <!-- Contact tile: the three direct channels -->
+      <div class="bt bt-contact r">
+        <span class="bt-label">Reach us</span>
+        <a class="creach" href="mailto:thinklensconsulting@gmail.com">
+          <span class="creach-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <span class="creach-v">thinklensconsulting@gmail.com</span>
+        </a>
+        <a class="creach" href="tel:+919676291788">
+          <span class="creach-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span>
+          <span class="creach-v">+91 96762 91788</span>
+        </a>
+        <a class="creach" href="https://wa.me/919676291788?text=Hi%20Thinklens%20—%20I%27d%20like%20to%20discuss%20an%20engagement." target="_blank" rel="noopener">
+          <span class="creach-ic creach-wa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+          <span class="creach-v">Chat on WhatsApp</span>
+        </a>
+      </div>
+      <!-- Availability tile: live 9 AM–9 PM IST presence -->
+      <div class="bt bt-avail r" id="availTile">
+        <span class="bt-label">Availability</span>
+        <span class="avail-status">
+          <span class="avail-dot"></span>
+          <span class="avail-online">Online now</span>
+          <span class="avail-offline">Back at 9&#8239;AM IST</span>
+        </span>
+        <p class="avail-reply">Typically replies within the hour.</p>
+        <p class="avail-trust">India-based · IEC-authorized · Serving global partners</p>
+      </div>
+      <!-- Guides tile (reciprocity: free material, no email wall) -->
+      <div class="bt bt-guides r">
+        <span class="gf-kicker">Before you even say hello</span>
+        <p class="gf-p">Take these with you — free, no email wall, no strings:</p>
+        <a class="gf-link" href="/resources/etl-testing-tools-checklist/">ETL Testing Tools Checklist <span aria-hidden="true">&#8594;</span></a>
+        <a class="gf-link" href="/resources/power-bi-vs-tableau-vs-spotfire/">Power BI vs Tableau vs Spotfire <span aria-hidden="true">&#8594;</span></a>
+        <a class="gf-link" href="/resources/what-is-etl-testing/">What is ETL Testing? A plain-English guide <span aria-hidden="true">&#8594;</span></a>
+      </div>
+      <form class="cform bt r" id="contactForm">
         <!-- Two distinct conversions, one visible at a time — no competing submit
              buttons. "Send an enquiry" shows the form; "Book a call" shows Cal.com. -->
         <div class="cform-tabs" role="tablist" aria-label="How would you like to start?">
@@ -2639,23 +2701,26 @@ document.addEventListener('DOMContentLoaded', function() {
       call: document.getElementById('panelCall'),
       whatsapp: document.getElementById('panelWhatsapp'),
     };
-    // WhatsApp mockup shows the visitor's own local time (status bar + chat row),
-    // and "online" only during Thinklens hours: 9 AM–9 PM IST.
+    // Thinklens is "online" 9 AM–9 PM IST (UTC+5:30, no DST), computed from the
+    // visitor's clock regardless of their zone. Drives both the WhatsApp mockup
+    // presence and the availability bento tile.
+    const availTile = document.getElementById('availTile');
+    const isOnlineIST = () =>
+      (h => h >= 9 && h < 21)(new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getHours());
     const syncWaTime = () => {
+      const online = isOnlineIST();
+      if (availTile) availTile.classList.toggle('is-offline', !online);
       const wa = panels.whatsapp;
       if (!wa) return;
-      const now = new Date();
-      const t = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
       const row = wa.querySelector('.wa-row-time');
       const bar = wa.querySelector('.wa-time');
       if (row) row.textContent = t;
       if (bar) bar.textContent = t.replace(/\s?[AP]M$/i, ''); // status bar has no AM/PM
-      // Current hour in IST (UTC+5:30, no DST), regardless of the visitor's zone.
-      const istHour = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getHours();
-      const online = istHour >= 9 && istHour < 21;
       const bot = wa.querySelector('.wa-row-bot');
       if (bot) bot.classList.toggle('is-offline', !online);
     };
+    setInterval(syncWaTime, 60000); // keep time + presence fresh if left open
     const setMode = (mode) => {
       cformTabs.forEach((t) => {
         const active = t.dataset.mode === mode;
@@ -2955,7 +3020,7 @@ document.addEventListener('DOMContentLoaded', function() {
       requestAnimationFrame(animateRing);
     })();
 
-    const hoverTargets = document.querySelectorAll('a, button, .sector-card, .why-card, .tbadge, .svc-item, .cmeta, input, select, textarea');
+    const hoverTargets = document.querySelectorAll('a, button, .sector-card, .why-card, .tbadge, .svc-item, input, select, textarea');
     hoverTargets.forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
