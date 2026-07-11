@@ -6,9 +6,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0a0a0a">
-<meta name="color-scheme" content="dark light">
+<meta name="color-scheme" content="dark">
 <meta name="robots" content="noindex, follow">
-<script>(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){var h=new Date().getHours();t=(h>=6&&h<18)?'light':'dark';}document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='light'?'#f7f8fa':'#0a0a0a');}catch(e){}})();</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L4LLVDPN7"></script>
@@ -46,16 +45,34 @@
   src:url('/fonts/plusjakarta.woff2') format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
+/* Contact Section v2 — editorial type, scoped to #contact only */
+@font-face{
+  font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('/fonts/spacegrotesk.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Hanken Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('/fonts/hankengrotesk.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:swap;
+  src:url('/fonts/instrumentserif.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;
+  src:url('/fonts/instrumentserif-italic.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
 
 /* ═══════════ TOKENS ═══════════ */
-/* Dark is the default theme (:root). Light theme overrides live in the
-   html[data-theme="light"] block below. `--white` is the strong-foreground /
-   inverted-surface token: it flips to near-black in light mode. `--on-accent`
-   is the only "always white" token — text sitting on the blue accent fill.
-   `--bg-rgb` powers the fade-to-bg gradient masks; `--grid-line` and
-   `--overlay-soft` carry the subtle surface tints. Theme via these, not
-   hardcoded rgba — so both modes stay in sync. */
-/* ── DARK (default) ── depth comes from surfaces lighter than the bg + hairline
+/* Dark-only. `--white` is the strong-foreground token; `--on-accent` is text
+   sitting on the blue accent fill. `--bg-rgb` powers the fade-to-bg gradient
+   masks; `--grid-line` and `--overlay-soft` carry the subtle surface tints.
+   Theme via these tokens, not hardcoded rgba. */
+/* ── DARK ── depth comes from surfaces lighter than the bg + hairline
    borders; shadows are subtle on near-black. */
 :root{
   --bg:#0a0a0b;
@@ -89,36 +106,10 @@
 
 /* ── LIGHT (soft & airy, Apple/Linear) ── near-white canvas, white cards lifted
    by soft shadows (borders recede to hairlines), faint blue glows, vivid accent. */
-html[data-theme="light"]{
-  --bg:#e8ebf1;            /* cool grey canvas, a touch deeper — white cards/bands must visibly lift OFF it (mirrors how dark layers surfaces above near-black) */
-  --surface:#f3f5f9;       /* elevated section band — wider tonal step from the canvas */
-  --card:#ffffff;          /* pure-white cards that visibly float on the grey */
-  --card-hi:#ffffff;
-  --border:rgba(17,24,39,.1);
-  --border-hi:rgba(17,24,39,.16);
-  --white:#101114;         /* strong foreground → near-black */
-  --on-accent:#fff;
-  --g100:#17181c;
-  --g200:#2c2d33;
-  --g300:#43444b;          /* body text — ~9:1 on the canvas */
-  --g400:#6a6b73;          /* muted label — AA */
-  --g500:#8a8b93;
-  --g600:#b6b7bd;
-  --accent:#007AFF;        /* vivid, as chosen */
-  --accent-deep:#0062d6;   /* button fill — AA white text */
-  --accent2:#1f86ff;
-  --accent3:#79b4ff;
-  --accent-glow:rgba(0,122,255,.16);
-  --bg-rgb:232,235,241;
-  --grid-line:rgba(17,24,39,.055);
-  --overlay-soft:rgba(17,24,39,.035);
-  --card-shadow:0 1px 2px rgba(16,24,40,.06),0 10px 28px rgba(16,24,40,.1);
-  --card-shadow-hover:0 4px 10px rgba(16,24,40,.09),0 28px 56px rgba(16,24,40,.16);
-  color-scheme:light;
-}
+
 :root{color-scheme:dark}
 html{transition:background-color .4s var(--ease)}
-body,#nav,.btn,.exp-card,.res-card,.tbadge,.why-card,.sector-card,.article-cta,.faq-item,.svc-item,.fg input,.fg select,.fg textarea,.theme-toggle{
+body,#nav,.btn,.exp-card,.res-card,.tbadge,.why-card,.sector-card,.article-cta,.faq-item,.svc-item,.fg input,.fg select,.fg textarea{
   transition:background-color .4s var(--ease),border-color .4s var(--ease),color .4s var(--ease),box-shadow .4s var(--ease);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -318,13 +309,11 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .hero-lottie svg{width:100%!important;height:100%!important;display:block}
 .hero-globe-dots{position:absolute;inset:0;z-index:2;pointer-events:none}
 .hgd circle{fill:#9fd0ff}                              /* bright on the dark globe */
-html[data-theme="light"] .hgd circle{fill:var(--accent)}  /* vivid on the light canvas */
-html[data-theme="light"] .hero-lottie{opacity:.95}
+  /* vivid on the light canvas */
+
 /* ≤900px the globe sits BEHIND the copy — keep it a whisper in light too
    (this light override otherwise out-specifies the mobile .45 rule below) */
-@media(max-width:900px){
-  html[data-theme="light"] .hero-lottie{opacity:.5}
-}
+
 @media(max-width:900px){
   .hero-lottie{top:40%;right:50%;transform:translate(50%,-50%);width:140%;max-width:none;opacity:.45;
     -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);
@@ -1015,235 +1004,280 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .cta-sub{font-size:1rem;color:var(--g400);line-height:1.75;margin-bottom:44px;max-width:520px;margin-left:auto;margin-right:auto}
 .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-/* ═══════════ CONTACT ═══════════ */
-#contact{padding:140px 40px;background:var(--surface)}
-/* ── Bento grid: heading + form + contact + availability + guides ── */
-.contact-bento{
-  display:grid;
-  grid-template-columns:minmax(0,0.8fr) minmax(0,0.8fr) minmax(0,1.9fr);
-  grid-template-areas:
-    "head    head   form"
-    "contact avail  form"
-    "guides  guides form";
-  gap:16px;align-items:stretch;
-}
-.bt-head{grid-area:head}
-.cform{grid-area:form}
-.bt-contact{grid-area:contact}
-.bt-avail{grid-area:avail}
-.bt-guides{grid-area:guides}
-/* Shared tile shell */
-.bt{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:18px;box-shadow:var(--card-shadow);padding:24px;
-}
-.bt-label{
-  display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--g400);margin-bottom:14px;
-}
-/* Heading tile — soft accent wash behind the title */
-.bt-head{
+/* ═══════════ CONTACT — "Contact Section v2" (imported design) ═══════════
+   A self-contained dark editorial band: sticky left rail + right brief
+   builder. Renders dark in BOTH themes (the design is dark-only), with its
+   own type scale (Space Grotesk / Instrument Serif / Hanken Grotesk) and
+   blues (#3b7bff / #2f6bff) — scoped entirely to #contact. */
+#contact{
+  --cx-blue:#3b7bff;--cx-blue-chip:#2f6bff;--cx-link:#4c86ff;--cx-link-hi:#7aa6ff;
+  --cx-ink:#eef0f4;--cx-head:#f6f7f9;--cx-body:#9a9da6;
+  --cx-mut:#8a8d96;--cx-mut2:#7c7f89;--cx-mut3:#5d616b;--cx-mut4:#4d505a;
+  --cx-line:rgba(255,255,255,.09);--cx-line2:rgba(255,255,255,.06);
   position:relative;overflow:hidden;
-  display:flex;flex-direction:column;justify-content:center;
-  background:linear-gradient(135deg,var(--card),var(--card)),radial-gradient(120% 140% at 100% 0,var(--accent-glow),transparent 60%);
-  padding:30px;
+  padding:0 0 96px;color:var(--cx-ink);
+  font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(900px 600px at 85% -10%, rgba(47,107,255,.16), transparent 60%),
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+    #0a0b0e;
+  background-size:auto,72px 72px,72px 72px,auto;
 }
-.bt-head .eyebrow{padding-left:0}
-.bt-head .eyebrow::before{display:none}
-.contact-h2{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:clamp(1.9rem,3.4vw,3rem);font-weight:800;letter-spacing:-.04em;line-height:1.06;color:var(--white);margin:6px 0 14px;
-}
-.contact-h2 .a{color:var(--accent)}
-.contact-deck{font-size:.95rem;color:var(--g400);line-height:1.7;margin:0}
-/* Contact tile — three direct channels as compact rows */
-.bt-contact{display:flex;flex-direction:column}
-.creach{
-  display:flex;align-items:center;gap:12px;padding:9px 0;
-  color:var(--g100);text-decoration:none;font-size:.88rem;font-weight:500;
-  border-top:1px solid var(--border);transition:color .2s,padding-left .2s;
-}
-.creach:first-of-type{border-top:none}
-.creach:hover{color:var(--accent);padding-left:3px}
-.creach-ic{
-  flex:0 0 auto;width:34px;height:34px;border-radius:9px;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--overlay-soft);border:1px solid var(--border);color:var(--accent);
-}
-.creach-ic svg{width:17px;height:17px}
-.creach-wa{color:#25d366}
-.creach-v{min-width:0;overflow-wrap:anywhere}
-/* Availability tile — live 9 AM–9 PM IST presence */
-.bt-avail{display:flex;flex-direction:column}
-.avail-status{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.avail-dot{
-  width:9px;height:9px;border-radius:50%;background:#25d366;flex:0 0 auto;
-  animation:waBlink 1.5s ease-in-out infinite;
-}
-.avail-online{font-size:1rem;font-weight:700;color:var(--white)}
-.avail-offline{font-size:1rem;font-weight:700;color:var(--g300);display:none}
-.bt-avail.is-offline .avail-dot,.bt-avail.is-offline .avail-online{display:none}
-.bt-avail.is-offline .avail-offline{display:inline}
-.avail-reply{font-size:.85rem;color:var(--g300);line-height:1.55;margin:0 0 auto}
-.avail-trust{font-size:.72rem;color:var(--g400);line-height:1.5;margin:14px 0 0}
-@media(prefers-reduced-motion:reduce){.avail-dot{animation:none}}
+.cx{max-width:1360px;margin:0 auto;padding:0 56px;position:relative;z-index:1}
+.cx a{color:var(--cx-link)}
+.cx a:hover{color:var(--cx-link-hi)}
 
-/* Form */
-.cform{display:flex;flex-direction:column;gap:14px}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.fg{display:flex;flex-direction:column;gap:6px;position:relative}
-/* ── Contact-form mode toggle (enquiry vs book-a-call) ── */
-.cform-tabs{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:4px;
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:4px;margin-bottom:8px;
+/* Top strip */
+.cx-top{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:30px 0;border-bottom:1px solid var(--cx-line);
 }
-.cform-tab{
-  cursor:pointer;border:0;border-radius:9px;padding:11px 10px;min-height:46px;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  background:transparent;color:var(--g300);
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:.86rem;font-weight:600;letter-spacing:-.005em;line-height:1.2;
-  transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease);
+.cx-eyebrow{
+  display:flex;align-items:center;gap:12px;
+  font-family:'Space Grotesk',sans-serif;font:600 12px/1 'Space Grotesk',sans-serif;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--cx-mut);
 }
-.cform-tab:hover{color:var(--white)}
-.cform-tab.is-active{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 14px rgba(0,122,255,.28)}
-@media(prefers-reduced-motion:reduce){.cform-tab{transition:none}}
-.cform-panel{display:flex;flex-direction:column;gap:14px}
-.cform-panel[hidden]{display:none}
-.cform-panel-deck{font-size:.95rem;line-height:1.65;color:var(--g300);margin:0}
-/* ── WhatsApp preview inside an iPhone mockup (whatsapp panel) ──
-   WhatsApp's own dark palette, self-contained; the phone bezel is black in
-   both site themes (as phones are). */
-[data-panel="whatsapp"]{
-  --wa-header:#1f2c34;--wa-bg:#0b141a;--wa-in:#1f2c34;--wa-out:#005c4b;
-  --wa-text:#e9edef;--wa-sub:#8696a0;--wa-green:#25d366;
+.cx-eyebrow-line{width:26px;height:1px;background:var(--cx-blue);flex:0 0 auto}
+.cx-trust{
+  font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:1;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--cx-mut3);text-align:right;
 }
-.wa-mock-wrap{display:flex;justify-content:center;padding:6px 0 2px}
-.iphone{
-  position:relative;width:310px;padding:11px;
-  background:#0a0a0b;border-radius:46px;
-  box-shadow:0 0 0 2px #2a2a2e,0 26px 60px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.04);
+
+/* Two-column grid */
+.cx-grid{
+  display:grid;grid-template-columns:0.92fr 1.08fr;gap:88px;align-items:start;
+  padding-top:64px;
 }
-.iphone-island{
-  position:absolute;top:20px;left:50%;transform:translateX(-50%);
-  width:92px;height:26px;background:#000;border-radius:16px;z-index:4;
+
+/* ── Left rail ── */
+.cx-rail{position:sticky;top:24px;display:flex;flex-direction:column;padding-top:8px}
+.cx-h{
+  margin:0 0 28px;font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(3rem,4.6vw,5.25rem);line-height:.94;letter-spacing:-.035em;color:var(--cx-head);
 }
-.iphone-screen{
-  position:relative;border-radius:38px;overflow:hidden;background:var(--wa-bg);
-  aspect-ratio:9 / 19.5;display:flex;flex-direction:column;
-  font-family:'Inter',-apple-system,sans-serif;
+.cx-serif{
+  font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-style:italic;
+  letter-spacing:-.01em;color:var(--cx-blue);
 }
-/* status bar */
-.wa-statusbar{
-  background:var(--wa-header);color:#fff;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 22px 6px;font-size:.78rem;font-weight:600;
+.cx-deck{font-size:18px;line-height:1.6;color:var(--cx-body);margin:0 0 52px;max-width:24em}
+
+/* Reach us */
+.cx-reach{border-top:1px solid var(--cx-line);padding:26px 0 30px}
+.cx-reach-label,.cx-guides-label{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;line-height:1;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--cx-mut3);
 }
-.wa-sysicons{display:flex;align-items:center;gap:5px}
-/* chats-list header */
-.wa-list-header{
-  background:var(--wa-header);color:#fff;
-  display:flex;align-items:center;justify-content:space-between;padding:6px 16px 12px;
+.cx-reach-label{display:block;margin-bottom:16px}
+.cx-reach-row{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:10px 0;
+  color:var(--cx-ink);font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:500;
+  letter-spacing:-.01em;transition:color .18s;text-decoration:none;
 }
-.wa-list-title{font-size:1.35rem;font-weight:700;letter-spacing:-.01em}
-.wa-list-actions{display:flex;align-items:center;gap:18px;color:var(--wa-green)}
-.wa-list-actions svg{width:20px;height:20px}
-/* search bar */
-.wa-search{
-  display:flex;align-items:center;gap:9px;margin:2px 12px 8px;
-  background:#2a3942;color:var(--wa-sub);border-radius:10px;padding:8px 13px;font-size:.82rem;
+.cx-reach-row:hover{color:var(--cx-link)}
+.cx-reach-arrow{font-size:17px;color:var(--cx-blue);flex:0 0 auto}
+
+/* Give-first guides */
+.cx-guides{border-top:1px solid var(--cx-line);padding:26px 0 0}
+.cx-guides-label{display:block;margin-bottom:6px}
+.cx-guides-p{font-size:15px;color:var(--cx-mut2);margin:8px 0 14px}
+.cx-guide{
+  display:flex;align-items:center;gap:18px;padding:15px 0;
+  border-top:1px solid var(--cx-line2);color:#c7c9d1;
+  font-size:16.5px;font-weight:600;text-decoration:none;transition:color .18s;
 }
-.wa-search svg{width:15px;height:15px;flex:0 0 auto}
-/* chat list */
-.wa-chatlist{flex:1;background:var(--wa-bg)}
-.wa-chat-row{
-  display:flex;align-items:center;gap:12px;padding:11px 14px;
-  border-bottom:1px solid rgba(255,255,255,.05);
+.cx-guide:hover{color:var(--cx-link)}
+.cx-guide-num{
+  flex:none;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:1;
+  color:var(--cx-blue);letter-spacing:.08em;
 }
-.wa-avatar{
-  position:relative;width:48px;height:48px;flex:0 0 auto;border-radius:50%;
-  background:radial-gradient(circle at 50% 40%,#12242f,#0a151c);
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
+.cx-guide-label{flex:1}
+.cx-guide-arrow{flex:none;color:var(--cx-mut3);font-size:17px}
+
+/* ── Right: brief builder ── */
+.cx-form{display:flex;flex-direction:column;min-width:0}
+
+/* Channel tabs — icon pill buttons (segmented control) with a sliding thumb */
+.cx-tabs{
+  position:relative;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+  background:rgba(255,255,255,.03);border:1px solid var(--cx-line);
+  border-radius:14px;padding:6px;margin-bottom:26px;
 }
-.wa-dp-mark{width:60%;height:60%;display:block}
-.wa-dot{
-  width:7px;height:7px;border-radius:50%;background:var(--wa-green);flex:0 0 auto;
-  animation:waBlink 1.5s ease-in-out infinite;
+/* The blue "thumb" that slides behind the active tab (positioned by JS) */
+.cx-tab-thumb{
+  position:absolute;top:0;left:0;width:0;height:0;border-radius:10px;
+  background:var(--cx-blue-chip);box-shadow:0 8px 22px -8px rgba(47,107,255,.7);
+  transition:transform .34s var(--spring),width .34s var(--ease),height .34s var(--ease);
+  pointer-events:none;z-index:0;
 }
-@keyframes waBlink{
-  0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(37,211,102,.55)}
-  50%{opacity:.4;box-shadow:0 0 0 4px rgba(37,211,102,0)}
-}
-.wa-row-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-.wa-row-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.wa-row-name{
-  font-size:.86rem;font-weight:600;color:#fff;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.wa-row-time{font-size:.66rem;color:var(--wa-sub);flex:0 0 auto}
-.wa-row-bot{display:flex;align-items:center;gap:7px;min-height:16px}
-.wa-online{font-size:.76rem;font-weight:500;color:var(--wa-green)}
-.wa-offline{font-size:.76rem;color:var(--wa-sub);display:none}
-/* Outside 9 AM–9 PM IST: hide the online dot/label, show a muted last-seen. */
-.wa-row-bot.is-offline .wa-dot,
-.wa-row-bot.is-offline .wa-online{display:none}
-.wa-row-bot.is-offline .wa-offline{display:inline}
-/* the one primary action in this mode — WhatsApp green.
-   .fsub.wa-cta out-specifies the base .fsub (white) that follows in source. */
-.fsub.wa-cta{
+.cx-tab{
+  position:relative;z-index:1;
   display:flex;align-items:center;justify-content:center;gap:9px;
-  background:var(--wa-green);color:#0b141a;
+  padding:13px 10px;border:0;border-radius:10px;
+  background:transparent;color:var(--cx-mut2);cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.01em;
+  transition:color .22s var(--ease);
 }
-.wa-cta svg{width:19px;height:19px}
-.fsub.wa-cta:hover:not(:disabled){background:#1ebe5a;color:#062012;box-shadow:0 12px 28px rgba(37,211,102,.28)}
-@media(prefers-reduced-motion:reduce){.wa-dot{animation:none}}
-/* ── Cal.com inline calendar (book-a-call panel) ── */
-.cal-embed{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
-.cal-embed[hidden]{display:none}
-#cal-inline-form{position:relative;width:100%;min-height:580px;background:var(--card)}
+.cx-tab-ic{width:17px;height:17px;flex:0 0 auto}
+.cx-tab:hover:not(.is-active){color:var(--cx-ink)}
+.cx-tab.is-active{color:#fff}
+.cx-tab:focus-visible{outline:2px solid var(--cx-blue);outline-offset:2px}
+/* Panel switch: the incoming body fades + slides in (replays each time a
+   panel un-hides, i.e. on every tab change). */
+@keyframes cxPanelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#briefBody,#calBody,#waBody{animation:cxPanelIn .3s var(--ease) both}
+@media(prefers-reduced-motion:reduce){#briefBody,#calBody,#waBody{animation:none}}
+
+/* Progress: 5 dots + label */
+.cx-progress{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:6px 0 30px}
+.cx-dots{display:flex;gap:7px}
+.cx-dots span{width:26px;height:4px;border-radius:4px;background:rgba(255,255,255,.12);transition:background .25s}
+.cx-dots span.on{background:var(--cx-blue)}
+.cx-progress-label{
+  font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:1;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--cx-mut2);text-align:right;
+}
+
+/* Steps */
+.cx-step{
+  display:grid;grid-template-columns:96px 1fr;gap:18px;
+  border-top:1px solid var(--cx-line);padding:26px 0 30px;
+}
+.cx-step:last-of-type{padding-bottom:8px}
+.cx-step-n{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;line-height:1.1;
+  color:var(--cx-blue);letter-spacing:.04em;padding-top:6px;
+}
+.cx-step-n span{
+  display:block;margin-top:6px;font-weight:600;font-size:10.5px;line-height:1.4;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--cx-mut3);
+}
+
+/* Chips */
+.cx-chips{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
+.cx-chips .chip{
+  border-radius:10px;padding:12px 20px;
+  font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.01em;
+  background:transparent;color:var(--cx-body);border:1px solid rgba(255,255,255,.14);
+  cursor:pointer;transition:all .16s;
+}
+.cx-chips .chip:hover{border-color:rgba(255,255,255,.28);color:var(--cx-ink)}
+.cx-chips .chip.on{
+  background:var(--cx-blue-chip);color:#fff;border-color:var(--cx-blue-chip);
+  box-shadow:0 6px 20px -6px rgba(47,107,255,.65);
+}
+
+/* Fields */
+.cx-fields{display:grid;grid-template-columns:1fr 1fr;gap:26px 32px}
+.cx-fg{display:flex;flex-direction:column;min-width:0}
+.cx-fg-full{grid-column:1 / -1}
+.cx-fg label{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;line-height:1;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--cx-mut3);margin-bottom:4px;
+}
+.cx-fg input,.cx-fg select,.cx-fg textarea{
+  width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.16);
+  border-radius:0;padding:11px 2px 13px;
+  font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--cx-ink);
+  outline:none;transition:border-color .16s,background .16s;appearance:none;
+}
+.cx-fg textarea{resize:vertical;min-height:84px;line-height:1.5;font-size:16px}
+.cx-fg input::placeholder,.cx-fg textarea::placeholder{color:var(--cx-mut4)}
+.cx-fg input:focus,.cx-fg select:focus,.cx-fg textarea:focus{
+  border-bottom-color:var(--cx-blue);background:rgba(59,123,255,.04);
+}
+.cx-fg select{
+  cursor:pointer;padding-right:30px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%235d616b' stroke-width='2' stroke-linecap='round'><path d='M4 6l4 4 4-4'/></svg>");
+  background-repeat:no-repeat;background-position:right 2px center;
+}
+.cx-fg select option{background:#111318;color:var(--cx-ink)}
+
+/* Live brief */
+.cx-brief{
+  margin-top:34px;border:1px solid rgba(59,123,255,.28);background:rgba(47,107,255,.07);
+  border-radius:16px;padding:18px 22px;display:flex;align-items:baseline;gap:14px;
+}
+.cx-brief-label{
+  flex:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:10.5px;line-height:1;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--cx-link);
+}
+.cx-brief-line{
+  font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;color:#c7c9d1;
+  letter-spacing:-.005em;min-width:0;
+}
+
+/* CTA */
+.cx-cta{
+  position:relative;overflow:hidden;margin-top:18px;width:100%;
+  border:none;border-radius:999px;padding:20px;
+  background:var(--cx-head);color:#0a0b0e;
+  font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;letter-spacing:.01em;
+  cursor:pointer;transition:transform .12s,box-shadow .2s,background .2s;
+  box-shadow:0 10px 34px -12px rgba(246,247,249,.35);
+}
+.cx-cta:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 14px 40px -12px rgba(246,247,249,.45)}
+.cx-cta:active{transform:translateY(0)}
+.cx-cta:disabled{opacity:.6;cursor:wait}
+.cx-cta.cx-cta-wa{background:#25d366;color:#062012;box-shadow:0 10px 34px -12px rgba(37,211,102,.5)}
+.cx-cta.cx-cta-wa:hover:not(:disabled){background:#1ebe5a;box-shadow:0 14px 40px -12px rgba(37,211,102,.6)}
+.cx-cta.cx-cta-ok{background:var(--cx-blue-chip);color:#fff}
+.cx-reply{margin-top:14px;text-align:center;font-size:13.5px;color:var(--cx-mut3)}
+#formMsg{display:none;margin-top:10px;font-size:13.5px;text-align:center;color:var(--cx-body)}
+
+/* Book-a-call body: Cal.com inline calendar */
+.cx-cal-deck{font-size:16px;line-height:1.6;color:var(--cx-body);margin:0 0 18px}
+.cal-embed{border:1px solid var(--cx-line);border-radius:16px;overflow:hidden;background:#111318}
+#cal-inline-form{position:relative;width:100%;min-height:560px;background:#111318}
 .cal-embed.is-loaded #cal-inline-form{min-height:0}
 #cal-inline-form iframe{width:100% !important;border:0;display:block;background:transparent}
 .cal-loading{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:12px;
-  color:var(--g400);font-size:.9rem;pointer-events:none;
+  color:var(--cx-body);font-size:14px;pointer-events:none;
 }
 .cal-spinner{
-  width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--accent);
+  width:22px;height:22px;border:2px solid var(--cx-line);border-top-color:var(--cx-blue);
   border-radius:50%;animation:calSpin .8s linear infinite;
 }
 @keyframes calSpin{to{transform:rotate(360deg)}}
-.fg label{
-  font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--g400);transition:color .25s;
+
+/* WhatsApp body: chat preview card + green handoff button */
+.cx-wa{display:flex;flex-direction:column}
+/* author display: must not defeat the [hidden] attribute on inactive panels */
+#contact [hidden]{display:none}
+.cx-wa-card{border:1px solid var(--cx-line);border-radius:16px;overflow:hidden;background:#111318}
+.cx-wa-head{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  background:rgba(255,255,255,.02);border-bottom:1px solid var(--cx-line2);
 }
-.fg:focus-within label{color:var(--accent)}
-.fg input,.fg select,.fg textarea{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:10px;padding:14px 16px;
-  font-family:'Inter',sans-serif;font-size:.92rem;font-weight:400;
-  color:var(--white);outline:none;width:100%;
-  transition:border-color .25s,background .25s,box-shadow .25s;appearance:none;
+.cx-wa-avatar{
+  width:42px;height:42px;flex:0 0 auto;border-radius:50%;overflow:hidden;
+  background:radial-gradient(circle at 50% 40%,#1a2740,#0c1526);
+  display:flex;align-items:center;justify-content:center;
 }
-.fg input::placeholder,.fg textarea::placeholder{color:var(--g500)}
-.fg select option{background:var(--card);color:var(--white)}
-.fg input:focus,.fg select:focus,.fg textarea:focus{
-  border-color:var(--accent);
-  background:rgba(0,122,255,.04);
-  box-shadow:0 0 0 4px rgba(0,122,255,.12);
+.cx-wa-avatar svg{width:62%;height:62%;display:block}
+.cx-wa-id{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.cx-wa-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;color:#fff}
+.cx-wa-status{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#25d366}
+.cx-wa-dot{width:7px;height:7px;border-radius:50%;background:#25d366;flex:0 0 auto;animation:cxBlink 1.6s ease-in-out infinite}
+.cx-wa-glyph{color:#25d366;flex:0 0 auto}
+.cx-wa-glyph svg{width:22px;height:22px;display:block}
+.cx-wa-thread{
+  display:flex;flex-direction:column;padding:22px 18px;
+  background:radial-gradient(circle at 18% 8%, rgba(37,211,102,.05), transparent 42%),#0b0f14;
 }
-.fg textarea{min-height:108px;resize:vertical}
-.fsub{
-  position:relative;overflow:hidden;
-  width:100%;margin-top:6px;background:var(--white);color:var(--bg);
-  border:none;border-radius:100px;padding:16px 32px;
-  font-family:'Inter',sans-serif;font-size:.92rem;font-weight:700;
-  cursor:pointer;transition:background .2s,transform .2s var(--spring),box-shadow .25s;
+.cx-wa-bubble{
+  margin:0;align-self:flex-end;max-width:84%;
+  background:#005c4b;color:#e9edef;padding:11px 14px;border-radius:12px 12px 3px 12px;
+  font-family:'Hanken Grotesk',sans-serif;font-size:15px;line-height:1.5;
 }
-.fsub:hover:not(:disabled){background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
-.fsub:active{transform:translateY(0)}
-.fsub.ok{background:var(--accent-deep);color:var(--on-accent)}
-.fsub:disabled{opacity:.6;cursor:wait}
-#formMsg{display:none;margin-top:10px;font-size:.82rem;text-align:center}
+.cx-wa-hint{margin:16px 0 0;font-size:12.5px;color:var(--cx-mut2);line-height:1.5}
+@keyframes cxBlink{0%,100%{opacity:1}50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.cx-wa-dot{animation:none}}
+.cx-cta-wa{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.cx-cta-wa svg{width:19px;height:19px}
 
 /* ═══════════ FOOTER ═══════════ */
 #footer{
@@ -1318,14 +1352,25 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
   .why-cards{grid-template-columns:1fr}
   .trust-layout{grid-template-columns:1fr;gap:48px}
   .trust-grid{grid-template-columns:1fr}
-  .contact-bento{grid-template-columns:1fr;grid-template-areas:"head" "form" "contact" "avail" "guides";gap:14px}
-  .frow{grid-template-columns:1fr}
+  /* Contact v2 → single column: form under the headline, rail below */
+  .cx-grid{grid-template-columns:1fr;gap:48px;padding-top:44px}
+  .cx-rail{position:static;top:auto;order:2}
+  .cx-form{order:1}
+  .cx-h{font-size:clamp(2.7rem,11vw,3.6rem)}
+  .cx-deck{margin-bottom:40px}
+  .cx-top{flex-direction:column;align-items:flex-start;gap:12px}
+  .cx-trust{text-align:left}
+  .cx-fields{grid-template-columns:1fr}
+  .cx-tabs{gap:4px;padding:5px}
+  .cx-tab{flex-direction:column;gap:6px;font-size:12px;padding:10px 4px;line-height:1.25;text-align:center}
+  .cx-tab-ic{width:18px;height:18px}
   .foot-inner{gap:36px}
   .foot-cols{grid-template-columns:1fr 1fr;gap:28px}
   .foot-bottom{flex-direction:column;align-items:flex-start;gap:20px}
   .foot-bottom .foot-copy{margin-left:0;text-align:left}
   #kinetic{padding:100px 24px}
-  #why,#trust,#contact,#sectors,#cta-section{padding-left:24px;padding-right:24px}
+  #why,#trust,#sectors,#cta-section{padding-left:24px;padding-right:24px}
+  .cx{padding:0 24px}
   .wrap{padding:0 24px}
 }
 
@@ -1578,7 +1623,7 @@ html[data-theme="light"] .hero-lottie{opacity:.95}
 .vec-mesh{fill:var(--accent);opacity:.045}
 .page-net{opacity:1}
 /* Light: brighter strokes, glowing nodes, slightly stronger mesh fills. */
-html[data-theme="light"] .page-vis{opacity:.85}
+
 /* Light hero blobs: bigger + more saturated — they're the hero's "flow" and
    must survive the pale canvas (they already drift via blobFloat). */
 @keyframes blobFloatLight{
@@ -1586,12 +1631,12 @@ html[data-theme="light"] .page-vis{opacity:.85}
   33%{transform:translate(130px,-90px) scale(1.16)}
   66%{transform:translate(-100px,70px) scale(.9)}
 }
-html[data-theme="light"] .hero-blob{opacity:.85;animation:blobFloatLight 13s ease-in-out infinite}
-html[data-theme="light"] .hero-blob.b1{width:640px;height:640px;background:radial-gradient(circle,rgba(0,122,255,.34),transparent 62%)}
-html[data-theme="light"] .hero-blob.b2{width:600px;height:600px;background:radial-gradient(circle,rgba(0,122,255,.2),transparent 66%)}
-html[data-theme="light"] .vec-line{stroke-width:1.5}
-html[data-theme="light"] .vec-node{filter:drop-shadow(0 0 6px var(--accent-glow))}
-html[data-theme="light"] .vec-mesh{opacity:.06}
+
+
+
+
+
+
 @media(max-width:780px){
   .page-section{padding:60px 0}
 }
@@ -1665,42 +1710,9 @@ html[data-theme="light"] .vec-mesh{opacity:.06}
 }
 
 
-/* ═══════════ FORM JOURNEY (smart defaults + goal gradient + IKEA chips) ═══════════ */
-.fj-progress{display:flex;align-items:center;gap:12px;margin-bottom:2px}
-.fj-track{flex:1;height:6px;border-radius:100px;background:var(--overlay-soft);border:1px solid var(--border);overflow:hidden}
-.fj-fill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent3));transition:width .5s var(--ease)}
-.fj-pct{font-size:.72rem;font-weight:600;color:var(--g400);white-space:nowrap}
-.fj-build{
-  display:flex;flex-direction:column;gap:14px;
-  padding:16px 18px;border:1px dashed var(--border-hi);border-radius:12px;
-  background:var(--overlay-soft);
-}
-.fj-group{display:flex;flex-direction:column;gap:8px}
-.fj-label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g400)}
-.fj-chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{
-  font-family:inherit;font-size:.78rem;font-weight:600;color:var(--g300);
-  background:var(--card);border:1px solid var(--border);border-radius:100px;
-  padding:8px 14px;cursor:pointer;
-  transition:color .2s,border-color .2s,background .2s,transform .2s var(--spring);
-}
-.chip:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
-.chip.on{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
-.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-
-/* ═══════════ GIVE-FIRST (reciprocity: free guides, no email wall) ═══════════ */
-/* Now a bento tile (.bt.bt-guides) with a subtle accent edge. */
-.bt-guides{border-left:3px solid var(--accent);display:flex;flex-direction:column}
-.gf-kicker{display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.gf-p{font-size:.85rem;color:var(--g400);margin-bottom:10px;line-height:1.6}
-.gf-link{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  font-size:.85rem;font-weight:600;color:var(--g100);
-  padding:8px 0;border-top:1px solid var(--border);
-  transition:color .2s,padding-left .2s;
-}
-.gf-link:first-of-type{border-top:none}
-.gf-link:hover{color:var(--accent);padding-left:4px}
+/* Contact-form chips (brief builder) — keyboard focus ring.
+   All other chip/journey/give-first styling now lives in the #contact block. */
+.cx-chips .chip:focus-visible{outline:2px solid var(--cx-blue);outline-offset:2px}
 
 /* ═══════════ ANCHOR COMPARE (contrast effect: expensive alternative first) ═══════════ */
 .anchor-compare{display:grid;grid-template-columns:1.05fr 1fr;gap:20px;max-width:1100px;margin:0 auto}
@@ -1725,207 +1737,39 @@ html[data-theme="light"] .vec-mesh{opacity:.06}
   .js-fade body{opacity:1 !important}
 }
 
-/* ═══════════ THEME EXTRAS (light overrides, logo, toggle) ═══════════ */
-/* Decorative elements that used hardcoded white alphas — redrawn at INK
-   strength for light: on a pale canvas a ghost-opacity stroke reads as
-   emptiness, not subtlety. */
-html[data-theme="light"] .sc-num{color:rgba(16,24,40,.11)}
-/* Nav logo: text fill + ring stroke flip with the foreground; accent dots stay blue.
-   (Footer logo is muted grey #636366 — reads on both themes, left alone.) */
+/* ═══════════ LOGO + ELEVATION ═══════════ */
+/* Nav logo: text fill + ring stroke track the foreground; accent dots stay blue.
+   (Footer logo is muted grey #636366 — left alone.) */
 .nav-logo svg > g{fill:var(--white)}
 .nav-logo svg > path[stroke="#ffffff"]{stroke:var(--white)}
 
-/* ── Theme toggle button ── */
-.theme-toggle{
-  width:38px;height:38px;border-radius:50%;flex-shrink:0;
-  display:grid;place-items:center;cursor:pointer;padding:0;
-  background:transparent;border:1px solid var(--border);color:var(--g300);
-  transition:color .2s,border-color .2s,background .2s,transform .25s var(--spring);
-}
-.theme-toggle:hover{color:var(--white);border-color:var(--border-hi);transform:scale(1.08)}
-.theme-toggle svg{width:18px;height:18px;display:block}
-.theme-toggle .icon-sun{display:none}
-.theme-toggle .icon-moon{display:block}
-html[data-theme="light"] .theme-toggle .icon-sun{display:block}
-html[data-theme="light"] .theme-toggle .icon-moon{display:none}
 @media (prefers-reduced-motion:reduce){
   html,body,#nav,.nav-cta,.btn,.card,.exp-card,.res-card,.tbadge,.faq-item,.svc-item,
-  .fg input,.fg select,.fg textarea,.theme-toggle{transition:none}
+  .fg input,.fg select,.fg textarea{transition:none}
 }
 
-/* ── Soft elevation (Apple/Linear): cards are shadow-led, esp. in light ── */
+/* Soft elevation (Apple/Linear): cards are shadow-led */
 .exp-card,.res-card,.tbadge,.why-card,.sector-card,.article-cta{box-shadow:var(--card-shadow)}
 .exp-card:hover,.res-card:hover,.tbadge:hover{box-shadow:var(--card-shadow-hover)}
 .faq-item{box-shadow:var(--card-shadow)}
 .faq-item[open]{box-shadow:var(--card-shadow-hover)}
-/* In light, cards are shadow-led but keep a whisper border — fully transparent
-   edges left white-on-near-white cards reading as fog, not elevation. */
-html[data-theme="light"] .exp-card,
-html[data-theme="light"] .res-card,
-html[data-theme="light"] .tbadge,
-html[data-theme="light"] .faq-item{border-color:rgba(17,24,39,.06)}
-html[data-theme="light"] .fg input,
-html[data-theme="light"] .fg select,
-html[data-theme="light"] .fg textarea{box-shadow:0 1px 2px rgba(16,24,40,.04)}
-/* Light nav: soft shadow when scrolled separates it from the white canvas */
-html[data-theme="light"] #nav.scrolled{box-shadow:0 1px 0 var(--border),0 6px 24px rgba(16,24,40,.05)}
-/* Primary CTA button lift in light (it's the dark button on a light page) */
-html[data-theme="light"] .btn-white{box-shadow:var(--card-shadow)}
-html[data-theme="light"] .btn-white:hover{box-shadow:var(--card-shadow-hover)}
-/* Sticky CTA pill lift in light */
-html[data-theme="light"] .sticky-cta{box-shadow:0 10px 30px var(--accent-glow)}
 
-/* ═══════════ LIGHT-MODE DEPTH OVERHAUL ═══════════
-   Dark mode's depth is LUMINOSITY — glowing washes on near-black. Those same
-   rgba(accent,.1x) radials are imperceptible on a pale canvas, so light mode
-   gets its own depth language instead of a faded copy of dark:
-     1. legible tonal banding (hairline edges + gradient bands per section)
-     2. more saturated ambient tints where dark uses glow pools
-     3. ink-strength decorative strokes (handled in THEME EXTRAS above)
-     4. high-contrast kinetic + watermark type
-   Everything is scoped to [data-theme="light"] — dark rendering unchanged. */
-
-/* 1 · Section banding: hairlines make band edges legible on near-white */
-html[data-theme="light"] #sectors,
-html[data-theme="light"] #trust,
-html[data-theme="light"] #contact{
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-}
-
-/* 2 · Hero: cool vertical falloff so the viewport isn't one flat grey field */
-html[data-theme="light"] #hero{
-  background:linear-gradient(180deg,#f4f6fa 0%,#edf0f5 55%,var(--bg) 100%);
-}
-
-/* 3 · Kinetic: bright paper band; unlit words go paler so lit words SNAP.
-   (Dark's dim-until-lit trick needs a big value gap to read as intentional.) */
-html[data-theme="light"] #kinetic{
-  background:linear-gradient(180deg,#f9fafc,#eef1f6);
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-}
-html[data-theme="light"] .kinetic-text{color:#c4c8d2}
-html[data-theme="light"] .kinetic-text .kw.lit{color:#101114}
-html[data-theme="light"] .kinetic-text .kw.accent-lit{text-shadow:none}
-
-/* 4 · About visual panel: saturated tint + directional gradient — the orbital
-   composition sits in a designed pool of light instead of empty grey */
-html[data-theme="light"] .about-vis-col{
-  background:
-    radial-gradient(ellipse 70% 70% at 30% 50%, rgba(0,122,255,.17), transparent 70%),
-    linear-gradient(160deg,#f6f8fb,#e6eaf2);
-}
-
-/* 5 · Services flow: stronger focal wash + more present accent lines */
-html[data-theme="light"] .svc-vis::before{
-  background:radial-gradient(ellipse 60% 80% at 25% 50%, rgba(0,122,255,.22), transparent 62%);
-}
-
-/* 6 · CTA: a visible pool of light behind the closing pitch */
-html[data-theme="light"] .cta-bg{
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,122,255,.2), transparent 70%),
-    linear-gradient(180deg,#eef1f6,#e5e9f0);
-}
-
-/* 7 · Pull-quote tint needs more chroma on white */
-html[data-theme="light"] .pull-quote{background:rgba(0,122,255,.08)}
-
-/* 8 · Flowing aurora gradients — the negative space itself moves.
-   Each roomy section gets an oversized ::before holding 2-3 soft blue
-   radials, drifting via transform (composited — no per-frame repaint,
-   unlike background-position animation). Layers sit at z-index:0 under
-   each section's raised content; durations are staggered and some run
-   in reverse so bands never move in lockstep. */
-@keyframes auroraDrift{
-  0%,100%{transform:translate3d(-13%,-9%,0) rotate(-4deg) scale(1)}
-  33%{transform:translate3d(9%,6%,0) rotate(1deg) scale(1.2)}
-  66%{transform:translate3d(13%,10%,0) rotate(4deg) scale(1.05)}
-}
-/* Containment + stacking (theme-agnostic; zero visual change in dark):
-   raise in-flow content above the z0 aurora layer, and give the two
-   sections that lacked it a positioning/clipping box. */
+/* Containment + stacking: raise in-flow content above decorative z0 layers,
+   and give #faq / #contact a positioning + clipping box. */
 #faq{overflow:hidden}
 #contact{position:relative;overflow:hidden}
 .about-split,#why .wrap,#faq .wrap,#trust .wrap,#contact .wrap{position:relative;z-index:1}
 
-html[data-theme="light"] #kinetic::before,
-html[data-theme="light"] #about::before,
-html[data-theme="light"] #sectors::before,
-html[data-theme="light"] #services::before,
-html[data-theme="light"] #why::before,
-html[data-theme="light"] #trust::before,
-html[data-theme="light"] #faq::before,
-html[data-theme="light"] #contact::before,
-html[data-theme="light"] .cta-bg::before{
-  content:'';position:absolute;inset:-32%;z-index:0;pointer-events:none;
-  animation:auroraDrift 16s ease-in-out infinite;
-  will-change:transform;
-}
-html[data-theme="light"] #kinetic::before{
-  background:
-    radial-gradient(42% 40% at 18% 30%, rgba(0,122,255,.17), transparent 66%),
-    radial-gradient(46% 44% at 80% 72%, rgba(121,180,255,.22), transparent 68%);
-  animation-duration:14s;
-}
-html[data-theme="light"] #about::before{
-  background:
-    radial-gradient(40% 46% at 72% 20%, rgba(0,122,255,.14), transparent 66%),
-    radial-gradient(36% 40% at 88% 80%, rgba(121,180,255,.18), transparent 68%);
-  animation-duration:19s;animation-direction:reverse;
-}
-html[data-theme="light"] #sectors::before{
-  background:
-    radial-gradient(44% 42% at 14% 70%, rgba(0,122,255,.13), transparent 66%),
-    radial-gradient(38% 40% at 84% 18%, rgba(121,180,255,.18), transparent 68%);
-  animation-duration:16s;
-}
-html[data-theme="light"] #services::before{
-  background:
-    radial-gradient(40% 44% at 76% 26%, rgba(121,180,255,.19), transparent 68%),
-    radial-gradient(38% 38% at 55% 85%, rgba(0,122,255,.12), transparent 66%);
-  animation-duration:15s;animation-direction:reverse;
-}
-html[data-theme="light"] #why::before{
-  background:
-    radial-gradient(42% 44% at 22% 22%, rgba(0,122,255,.14), transparent 66%),
-    radial-gradient(44% 46% at 82% 78%, rgba(121,180,255,.19), transparent 68%);
-  animation-duration:18s;
-}
-html[data-theme="light"] #trust::before{
-  background:
-    radial-gradient(40% 44% at 80% 30%, rgba(0,122,255,.13), transparent 66%),
-    radial-gradient(38% 40% at 16% 78%, rgba(121,180,255,.17), transparent 68%);
-  animation-duration:13s;animation-direction:reverse;
-}
-html[data-theme="light"] #faq::before{
-  background:
-    radial-gradient(44% 40% at 20% 26%, rgba(121,180,255,.18), transparent 68%),
-    radial-gradient(40% 44% at 82% 76%, rgba(0,122,255,.12), transparent 66%);
-  animation-duration:17s;
-}
-html[data-theme="light"] #contact::before{
-  background:
-    radial-gradient(42% 44% at 18% 24%, rgba(0,122,255,.13), transparent 66%),
-    radial-gradient(40% 42% at 84% 70%, rgba(121,180,255,.17), transparent 68%);
-  animation-duration:15.5s;animation-direction:reverse;
-}
-html[data-theme="light"] .cta-bg::before{
-  background:
-    radial-gradient(40% 46% at 30% 34%, rgba(0,122,255,.18), transparent 66%),
-    radial-gradient(44% 48% at 72% 66%, rgba(121,180,255,.24), transparent 68%);
-  animation-duration:12s;
-}
-@media(prefers-reduced-motion:reduce){
-  html[data-theme="light"] #kinetic::before,
-  html[data-theme="light"] #about::before,
-  html[data-theme="light"] #sectors::before,
-  html[data-theme="light"] #services::before,
-  html[data-theme="light"] #why::before,
-  html[data-theme="light"] #trust::before,
-  html[data-theme="light"] #faq::before,
-  html[data-theme="light"] #contact::before,
-  html[data-theme="light"] .cta-bg::before{animation:none}
-}
+
+
+
+
+
+
+
+
+
+
 
 /* ═══════════ WIBIFY-INSPIRED POLISH (palette + type unchanged) ═══════════ */
 /* Film grain texture — analog depth over the whole page (Wibify .grain) */
@@ -1935,7 +1779,7 @@ body::before{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:160px 160px;
 }
-html[data-theme="light"] body::before{opacity:.045;mix-blend-mode:multiply}
+
 @media (prefers-reduced-motion:reduce){body::before{display:none}}
 
 /* ── Shiny CTA: animated shimmer border sweeping the primary button ── */
@@ -2153,25 +1997,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  /* ── Theme toggle (light/dark) ──
-     The initial theme is set before paint by the boot script in the <head>
-     (saved choice wins, else auto by local time). Here we just wire the
-     button to flip + persist — which then overrides the time-based default
-     on future visits. */
-  (function(){
-    const root = document.documentElement;
-    const btn = document.getElementById('themeToggle');
-    if (!btn) return;
-    const meta = document.querySelector('meta[name="theme-color"]');
-    btn.addEventListener('click', () => {
-      const next = (root.getAttribute('data-theme') === 'light') ? 'dark' : 'light';
-      root.setAttribute('data-theme', next);
-      if (meta) meta.setAttribute('content', next === 'light' ? '#f7f8fa' : '#0a0a0a');
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      if (typeof window.gtag === 'function') window.gtag('event', 'theme_toggle', { theme: next });
-    });
-  })();
-
   /* ── Text-roll (slot-machine) on homepage service item names ──
      Wraps each letter in a span (+ a cloned row beneath); CSS handles the
      staggered roll on hover. Desktop/hover only — mobile keeps plain text. */
@@ -2265,96 +2090,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', updateSticky, {passive:true});
     window.addEventListener('resize', updateSticky, {passive:true});
     updateSticky();
-  }
-
-  /* ── Contact-form mode toggle → "Send an enquiry" vs "Book a call" ──
-     Only one primary button is ever visible; the Cal.com calendar is
-     lazy-mounted the first time the "Book a call" tab is opened. */
-  const calForm = document.getElementById('calForm');
-  const calMount = document.getElementById('cal-inline-form');
-  const cformTabs = document.querySelectorAll('.cform-tab');
-  const tabCall = document.getElementById('tabCall');
-  if (calForm && calMount && cformTabs.length) {
-    const CAL_LINK = 'think-lens-consulting-kui4bb/30min';
-    let scriptReady = false, mounted = false;
-    // Load the embed script + preload data (safe to run before the container is shown)
-    const warmCal = () => {
-      if (scriptReady) return;
-      scriptReady = true;
-      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
-      window.Cal('init', { origin: 'https://cal.com' });
-      window.Cal('ui', {
-        theme: 'dark',
-        cssVarsPerTheme: { dark: { 'cal-brand': '#007AFF' } },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      });
-      window.Cal('preload', { calLink: CAL_LINK });
-    };
-    // Render the inline calendar — only once the container is visible
-    const mountCal = () => {
-      if (mounted) return;
-      mounted = true;
-      warmCal();
-      window.Cal('inline', {
-        elementOrSelector: '#cal-inline-form',
-        calLink: CAL_LINK,
-        layout: 'month_view',
-        config: { theme: 'dark' },
-      });
-      window.Cal('on', { action: 'linkReady', callback: () => {
-        calForm.classList.add('is-loaded');
-        const l = calMount.querySelector('.cal-loading');
-        if (l) l.style.display = 'none';
-      }});
-      window.Cal('on', { action: 'bookingSuccessful', callback: () => {
-        if (typeof window.gtag === 'function') window.gtag('event', 'book_appointment', { method: 'cal.com' });
-      }});
-    };
-    const panels = {
-      enquiry: document.getElementById('panelEnquiry'),
-      call: document.getElementById('panelCall'),
-      whatsapp: document.getElementById('panelWhatsapp'),
-    };
-    // Thinklens is "online" 9 AM–9 PM IST (UTC+5:30, no DST), computed from the
-    // visitor's clock regardless of their zone. Drives both the WhatsApp mockup
-    // presence and the availability bento tile.
-    const availTile = document.getElementById('availTile');
-    const isOnlineIST = () =>
-      (h => h >= 9 && h < 21)(new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getHours());
-    const syncWaTime = () => {
-      const online = isOnlineIST();
-      if (availTile) availTile.classList.toggle('is-offline', !online);
-      const wa = panels.whatsapp;
-      if (!wa) return;
-      const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-      const row = wa.querySelector('.wa-row-time');
-      const bar = wa.querySelector('.wa-time');
-      if (row) row.textContent = t;
-      if (bar) bar.textContent = t.replace(/\s?[AP]M$/i, ''); // status bar has no AM/PM
-      const bot = wa.querySelector('.wa-row-bot');
-      if (bot) bot.classList.toggle('is-offline', !online);
-    };
-    setInterval(syncWaTime, 60000); // keep time + presence fresh if left open
-    const setMode = (mode) => {
-      cformTabs.forEach((t) => {
-        const active = t.dataset.mode === mode;
-        t.classList.toggle('is-active', active);
-        t.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      Object.keys(panels).forEach((k) => {
-        if (panels[k]) panels[k].toggleAttribute('hidden', k !== mode);
-      });
-      if (mode === 'call') mountCal();
-      if (mode === 'whatsapp') syncWaTime();
-    };
-    syncWaTime();
-    cformTabs.forEach((t) => t.addEventListener('click', () => setMode(t.dataset.mode)));
-    // Warm the script on hover/focus intent so the first open is instant
-    if (tabCall) {
-      tabCall.addEventListener('pointerenter', warmCal, { once: true });
-      tabCall.addEventListener('focus', warmCal, { once: true });
-    }
   }
 
   /* ── Count-up animation ── */
@@ -2501,43 +2236,72 @@ document.addEventListener('DOMContentLoaded', function() {
     track('cta_click', { label: (cta.textContent || '').trim().slice(0, 60) });
   });
 
-  /* ── Form journey: smart defaults + goal-gradient progress + build-your-engagement chips ──
-     The selects ship pre-filled and the "Time & Materials" chip ships selected, so the
-     progress bar never starts at 0%. Chip choices post with the form (hidden fields)
-     and personalize the message hint. */
+  /* ── Contact: brief builder (imported "Contact Section v2" design) ──
+     One unified form; three channels via the tabs. The 5-dot meter + live
+     "Your brief" line update as chips/fields are filled. The primary button
+     routes by channel: Send an enquiry → Formspree; Book a call → Cal.com
+     inline calendar (lazy-mounted); WhatsApp Chat → wa.me with the brief
+     prefilled. Smart defaults keep the meter off zero. */
   (() => {
-    const journeyForm = document.getElementById('contactForm');
-    if (!journeyForm || !document.getElementById('fjFill')) return;
-    const fill = document.getElementById('fjFill');
-    const pctEl = document.getElementById('fjPct');
-    const msgField = document.getElementById('fmessage');
-    const defaultHint = msgField.placeholder;
-    const groups = journeyForm.querySelectorAll('.fj-group');
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    const $ = (id) => document.getElementById(id);
+    const val = (id) => ($(id) || { value: '' }).value;
 
-    const val = (id) => (document.getElementById(id) || { value: '' }).value;
-    function syncHint() {
-      const model = val('fjModel'), skills = val('fjSkills'), start = val('fjStart');
-      msgField.placeholder = (model || skills || start)
-        ? 'e.g., We need ' + (skills || 'a senior consultant') + (model ? ' on a ' + model + ' basis' : '') + (start ? ', starting ' + (start === 'ASAP' ? start : start.toLowerCase()) : '') + ' — plus any client or pipeline context.'
-        : defaultHint;
-    }
-    const steps = [
-      () => !!val('fjModel'),
-      () => !!val('fjSkills'),
-      () => !!val('fregion'),
-      () => !!val('fenquiry'),
-      () => !!val('fname').trim(),
-      () => !!val('femail').trim(),
-      () => !!msgField.value.trim(),
-    ];
-    function update() {
-      const done = steps.filter((f) => f()).length;
-      const p = Math.round((done / steps.length) * 100);
-      fill.style.width = p + '%';
-      pctEl.textContent = p >= 100
-        ? "100% — ready. Don't lose it."
-        : p + '% there — ' + (steps.length - done) + ' quick ' + (steps.length - done === 1 ? 'step' : 'steps') + ' left';
-    }
+    const cta = $('submitBtn'), msg = $('formMsg');
+    const briefBody = $('briefBody'), calBody = $('calBody'), waBody = $('waBody');
+    const progress = form.querySelector('.cx-progress');
+    const waPreview = $('waPreview'), waOpen = $('waOpen');
+    const tabs = [...document.querySelectorAll('.cx-tab')];
+    const groups = [...form.querySelectorAll('.cx-chips')];
+    const dots = $('fjDots') ? [...$('fjDots').children] : [];
+    const progLabel = $('fjLabel'), briefLine = $('fjBrief');
+    const msgField = $('fmessage');
+
+    const CAL_LINK = 'think-lens-consulting-kui4bb/30min';
+    const WA_BASE = 'https://wa.me/919676291788';
+    const FORMSPREE_ID = 'xdapybyb';
+    // Consumer mail providers — anything else is treated as a corporate domain.
+    const FREE_MAIL = ['gmail.com','yahoo.com','outlook.com','hotmail.com','live.com','icloud.com','proton.me','protonmail.com','aol.com','mail.com','gmx.com','yandex.com','zoho.com','rediffmail.com'];
+    let mode = 'enquiry';
+
+    /* ── Cal.com lazy mount (only when "Book a call" is first opened) ── */
+    const calForm = $('calForm'), calMount = $('cal-inline-form'), tabCall = $('tabCall');
+    let scriptReady = false, mounted = false;
+    const warmCal = () => {
+      if (scriptReady || !calForm) return;
+      scriptReady = true;
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
+      window.Cal('init', { origin: 'https://cal.com' });
+      window.Cal('ui', {
+        theme: 'dark',
+        cssVarsPerTheme: { dark: { 'cal-brand': '#3b7bff' } },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+      window.Cal('preload', { calLink: CAL_LINK });
+    };
+    const mountCal = () => {
+      if (mounted || !calForm) return;
+      mounted = true;
+      warmCal();
+      window.Cal('inline', {
+        elementOrSelector: '#cal-inline-form',
+        calLink: CAL_LINK,
+        layout: 'month_view',
+        config: { theme: 'dark' },
+      });
+      window.Cal('on', { action: 'linkReady', callback: () => {
+        calForm.classList.add('is-loaded');
+        const l = calMount.querySelector('.cal-loading');
+        if (l) l.style.display = 'none';
+      }});
+      window.Cal('on', { action: 'bookingSuccessful', callback: () => {
+        track('book_appointment', { method: 'cal.com' });
+      }});
+    };
+
+    /* ── Chips → hidden inputs ── */
     groups.forEach((g) => {
       const multi = g.dataset.multi === '1';
       const hidden = g.querySelector('input[type="hidden"]');
@@ -2545,77 +2309,157 @@ document.addEventListener('DOMContentLoaded', function() {
         if (multi) ch.classList.toggle('on');
         else { g.querySelectorAll('.chip').forEach((c) => c.classList.remove('on')); ch.classList.add('on'); }
         hidden.value = [...g.querySelectorAll('.chip.on')].map((c) => c.textContent.trim()).join(', ');
-        syncHint(); update();
+        update();
       }));
     });
-    // The submit handler calls form.reset() on success — restore chips/defaults too.
-    const origReset = journeyForm.reset.bind(journeyForm);
-    journeyForm.reset = () => {
+
+    /* ── 5-dot progress + live brief line ── */
+    function update() {
+      const checks = [
+        !!val('fname').trim(),
+        !!val('femail').trim(),
+        !!val('fjSkills'),
+        !!val('fjStart'),
+        !!(msgField && msgField.value.trim()),
+      ];
+      const done = checks.filter(Boolean).length, left = checks.length - done;
+      dots.forEach((d, i) => d.classList.toggle('on', checks[i]));
+      if (progLabel) progLabel.textContent = left === 0
+        ? 'All set — ready to send'
+        : left + ' quick step' + (left === 1 ? '' : 's') + ' left';
+      const eng = val('fjModel'), skills = val('fjSkills'), start = val('fjStart'), region = val('fregion');
+      const parts = [];
+      if (eng) parts.push(eng);
+      if (skills) parts.push(skills);
+      if (start) parts.push('starting ' + (start === 'Just exploring' ? 'whenever — just exploring' : start));
+      if (region) parts.push('for ' + region);
+      if (briefLine) briefLine.textContent = parts.join(' · ');
+    }
+    form.addEventListener('input', update);
+
+    /* ── Sliding "thumb" that tracks the active tab ── */
+    const tabsEl = form.querySelector('.cx-tabs');
+    const thumb = tabsEl ? tabsEl.querySelector('.cx-tab-thumb') : null;
+    const moveThumb = (animate) => {
+      if (!thumb || !tabsEl) return;
+      const active = tabsEl.querySelector('.cx-tab.is-active');
+      if (!active) return;
+      const cr = tabsEl.getBoundingClientRect(), tr = active.getBoundingClientRect();
+      const x = tr.left - cr.left - tabsEl.clientLeft;
+      const y = tr.top - cr.top - tabsEl.clientTop;
+      if (!animate) thumb.style.transition = 'none';
+      thumb.style.width = tr.width + 'px';
+      thumb.style.height = tr.height + 'px';
+      thumb.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      if (!animate) { void thumb.offsetWidth; thumb.style.transition = ''; } // reflow, then re-enable
+    };
+    // Keep it aligned on viewport/layout changes and once fonts settle.
+    window.addEventListener('resize', () => moveThumb(false), { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => moveThumb(false));
+
+    /* ── Channel tabs → swap the body: enquiry form / Cal calendar / WhatsApp ── */
+    const setMode = (m, animate) => {
+      mode = m;
+      form.dataset.mode = m;
+      tabs.forEach((t) => {
+        const active = t.dataset.mode === m;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      moveThumb(animate !== false);
+      if (briefBody) briefBody.toggleAttribute('hidden', m !== 'enquiry');
+      if (calBody) calBody.toggleAttribute('hidden', m !== 'call');
+      if (waBody) waBody.toggleAttribute('hidden', m !== 'whatsapp');
+      // The 5-dot meter only tracks the enquiry form — hide it for call/WhatsApp.
+      if (progress) progress.toggleAttribute('hidden', m !== 'enquiry');
+      if (m === 'call') mountCal();
+      if (m === 'whatsapp') syncWhatsapp();
+    };
+    tabs.forEach((t) => t.addEventListener('click', () => setMode(t.dataset.mode)));
+    if (tabCall) {
+      tabCall.addEventListener('pointerenter', warmCal, { once: true });
+      tabCall.addEventListener('focus', warmCal, { once: true });
+    }
+
+    /* ── Keep the WhatsApp preview + wa.me link in sync with the brief ── */
+    function syncWhatsapp() {
+      const text = waMessage();
+      if (waPreview) waPreview.textContent = text;
+      if (waOpen) waOpen.href = WA_BASE + '?text=' + encodeURIComponent(text);
+    }
+    if (waOpen) waOpen.addEventListener('click', () => {
+      track('generate_lead', { method: 'whatsapp', region: val('fregion') });
+    });
+
+    /* ── Build a WhatsApp opener message from the brief ── */
+    function waMessage() {
+      const name = val('fname').trim(), eng = val('fjModel'), skills = val('fjSkills'),
+            start = val('fjStart'), region = val('fregion');
+      let m = 'Hi Thinklens — ' + (name ? name + ' here. ' : '') + "I'd like to discuss an engagement";
+      const b = [];
+      if (eng) b.push(eng);
+      if (skills) b.push(skills);
+      if (start) b.push('starting ' + start);
+      if (region) b.push(region);
+      if (b.length) m += ' (' + b.join(' · ') + ')';
+      return m + '.';
+    }
+
+    /* ── Reset restores chip defaults + smart defaults ── */
+    const origReset = form.reset.bind(form);
+    form.reset = () => {
       origReset();
       groups.forEach((g) => {
         const hidden = g.querySelector('input[type="hidden"]');
         g.querySelectorAll('.chip').forEach((c) => c.classList.toggle('on', !!hidden.defaultValue && c.textContent.trim() === hidden.defaultValue));
         hidden.value = hidden.defaultValue;
       });
-      syncHint(); update();
+      update();
     };
-    journeyForm.addEventListener('input', update);
-    syncHint(); update();
-  })();
 
-  /* ── Form submission via Formspree ── */
-  const FORMSPREE_ID = 'xdapybyb';
-  // Consumer mail providers — anything else is treated as a corporate domain.
-  const FREE_MAIL = ['gmail.com','yahoo.com','outlook.com','hotmail.com','live.com','icloud.com','proton.me','protonmail.com','aol.com','mail.com','gmx.com','yandex.com','zoho.com','rediffmail.com'];
-  const form = document.getElementById('contactForm');
-  if (form) {
-    form.addEventListener('submit', async function(e) {
+    /* ── Enquiry submit → Formspree (Book-a-call and WhatsApp have their own
+         actions in their panels) ── */
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const msg = document.getElementById('formMsg');
-      document.getElementById('replyto').value = document.getElementById('femail').value;
-      if (!document.getElementById('fregion').value || !document.getElementById('fenquiry').value) {
+      $('replyto').value = val('femail');
+      if (!val('fregion') || !val('fenquiry')) {
         msg.style.display = 'block'; msg.style.color = '#ff6b6b';
         msg.textContent = 'Please select your region and enquiry type.'; return;
       }
-      btn.textContent = 'Sending…'; btn.disabled = true; msg.style.display = 'none';
-      // Lead tagging — free-mail vs corporate domain, MSA routing via subject line
-      const emailDomain = (document.getElementById('femail').value.split('@')[1] || '').toLowerCase();
+      cta.textContent = 'Sending…'; cta.disabled = true; msg.style.display = 'none';
+      const emailDomain = (val('femail').split('@')[1] || '').toLowerCase();
       const leadType = FREE_MAIL.includes(emailDomain) ? 'free' : 'corporate';
-      const enquiryType = document.getElementById('fenquiry').value;
+      const enquiryType = val('fenquiry');
       const isMsa = /^(MSA|Master Service Agreement|Sub-Contracting)/.test(enquiryType);
-      this.querySelector('[name="_subject"]').value = isMsa
+      form.querySelector('[name="_subject"]').value = isMsa
         ? 'MSA / Partnership Enquiry — Thinklens Website'
         : 'New Enquiry — Thinklens Website';
-      const data = new FormData(this);
+      const data = new FormData(form);
       data.append('lead_type', leadType);
       data.append('email_domain', emailDomain);
       try {
         const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-          method: 'POST', body: data, headers: {'Accept': 'application/json'}
+          method: 'POST', body: data, headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          track('generate_lead', {
-            enquiry_type: enquiryType,
-            region: document.getElementById('fregion').value,
-            lead_type: leadType,
-          });
-          btn.classList.add('ok');
-          btn.textContent = '✓ Enquiry sent';
-          msg.style.display = 'block';
-          msg.style.color = '#aeaeb2';
+          track('generate_lead', { enquiry_type: enquiryType, region: val('fregion'), lead_type: leadType });
+          cta.classList.add('cx-cta-ok');
+          cta.textContent = '✓ Enquiry sent';
+          msg.style.display = 'block'; msg.style.color = '';
           msg.textContent = "We've received your message — we'll be in touch shortly.";
           form.reset();
         } else { throw new Error('Server error'); }
       } catch (err) {
-        btn.disabled = false;
-        btn.textContent = 'Send Enquiry';
-        msg.style.display = 'block';
-        msg.style.color = '#ff6b6b';
+        cta.disabled = false;
+        cta.textContent = 'Send Enquiry';
+        msg.style.display = 'block'; msg.style.color = '#ff6b6b';
         msg.textContent = 'Something went wrong. Please email thinklensconsulting@gmail.com';
       }
     });
-  }
+
+    setMode('enquiry', false); // place the thumb without sliding on first load
+    update();
+  })();
 
   /* ── Custom cursor (fine pointers only) ── */
   if (isFinePointer) {

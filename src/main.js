@@ -31,25 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  /* ── Theme toggle (light/dark) ──
-     The initial theme is set before paint by the boot script in the <head>
-     (saved choice wins, else auto by local time). Here we just wire the
-     button to flip + persist — which then overrides the time-based default
-     on future visits. */
-  (function(){
-    const root = document.documentElement;
-    const btn = document.getElementById('themeToggle');
-    if (!btn) return;
-    const meta = document.querySelector('meta[name="theme-color"]');
-    btn.addEventListener('click', () => {
-      const next = (root.getAttribute('data-theme') === 'light') ? 'dark' : 'light';
-      root.setAttribute('data-theme', next);
-      if (meta) meta.setAttribute('content', next === 'light' ? '#f7f8fa' : '#0a0a0a');
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      if (typeof window.gtag === 'function') window.gtag('event', 'theme_toggle', { theme: next });
-    });
-  })();
-
   /* ── Text-roll (slot-machine) on homepage service item names ──
      Wraps each letter in a span (+ a cloned row beneath); CSS handles the
      staggered roll on hover. Desktop/hover only — mobile keeps plain text. */
@@ -143,96 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', updateSticky, {passive:true});
     window.addEventListener('resize', updateSticky, {passive:true});
     updateSticky();
-  }
-
-  /* ── Contact-form mode toggle → "Send an enquiry" vs "Book a call" ──
-     Only one primary button is ever visible; the Cal.com calendar is
-     lazy-mounted the first time the "Book a call" tab is opened. */
-  const calForm = document.getElementById('calForm');
-  const calMount = document.getElementById('cal-inline-form');
-  const cformTabs = document.querySelectorAll('.cform-tab');
-  const tabCall = document.getElementById('tabCall');
-  if (calForm && calMount && cformTabs.length) {
-    const CAL_LINK = 'think-lens-consulting-kui4bb/30min';
-    let scriptReady = false, mounted = false;
-    // Load the embed script + preload data (safe to run before the container is shown)
-    const warmCal = () => {
-      if (scriptReady) return;
-      scriptReady = true;
-      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
-      window.Cal('init', { origin: 'https://cal.com' });
-      window.Cal('ui', {
-        theme: 'dark',
-        cssVarsPerTheme: { dark: { 'cal-brand': '#007AFF' } },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      });
-      window.Cal('preload', { calLink: CAL_LINK });
-    };
-    // Render the inline calendar — only once the container is visible
-    const mountCal = () => {
-      if (mounted) return;
-      mounted = true;
-      warmCal();
-      window.Cal('inline', {
-        elementOrSelector: '#cal-inline-form',
-        calLink: CAL_LINK,
-        layout: 'month_view',
-        config: { theme: 'dark' },
-      });
-      window.Cal('on', { action: 'linkReady', callback: () => {
-        calForm.classList.add('is-loaded');
-        const l = calMount.querySelector('.cal-loading');
-        if (l) l.style.display = 'none';
-      }});
-      window.Cal('on', { action: 'bookingSuccessful', callback: () => {
-        if (typeof window.gtag === 'function') window.gtag('event', 'book_appointment', { method: 'cal.com' });
-      }});
-    };
-    const panels = {
-      enquiry: document.getElementById('panelEnquiry'),
-      call: document.getElementById('panelCall'),
-      whatsapp: document.getElementById('panelWhatsapp'),
-    };
-    // Thinklens is "online" 9 AM–9 PM IST (UTC+5:30, no DST), computed from the
-    // visitor's clock regardless of their zone. Drives both the WhatsApp mockup
-    // presence and the availability bento tile.
-    const availTile = document.getElementById('availTile');
-    const isOnlineIST = () =>
-      (h => h >= 9 && h < 21)(new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })).getHours());
-    const syncWaTime = () => {
-      const online = isOnlineIST();
-      if (availTile) availTile.classList.toggle('is-offline', !online);
-      const wa = panels.whatsapp;
-      if (!wa) return;
-      const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-      const row = wa.querySelector('.wa-row-time');
-      const bar = wa.querySelector('.wa-time');
-      if (row) row.textContent = t;
-      if (bar) bar.textContent = t.replace(/\s?[AP]M$/i, ''); // status bar has no AM/PM
-      const bot = wa.querySelector('.wa-row-bot');
-      if (bot) bot.classList.toggle('is-offline', !online);
-    };
-    setInterval(syncWaTime, 60000); // keep time + presence fresh if left open
-    const setMode = (mode) => {
-      cformTabs.forEach((t) => {
-        const active = t.dataset.mode === mode;
-        t.classList.toggle('is-active', active);
-        t.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      Object.keys(panels).forEach((k) => {
-        if (panels[k]) panels[k].toggleAttribute('hidden', k !== mode);
-      });
-      if (mode === 'call') mountCal();
-      if (mode === 'whatsapp') syncWaTime();
-    };
-    syncWaTime();
-    cformTabs.forEach((t) => t.addEventListener('click', () => setMode(t.dataset.mode)));
-    // Warm the script on hover/focus intent so the first open is instant
-    if (tabCall) {
-      tabCall.addEventListener('pointerenter', warmCal, { once: true });
-      tabCall.addEventListener('focus', warmCal, { once: true });
-    }
   }
 
   /* ── Count-up animation ── */
@@ -379,43 +270,72 @@ document.addEventListener('DOMContentLoaded', function() {
     track('cta_click', { label: (cta.textContent || '').trim().slice(0, 60) });
   });
 
-  /* ── Form journey: smart defaults + goal-gradient progress + build-your-engagement chips ──
-     The selects ship pre-filled and the "Time & Materials" chip ships selected, so the
-     progress bar never starts at 0%. Chip choices post with the form (hidden fields)
-     and personalize the message hint. */
+  /* ── Contact: brief builder (imported "Contact Section v2" design) ──
+     One unified form; three channels via the tabs. The 5-dot meter + live
+     "Your brief" line update as chips/fields are filled. The primary button
+     routes by channel: Send an enquiry → Formspree; Book a call → Cal.com
+     inline calendar (lazy-mounted); WhatsApp Chat → wa.me with the brief
+     prefilled. Smart defaults keep the meter off zero. */
   (() => {
-    const journeyForm = document.getElementById('contactForm');
-    if (!journeyForm || !document.getElementById('fjFill')) return;
-    const fill = document.getElementById('fjFill');
-    const pctEl = document.getElementById('fjPct');
-    const msgField = document.getElementById('fmessage');
-    const defaultHint = msgField.placeholder;
-    const groups = journeyForm.querySelectorAll('.fj-group');
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    const $ = (id) => document.getElementById(id);
+    const val = (id) => ($(id) || { value: '' }).value;
 
-    const val = (id) => (document.getElementById(id) || { value: '' }).value;
-    function syncHint() {
-      const model = val('fjModel'), skills = val('fjSkills'), start = val('fjStart');
-      msgField.placeholder = (model || skills || start)
-        ? 'e.g., We need ' + (skills || 'a senior consultant') + (model ? ' on a ' + model + ' basis' : '') + (start ? ', starting ' + (start === 'ASAP' ? start : start.toLowerCase()) : '') + ' — plus any client or pipeline context.'
-        : defaultHint;
-    }
-    const steps = [
-      () => !!val('fjModel'),
-      () => !!val('fjSkills'),
-      () => !!val('fregion'),
-      () => !!val('fenquiry'),
-      () => !!val('fname').trim(),
-      () => !!val('femail').trim(),
-      () => !!msgField.value.trim(),
-    ];
-    function update() {
-      const done = steps.filter((f) => f()).length;
-      const p = Math.round((done / steps.length) * 100);
-      fill.style.width = p + '%';
-      pctEl.textContent = p >= 100
-        ? "100% — ready. Don't lose it."
-        : p + '% there — ' + (steps.length - done) + ' quick ' + (steps.length - done === 1 ? 'step' : 'steps') + ' left';
-    }
+    const cta = $('submitBtn'), msg = $('formMsg');
+    const briefBody = $('briefBody'), calBody = $('calBody'), waBody = $('waBody');
+    const progress = form.querySelector('.cx-progress');
+    const waPreview = $('waPreview'), waOpen = $('waOpen');
+    const tabs = [...document.querySelectorAll('.cx-tab')];
+    const groups = [...form.querySelectorAll('.cx-chips')];
+    const dots = $('fjDots') ? [...$('fjDots').children] : [];
+    const progLabel = $('fjLabel'), briefLine = $('fjBrief');
+    const msgField = $('fmessage');
+
+    const CAL_LINK = 'think-lens-consulting-kui4bb/30min';
+    const WA_BASE = 'https://wa.me/919676291788';
+    const FORMSPREE_ID = 'xdapybyb';
+    // Consumer mail providers — anything else is treated as a corporate domain.
+    const FREE_MAIL = ['gmail.com','yahoo.com','outlook.com','hotmail.com','live.com','icloud.com','proton.me','protonmail.com','aol.com','mail.com','gmx.com','yandex.com','zoho.com','rediffmail.com'];
+    let mode = 'enquiry';
+
+    /* ── Cal.com lazy mount (only when "Book a call" is first opened) ── */
+    const calForm = $('calForm'), calMount = $('cal-inline-form'), tabCall = $('tabCall');
+    let scriptReady = false, mounted = false;
+    const warmCal = () => {
+      if (scriptReady || !calForm) return;
+      scriptReady = true;
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
+      window.Cal('init', { origin: 'https://cal.com' });
+      window.Cal('ui', {
+        theme: 'dark',
+        cssVarsPerTheme: { dark: { 'cal-brand': '#3b7bff' } },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+      window.Cal('preload', { calLink: CAL_LINK });
+    };
+    const mountCal = () => {
+      if (mounted || !calForm) return;
+      mounted = true;
+      warmCal();
+      window.Cal('inline', {
+        elementOrSelector: '#cal-inline-form',
+        calLink: CAL_LINK,
+        layout: 'month_view',
+        config: { theme: 'dark' },
+      });
+      window.Cal('on', { action: 'linkReady', callback: () => {
+        calForm.classList.add('is-loaded');
+        const l = calMount.querySelector('.cal-loading');
+        if (l) l.style.display = 'none';
+      }});
+      window.Cal('on', { action: 'bookingSuccessful', callback: () => {
+        track('book_appointment', { method: 'cal.com' });
+      }});
+    };
+
+    /* ── Chips → hidden inputs ── */
     groups.forEach((g) => {
       const multi = g.dataset.multi === '1';
       const hidden = g.querySelector('input[type="hidden"]');
@@ -423,77 +343,157 @@ document.addEventListener('DOMContentLoaded', function() {
         if (multi) ch.classList.toggle('on');
         else { g.querySelectorAll('.chip').forEach((c) => c.classList.remove('on')); ch.classList.add('on'); }
         hidden.value = [...g.querySelectorAll('.chip.on')].map((c) => c.textContent.trim()).join(', ');
-        syncHint(); update();
+        update();
       }));
     });
-    // The submit handler calls form.reset() on success — restore chips/defaults too.
-    const origReset = journeyForm.reset.bind(journeyForm);
-    journeyForm.reset = () => {
+
+    /* ── 5-dot progress + live brief line ── */
+    function update() {
+      const checks = [
+        !!val('fname').trim(),
+        !!val('femail').trim(),
+        !!val('fjSkills'),
+        !!val('fjStart'),
+        !!(msgField && msgField.value.trim()),
+      ];
+      const done = checks.filter(Boolean).length, left = checks.length - done;
+      dots.forEach((d, i) => d.classList.toggle('on', checks[i]));
+      if (progLabel) progLabel.textContent = left === 0
+        ? 'All set — ready to send'
+        : left + ' quick step' + (left === 1 ? '' : 's') + ' left';
+      const eng = val('fjModel'), skills = val('fjSkills'), start = val('fjStart'), region = val('fregion');
+      const parts = [];
+      if (eng) parts.push(eng);
+      if (skills) parts.push(skills);
+      if (start) parts.push('starting ' + (start === 'Just exploring' ? 'whenever — just exploring' : start));
+      if (region) parts.push('for ' + region);
+      if (briefLine) briefLine.textContent = parts.join(' · ');
+    }
+    form.addEventListener('input', update);
+
+    /* ── Sliding "thumb" that tracks the active tab ── */
+    const tabsEl = form.querySelector('.cx-tabs');
+    const thumb = tabsEl ? tabsEl.querySelector('.cx-tab-thumb') : null;
+    const moveThumb = (animate) => {
+      if (!thumb || !tabsEl) return;
+      const active = tabsEl.querySelector('.cx-tab.is-active');
+      if (!active) return;
+      const cr = tabsEl.getBoundingClientRect(), tr = active.getBoundingClientRect();
+      const x = tr.left - cr.left - tabsEl.clientLeft;
+      const y = tr.top - cr.top - tabsEl.clientTop;
+      if (!animate) thumb.style.transition = 'none';
+      thumb.style.width = tr.width + 'px';
+      thumb.style.height = tr.height + 'px';
+      thumb.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      if (!animate) { void thumb.offsetWidth; thumb.style.transition = ''; } // reflow, then re-enable
+    };
+    // Keep it aligned on viewport/layout changes and once fonts settle.
+    window.addEventListener('resize', () => moveThumb(false), { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => moveThumb(false));
+
+    /* ── Channel tabs → swap the body: enquiry form / Cal calendar / WhatsApp ── */
+    const setMode = (m, animate) => {
+      mode = m;
+      form.dataset.mode = m;
+      tabs.forEach((t) => {
+        const active = t.dataset.mode === m;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      moveThumb(animate !== false);
+      if (briefBody) briefBody.toggleAttribute('hidden', m !== 'enquiry');
+      if (calBody) calBody.toggleAttribute('hidden', m !== 'call');
+      if (waBody) waBody.toggleAttribute('hidden', m !== 'whatsapp');
+      // The 5-dot meter only tracks the enquiry form — hide it for call/WhatsApp.
+      if (progress) progress.toggleAttribute('hidden', m !== 'enquiry');
+      if (m === 'call') mountCal();
+      if (m === 'whatsapp') syncWhatsapp();
+    };
+    tabs.forEach((t) => t.addEventListener('click', () => setMode(t.dataset.mode)));
+    if (tabCall) {
+      tabCall.addEventListener('pointerenter', warmCal, { once: true });
+      tabCall.addEventListener('focus', warmCal, { once: true });
+    }
+
+    /* ── Keep the WhatsApp preview + wa.me link in sync with the brief ── */
+    function syncWhatsapp() {
+      const text = waMessage();
+      if (waPreview) waPreview.textContent = text;
+      if (waOpen) waOpen.href = WA_BASE + '?text=' + encodeURIComponent(text);
+    }
+    if (waOpen) waOpen.addEventListener('click', () => {
+      track('generate_lead', { method: 'whatsapp', region: val('fregion') });
+    });
+
+    /* ── Build a WhatsApp opener message from the brief ── */
+    function waMessage() {
+      const name = val('fname').trim(), eng = val('fjModel'), skills = val('fjSkills'),
+            start = val('fjStart'), region = val('fregion');
+      let m = 'Hi Thinklens — ' + (name ? name + ' here. ' : '') + "I'd like to discuss an engagement";
+      const b = [];
+      if (eng) b.push(eng);
+      if (skills) b.push(skills);
+      if (start) b.push('starting ' + start);
+      if (region) b.push(region);
+      if (b.length) m += ' (' + b.join(' · ') + ')';
+      return m + '.';
+    }
+
+    /* ── Reset restores chip defaults + smart defaults ── */
+    const origReset = form.reset.bind(form);
+    form.reset = () => {
       origReset();
       groups.forEach((g) => {
         const hidden = g.querySelector('input[type="hidden"]');
         g.querySelectorAll('.chip').forEach((c) => c.classList.toggle('on', !!hidden.defaultValue && c.textContent.trim() === hidden.defaultValue));
         hidden.value = hidden.defaultValue;
       });
-      syncHint(); update();
+      update();
     };
-    journeyForm.addEventListener('input', update);
-    syncHint(); update();
-  })();
 
-  /* ── Form submission via Formspree ── */
-  const FORMSPREE_ID = 'xdapybyb';
-  // Consumer mail providers — anything else is treated as a corporate domain.
-  const FREE_MAIL = ['gmail.com','yahoo.com','outlook.com','hotmail.com','live.com','icloud.com','proton.me','protonmail.com','aol.com','mail.com','gmx.com','yandex.com','zoho.com','rediffmail.com'];
-  const form = document.getElementById('contactForm');
-  if (form) {
-    form.addEventListener('submit', async function(e) {
+    /* ── Enquiry submit → Formspree (Book-a-call and WhatsApp have their own
+         actions in their panels) ── */
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const msg = document.getElementById('formMsg');
-      document.getElementById('replyto').value = document.getElementById('femail').value;
-      if (!document.getElementById('fregion').value || !document.getElementById('fenquiry').value) {
+      $('replyto').value = val('femail');
+      if (!val('fregion') || !val('fenquiry')) {
         msg.style.display = 'block'; msg.style.color = '#ff6b6b';
         msg.textContent = 'Please select your region and enquiry type.'; return;
       }
-      btn.textContent = 'Sending…'; btn.disabled = true; msg.style.display = 'none';
-      // Lead tagging — free-mail vs corporate domain, MSA routing via subject line
-      const emailDomain = (document.getElementById('femail').value.split('@')[1] || '').toLowerCase();
+      cta.textContent = 'Sending…'; cta.disabled = true; msg.style.display = 'none';
+      const emailDomain = (val('femail').split('@')[1] || '').toLowerCase();
       const leadType = FREE_MAIL.includes(emailDomain) ? 'free' : 'corporate';
-      const enquiryType = document.getElementById('fenquiry').value;
+      const enquiryType = val('fenquiry');
       const isMsa = /^(MSA|Master Service Agreement|Sub-Contracting)/.test(enquiryType);
-      this.querySelector('[name="_subject"]').value = isMsa
+      form.querySelector('[name="_subject"]').value = isMsa
         ? 'MSA / Partnership Enquiry — Thinklens Website'
         : 'New Enquiry — Thinklens Website';
-      const data = new FormData(this);
+      const data = new FormData(form);
       data.append('lead_type', leadType);
       data.append('email_domain', emailDomain);
       try {
         const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-          method: 'POST', body: data, headers: {'Accept': 'application/json'}
+          method: 'POST', body: data, headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          track('generate_lead', {
-            enquiry_type: enquiryType,
-            region: document.getElementById('fregion').value,
-            lead_type: leadType,
-          });
-          btn.classList.add('ok');
-          btn.textContent = '✓ Enquiry sent';
-          msg.style.display = 'block';
-          msg.style.color = '#aeaeb2';
+          track('generate_lead', { enquiry_type: enquiryType, region: val('fregion'), lead_type: leadType });
+          cta.classList.add('cx-cta-ok');
+          cta.textContent = '✓ Enquiry sent';
+          msg.style.display = 'block'; msg.style.color = '';
           msg.textContent = "We've received your message — we'll be in touch shortly.";
           form.reset();
         } else { throw new Error('Server error'); }
       } catch (err) {
-        btn.disabled = false;
-        btn.textContent = 'Send Enquiry';
-        msg.style.display = 'block';
-        msg.style.color = '#ff6b6b';
+        cta.disabled = false;
+        cta.textContent = 'Send Enquiry';
+        msg.style.display = 'block'; msg.style.color = '#ff6b6b';
         msg.textContent = 'Something went wrong. Please email thinklensconsulting@gmail.com';
       }
     });
-  }
+
+    setMode('enquiry', false); // place the thumb without sliding on first load
+    update();
+  })();
 
   /* ── Custom cursor (fine pointers only) ── */
   if (isFinePointer) {
