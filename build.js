@@ -38,16 +38,137 @@ const read = (...p) => fs.readFileSync(path.join(ROOT, ...p), 'utf8').replace(/\
 const FADE_BOOT = "<script>document.documentElement.classList.add('js-fade')</script>";
 
 // Apply the page-route template substitutions to one chunk of HTML.
+// Replacements are passed as functions so a literal `$` in the injected content
+// (e.g. a salary in a job description) is never read as a `$&` pattern token.
 function applyTpl(content, route) {
   const isHome = route === '/';
   return content
-    .replace(/\{\{HOME\}\}/g, isHome ? '' : '/')
-    .replace(/\{\{HOME_ROOT\}\}/g, isHome ? '#' : '/');
+    .replace(/\{\{HOME\}\}/g, () => (isHome ? '' : '/'))
+    .replace(/\{\{HOME_ROOT\}\}/g, () => (isHome ? '#' : '/'))
+    .replace(/\{\{JOB_LIST\}\}/g, () => renderJobList(JOBS))
+    .replace(/\{\{JOB_OPTIONS\}\}/g, () => renderJobOptions(JOBS));
 }
 
 // Read a partial by its path under src/partials/ (e.g. 'shared/nav').
 const readPartial = (relPath, route) =>
   applyTpl(read('src', 'partials', relPath + '.html'), route);
+
+/* ── Careers: job openings ──────────────────────────────────────────────────
+   src/data/jobs.json is the single source of truth. Each job renders into the
+   card list, the apply dropdown, and — only when status is 'open' — the
+   JobPosting JSON-LD. A 'draft' job is visible on the page but deliberately
+   kept out of the structured data so a placeholder can never be picked up by
+   Google for Jobs as a real vacancy. 'closed' jobs are dropped entirely. */
+const esc = (s) => String(s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;');
+
+const JOBS = JSON.parse(read('src', 'data', 'jobs.json')).jobs
+  .filter((j) => j.status !== 'closed');
+
+function renderJobList(jobs) {
+  if (!jobs.length) {
+    return [
+      '<div class="job-empty r">',
+      '  <h3 class="job-empty-h">No open roles right now.</h3>',
+      '  <p class="job-empty-p">We hire in bursts as client work lands. Send your profile below and we\'ll reach out when something matches your background.</p>',
+      '  <a href="#apply" class="job-empty-cta">Send us your profile</a>',
+      '</div>',
+    ].join('\n');
+  }
+  return ['<div class="job-list">'].concat(jobs.map((j) => {
+    const li = (items) => items.map((t) => '        <li>' + esc(t) + '</li>').join('\n');
+    return [
+      '  <details class="job r" id="job-' + esc(j.id) + '">',
+      '    <summary class="job-sum">',
+      '      <div class="job-sum-main">',
+      '        <h3 class="job-t">' + esc(j.title) +
+        (j.status === 'draft' ? ' <span class="job-draft">Draft</span>' : '') + '</h3>',
+      '        <p class="job-meta">' +
+        [j.department, j.workplace, j.type, j.experience].filter(Boolean).map(esc).join('<span class="job-dot">·</span>') +
+        '</p>',
+      '      </div>',
+      '      <span class="job-chev" aria-hidden="true"></span>',
+      '    </summary>',
+      '    <div class="job-body">',
+      '      <p class="job-summary">' + esc(j.summary) + '</p>',
+      '      <div class="job-cols">',
+      '        <div><h4 class="job-h4">What you\'ll do</h4><ul class="job-ul">',
+      li(j.responsibilities || []),
+      '        </ul></div>',
+      '        <div><h4 class="job-h4">What we\'re looking for</h4><ul class="job-ul">',
+      li(j.requirements || []),
+      '        </ul></div>',
+      '      </div>',
+      '      <button type="button" class="job-apply" data-role="' + esc(j.title) + '">Apply for this role</button>',
+      '    </div>',
+      '  </details>',
+    ].join('\n');
+  })).concat(['</div>']).join('\n');
+}
+
+function renderJobOptions(jobs) {
+  return ['<option value="" selected>Select a role…</option>']
+    .concat(jobs.map((j) => '<option>' + esc(j.title) + '</option>'))
+    .concat(['<option>General / future openings</option>'])
+    .map((o) => '            ' + o)
+    .join('\n');
+}
+
+// JobPosting JSON-LD — only for genuinely open roles (see note above).
+function renderJobsJsonLd(jobs) {
+  const open = jobs.filter((j) => j.status === 'open');
+  const graph = open.map((j) => ({
+    '@type': 'JobPosting',
+    '@id': 'https://www.thinklens.in/careers/#' + j.id,
+    title: j.title,
+    description: j.summary,
+    datePosted: j.datePosted,
+    validThrough: j.validThrough,
+    // schema.org only accepts a fixed vocabulary here (FULL_TIME, CONTRACTOR, …),
+    // so it comes from an explicit field rather than being derived from `type`.
+    employmentType: j.employmentType || 'CONTRACTOR',
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: 'Thinklens Consulting LLP',
+      sameAs: 'https://www.thinklens.in/',
+    },
+    directApply: true,
+  })).map((posting, i) => {
+    // Location comes from the job itself. Fully-remote roles get TELECOMMUTE +
+    // a country-level applicant requirement; on-site/hybrid roles get the real
+    // city, because a wrong address is worse than none for Google for Jobs.
+    const j = open[i];
+    if (j.remote) {
+      posting.jobLocationType = 'TELECOMMUTE';
+      posting.applicantLocationRequirements = { '@type': 'Country', name: 'India' };
+    }
+    if (j.city) {
+      posting.jobLocation = {
+        '@type': 'Place',
+        address: Object.assign(
+          { '@type': 'PostalAddress', addressLocality: j.city, addressCountry: 'IN' },
+          j.region ? { addressRegion: j.region } : {}
+        ),
+      };
+    }
+    return posting;
+  });
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': 'https://www.thinklens.in/careers/#breadcrumb',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.thinklens.in/' },
+      { '@type': 'ListItem', position: 2, name: 'Careers', item: 'https://www.thinklens.in/careers/' },
+    ],
+  });
+  return [
+    '<!-- ── Structured data (JSON-LD) — generated from src/data/jobs.json ── -->',
+    '<script type="application/ld+json">',
+    JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2),
+    '</script>',
+  ].join('\n');
+}
 
 // Per-page configs. The order of `partials` is the rendered body order.
 // `sitemap` controls what shows up in sitemap.xml — omit to exclude a page.
@@ -355,6 +476,36 @@ const PAGES = [
       changefreq: 'monthly',
     },
   },
+  {
+    route: '/careers/',
+    metaFile: 'pages/careers/meta.html',
+    jsonldFn: () => renderJobsJsonLd(JOBS),
+    partials: [
+      'shared/body-open',
+      'shared/nav',
+      'shared/mobile-menu',
+      'shared/page-top-vis',
+      'careers/body',
+      'shared/footer',
+      'shared/sticky-cta',
+    ],
+    sitemap: { priority: '0.6', changefreq: 'weekly' },
+  },
+  {
+    // Unlisted vendor candidate-intake form. Deliberately NOT in the main nav
+    // and NO `sitemap` key → excluded from sitemap.xml; the page itself is
+    // noindex,nofollow (see pages/candidate-tracker/meta.html). Share by direct link.
+    route: '/candidate-tracker/',
+    metaFile: 'pages/candidate-tracker/meta.html',
+    partials: [
+      'shared/body-open',
+      'shared/nav',
+      'shared/mobile-menu',
+      'shared/page-top-vis',
+      'candidate-tracker/body',
+      'shared/footer',
+    ],
+  },
 ];
 
 // Render head from head-base.html with {{PAGE_META}} / {{PAGE_JSONLD}} substitutions.
@@ -364,7 +515,10 @@ const PAGES = [
 function renderHead(page) {
   const base = read('src', 'head-base.html');
   const meta = page.metaFile ? read('src', page.metaFile) : '';
-  const jsonld = page.jsonldFile ? read('src', page.jsonldFile) : '';
+  // `jsonldFn` lets a page generate its structured data (see /careers/, which
+  // builds JobPosting entries from src/data/jobs.json) instead of reading a file.
+  const jsonld = page.jsonldFn ? page.jsonldFn()
+    : page.jsonldFile ? read('src', page.jsonldFile) : '';
   return base
     .replace('{{PAGE_META}}', () => meta)
     .replace('{{PAGE_JSONLD}}', () => jsonld);

@@ -1,0 +1,129 @@
+<!-- ══════════ CANDIDATE TRACKER (unlisted vendor intake) ══════════ -->
+<section id="ctrack">
+  <div class="ct-wrap">
+
+    <!-- Header -->
+    <header class="ct-head">
+      <span class="ct-eyebrow"><span class="ct-eyebrow-line"></span>Vendor submission</span>
+      <h1 class="ct-h1">Candidate <span class="ct-serif">Tracker.</span></h1>
+      <p class="ct-deck">Submit a candidate profile for review. Fields marked <b>*</b> are required — the more detail you share, the faster we can screen and respond.</p>
+    </header>
+
+    <!-- Form -->
+    <form class="ct-form" id="candidateForm" novalidate>
+
+      <!-- Submission details -->
+      <fieldset class="ct-set">
+        <legend class="ct-legend"><span class="ct-legend-n">01</span> Submission</legend>
+        <div class="ct-grid">
+          <div class="ct-fg">
+            <label for="ctDate">Date</label>
+            <input type="date" id="ctDate" name="date">
+          </div>
+          <div class="ct-fg">
+            <label for="ctVendor">Vendor company</label>
+            <input type="text" id="ctVendor" name="vendor_company" placeholder="e.g., Acme Staffing Pvt Ltd" autocomplete="organization">
+          </div>
+          <div class="ct-fg ct-fg-full">
+            <label for="ctSubmittedBy">Submitted by <span class="ct-opt">(recruiter name)</span></label>
+            <input type="text" id="ctSubmittedBy" name="submitted_by" placeholder="Your name">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Candidate details -->
+      <fieldset class="ct-set">
+        <legend class="ct-legend"><span class="ct-legend-n">02</span> Candidate</legend>
+        <div class="ct-grid">
+          <div class="ct-fg">
+            <label for="ctName">Candidate's full name <b>*</b></label>
+            <input type="text" id="ctName" name="candidate_name" placeholder="Full name" required>
+          </div>
+          <div class="ct-fg">
+            <label for="ctEmail">Email <b>*</b></label>
+            <input type="email" id="ctEmail" name="email" placeholder="name@example.com" autocomplete="email" required>
+          </div>
+          <div class="ct-fg">
+            <label for="ctPhone">Contact number <b>*</b></label>
+            <input type="tel" id="ctPhone" name="contact_number" placeholder="+91 …" autocomplete="tel" required>
+          </div>
+          <div class="ct-fg">
+            <label for="ctLinkedin">LinkedIn profile</label>
+            <input type="url" id="ctLinkedin" name="linkedin" placeholder="https://linkedin.com/in/…" inputmode="url">
+          </div>
+          <div class="ct-fg">
+            <label for="ctUan">UAN <span class="ct-opt">(PF account no.)</span></label>
+            <input type="text" id="ctUan" name="uan" placeholder="12-digit UAN" inputmode="numeric">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Professional -->
+      <fieldset class="ct-set">
+        <legend class="ct-legend"><span class="ct-legend-n">03</span> Professional</legend>
+        <div class="ct-grid">
+          <div class="ct-fg ct-fg-full">
+            <label for="ctTech">Technology / skills <b>*</b></label>
+            <input type="text" id="ctTech" name="technology" placeholder="e.g., Power BI, SQL, ETL Testing, Snowflake" required>
+          </div>
+          <div class="ct-fg">
+            <label for="ctExp">Years of experience <b>*</b></label>
+            <input type="number" id="ctExp" name="experience_years" placeholder="e.g., 6" min="0" max="60" step="0.5" required>
+          </div>
+          <div class="ct-fg">
+            <label for="ctBudget">Budget <span class="ct-opt">(rate / CTC)</span></label>
+            <input type="text" id="ctBudget" name="budget" placeholder="e.g., ₹18 LPA or ₹1200/hr">
+          </div>
+          <div class="ct-fg">
+            <label for="ctCurLoc">Current location</label>
+            <input type="text" id="ctCurLoc" name="current_location" placeholder="City, State">
+          </div>
+          <div class="ct-fg">
+            <label for="ctPrefLoc">Preferred location</label>
+            <input type="text" id="ctPrefLoc" name="preferred_location" placeholder="City / Remote / Any">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Availability -->
+      <fieldset class="ct-set">
+        <legend class="ct-legend"><span class="ct-legend-n">04</span> Availability</legend>
+        <div class="ct-grid">
+          <div class="ct-fg">
+            <label for="ctScreen">Availability for screening</label>
+            <input type="text" id="ctScreen" name="screening_availability" placeholder="e.g., Weekdays after 4 PM IST">
+          </div>
+          <div class="ct-fg">
+            <label for="ctNotice">Notice period / joining</label>
+            <select id="ctNotice" name="notice_period">
+              <option value="" selected>Select…</option>
+              <option>Immediate</option>
+              <option>Serving notice</option>
+              <option>15 days</option>
+              <option>30 days</option>
+              <option>60 days</option>
+              <option>90 days</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="ct-fg ct-fg-full">
+            <label for="ctNotes">Notes <span class="ct-opt">(anything else worth knowing)</span></label>
+            <textarea id="ctNotes" name="notes" rows="3" placeholder="Relevant projects, certifications, visa status, client context…"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Formspree plumbing -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="_subject" value="New Candidate — Thinklens Tracker">
+      <input type="hidden" name="_replyto" id="ctReplyto">
+
+      <div class="ct-actions">
+        <button type="submit" class="ct-cta" id="ctSubmit">Submit candidate</button>
+        <span class="ct-reply">We review submissions within one business day.</span>
+      </div>
+      <p id="ctMsg" class="ct-msg" role="status" aria-live="polite"></p>
+
+    </form>
+  </div>
+</section>
