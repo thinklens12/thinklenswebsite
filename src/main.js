@@ -127,11 +127,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   /* ── Count-up animation ── */
+  // The markup ships the true final value, so anything that skips this
+  // animation (no JS, reduced motion, a crawler) still reads the real number.
   function countUp(el) {
     const target = parseInt(el.dataset.count);
     const suffix = el.dataset.suffix || '';
     const mode = el.dataset.mode;
-    if (mode === 'year') { el.textContent = target; return; }
+    if (mode === 'year' || reduceMotion) { el.textContent = target + suffix; return; }
     let startTime = null;
     const duration = 1800;
     function step(ts) {

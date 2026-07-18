@@ -119,22 +119,31 @@ package.json           npm run build
 - **One brand blue: `--accent #007AFF`** (Apple blue). `--accent-deep #006FE6` is used
   ONLY as a fill behind white text (buttons), for WCAG AA contrast. Never reintroduce
   other blues (e.g. `#3395ff`, `#66b3ff`) on solid text.
-- **Dark-mode first, with a light theme.** Dark is `:root`; light is
-  `html[data-theme="light"]` (token overrides only). **Theme via the tokens, never
-  hardcoded rgba** — `--white` is the strong-foreground/inverted-surface token (flips to
-  near-black in light), `--on-accent` is the only always-white (text on the blue accent
-  fill), `--bg-rgb` powers the fade-to-bg gradient masks, `--grid-line`/`--overlay-soft`
-  carry the subtle surface tints. Both modes meet **WCAG 2.1 AA** — small/label text uses
-  `--g400` (not `--g500/600`). A pre-paint boot script in `head-base.html` + `404-head.html`
-  sets `data-theme` with **no FOUC**: a saved choice (`localStorage.theme`) wins, else
-  **auto by local time** (light 06:00–18:00, dark otherwise); no-JS default is dark. The
-  `#themeToggle` button (in `nav.html`, always visible incl. mobile) flips + persists +
-  updates `theme-color`. Logo text/ring are themed in CSS (`.nav-logo svg`); the footer
-  logo stays muted grey. When adding UI, prefer existing tokens so it themes for free.
-- **Self-hosted fonts** in `/fonts/` (`inter.woff2`, `plusjakarta.woff2` — latin variable,
-  SIL OFL). Declared via `@font-face` + `font-display:swap` in `styles.css`, preloaded in
-  the heads. **No Google Fonts** — don't add the `<link>` back.
+- **Status colours** — the work is pass/fail, so validation state has its own pair:
+  `--pass`/`--pass-soft` (green) and `--flag`/`--flag-soft` (amber). Use them ONLY for
+  validation states and status badges, never for brand furniture. The blue stays the
+  only brand colour.
+- **Dark only.** There is no light theme — the `data-theme` system, the boot script, and
+  the `#themeToggle` button were all removed. Dark lives on `:root` with
+  `color-scheme:dark`. **Theme via the tokens, never hardcoded rgba** — `--white` is the
+  strong-foreground token, `--on-accent` is text on the blue accent fill, `--bg-rgb`
+  powers the fade-to-bg gradient masks, `--grid-line`/`--overlay-soft` carry the subtle
+  surface tints. Meets **WCAG 2.1 AA** — small/label text uses `--g400` (not `--g500/600`).
+- **Three self-hosted faces** in `/fonts/` (latin variable, SIL OFL — see
+  `fonts/LICENSE.md`), bound to type-role tokens. **Use the token, don't name a family:**
+  - `--display` Plus Jakarta Sans — headings only. **Ships 700–800 ONLY.** Setting it
+    below 700 gets silently clamped, and italic gets synthesised. If you want lighter or
+    italic, you want `--body`.
+  - `--body` Inter (400–700) — running text, form controls, and buttons. Site buttons
+    (`.btn`, `.nav-cta`, `.ap-cta`) are Inter 600.
+  - `--mono` JetBrains Mono (400–700) — the utility/data face: counts, metrics, and
+    tracked uppercase labels. Pair with `font-variant-numeric:tabular-nums` for anything
+    that animates or updates, so digits don't jitter.
+
+  Declared via `@font-face` + `font-display:swap` in `styles.css`; Plus Jakarta + Inter
+  are preloaded in the heads. **No Google Fonts** — don't add the `<link>` back.
 - Brand spec: `Thinklens-Brand-Guidelines.docx` (Plus Jakarta Sans display, Inter body).
+  The mono is a utility face added on top of that spec, not a replacement for either.
 - `prefers-reduced-motion` is respected; keep new animations behind it.
 - **Favicons are transparent** (alpha 0 background). The SVG is the source of truth; PNGs
   + `.ico` are rasterized from it. If you regenerate them, keep the background transparent
