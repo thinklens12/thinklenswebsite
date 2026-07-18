@@ -4,46 +4,58 @@
     <div class="bg-grid"></div>
     <div class="hero-blob b1"></div>
     <div class="hero-blob b2"></div>
+    <!-- Lottie line-globe (recolored brand blue, self-hosted, continuous loop).
+         Glowing dots overlaid on grid intersections; left edge fades out via CSS. -->
+    <div class="hero-lottie" id="heroLottie" aria-hidden="true">
+      <svg class="hero-globe-dots" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="dotGlow" x="-120%" y="-120%" width="340%" height="340%">
+            <feGaussianBlur stdDeviation="9" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <g class="hgd" filter="url(#dotGlow)">
+          <circle cx="500" cy="150" r="9"><animate attributeName="opacity" values=".35;1;.35" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="320" cy="360" r="8"><animate attributeName="opacity" values=".3;1;.3" dur="3.6s" begin=".6s" repeatCount="indefinite"/></circle>
+          <circle cx="710" cy="430" r="9"><animate attributeName="opacity" values=".35;1;.35" dur="3.2s" begin="1.1s" repeatCount="indefinite"/></circle>
+          <circle cx="430" cy="640" r="7"><animate attributeName="opacity" values=".3;1;.3" dur="4s" begin="1.7s" repeatCount="indefinite"/></circle>
+          <circle cx="650" cy="700" r="8"><animate attributeName="opacity" values=".3;1;.3" dur="3.4s" begin="2.3s" repeatCount="indefinite"/></circle>
+        </g>
+      </svg>
+    </div>
+    <script>
+      (function(){
+        var el=document.getElementById('heroLottie');
+        if(!el) return;
+        var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        function init(){
+          if(!window.lottie) return;
+          var anim=window.lottie.loadAnimation({
+            container:el, renderer:'svg', loop:true, autoplay:!reduce,
+            path:'/lottie/globe-blue.json',
+            rendererSettings:{preserveAspectRatio:'xMidYMid meet'}
+          });
+          if(reduce){ anim.addEventListener('DOMLoaded',function(){ anim.goToAndStop(0,true); }); }
+        }
+        var s=document.createElement('script');
+        s.src='/vendor/lottie_light.min.js'; s.async=true; s.onload=init;
+        document.head.appendChild(s);
+      })();
+    </script>
   </div>
   <div class="hero-content">
-    <div class="hero-copy">
-      <p class="hero-overline"><span class="pulse-dot"></span>Remote IT Consulting · Support · Training</p>
-      <h1 class="hero-h1">On-demand IT.<br><span class="accent">Global scale.</span></h1>
-      <p class="hero-sub"><b>Thinklens</b> is a remote IT consulting partner for staffing agencies, freelancers, HR partners, and businesses that need extra hands — <b>long-term, short-term, and overflow</b> mandates in IT, data, and BI, spun up on short notice.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn btn-white" data-magnetic data-ripple>
-          Book a Free Consultation
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M8 7 L17 7 L17 16"/></svg>
-        </a>
-        <a href="#about" class="btn btn-outline" data-magnetic>
-          Explore Our Work
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- Reconciliation panel — the hero's thesis. It shows the actual craft:
-         source-to-target validation, with one row catching a mismatch. Values are
-         illustrative, so it's aria-hidden; the copy carries the message for AT. -->
-    <div class="recon" aria-hidden="true">
-      <div class="recon-bar">
-        <span class="recon-job">reconcile · orders_pipeline</span>
-        <span class="recon-run">running</span>
-      </div>
-      <div class="recon-legend">
-        <span>table</span><span>source</span><span>target</span><span></span>
-      </div>
-      <ul class="recon-rows">
-        <li class="recon-row" style="--i:0"><span class="rk">orders</span><span class="rv">1,284</span><span class="rv">1,284</span><span class="rs ok">match</span></li>
-        <li class="recon-row" style="--i:1"><span class="rk">customers</span><span class="rv">412</span><span class="rv">412</span><span class="rs ok">match</span></li>
-        <li class="recon-row" style="--i:2"><span class="rk">revenue_gbp</span><span class="rv">84,210.55</span><span class="rv">84,210.55</span><span class="rs ok">match</span></li>
-        <li class="recon-row is-flag" style="--i:3"><span class="rk">refunds</span><span class="rv">37</span><span class="rv">31</span><span class="rs flag">−6 rows</span></li>
-        <li class="recon-row" style="--i:4"><span class="rk">regions</span><span class="rv">12</span><span class="rv">12</span><span class="rs ok">match</span></li>
-      </ul>
-      <div class="recon-foot">
-        <span class="recon-dot"></span>4 of 5 tables reconciled · 1 discrepancy flagged
-      </div>
-      <span class="recon-scan"></span>
+    <p class="hero-overline"><span class="pulse-dot"></span>Remote IT Consulting · Support · Training</p>
+    <h1 class="hero-h1">On-demand IT.<br><span class="accent">Global scale.</span></h1>
+    <p class="hero-sub"><b>Thinklens</b> is a remote IT consulting partner for staffing agencies, freelancers, HR partners, and businesses that need extra hands — <b>long-term, short-term, and overflow</b> mandates in IT, data, and BI, spun up on short notice.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-white" data-magnetic data-ripple>
+        Book a Free Consultation
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M8 7 L17 7 L17 16"/></svg>
+      </a>
+      <a href="#about" class="btn btn-outline" data-magnetic>
+        Explore Our Work
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+      </a>
     </div>
   </div>
   <div class="scroll-hint" aria-hidden="true">
