@@ -530,4 +530,265 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cursor-dot').style.display = 'none';
     document.getElementById('cursor-ring').style.display = 'none';
   }
+
+  /* ── Candidate Tracker (unlisted vendor intake → Formspree) ── */
+  (function () {
+    const form = document.getElementById('candidateForm');
+    if (!form) return;
+    const CT_FORMSPREE_ID = 'xdapybyb'; // shared endpoint; distinct _subject routes these
+    const cta = document.getElementById('ctSubmit');
+    const msg = document.getElementById('ctMsg');
+    const dateInput = document.getElementById('ctDate');
+    const replyto = document.getElementById('ctReplyto');
+
+    // Default the date to today (local) unless already set.
+    if (dateInput && !dateInput.value) {
+      const d = new Date();
+      dateInput.value = d.getFullYear() + '-' +
+        String(d.getMonth() + 1).padStart(2, '0') + '-' +
+        String(d.getDate()).padStart(2, '0');
+    }
+
+    function showMsg(text, ok) {
+      msg.style.display = 'block';
+      msg.style.color = ok ? '' : '#ff6b6b';
+      msg.textContent = text;
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      // Native validation for the required fields.
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      if (replyto) replyto.value = (document.getElementById('ctEmail') || {}).value || '';
+
+      cta.textContent = 'Submitting…';
+      cta.disabled = true;
+      msg.style.display = 'none';
+
+      try {
+        const res = await fetch('https://formspree.io/f/' + CT_FORMSPREE_ID, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (!res.ok) throw new Error('Server error');
+        if (typeof gtag === 'function') {
+          gtag('event', 'candidate_submitted', { form: 'candidate_tracker' });
+        }
+        cta.classList.add('ct-cta-ok');
+        cta.textContent = '✓ Submitted';
+        showMsg("Candidate received — we'll review and get back within one business day.", true);
+        form.reset();
+      } catch (err) {
+        cta.disabled = false;
+        cta.textContent = 'Submit candidate';
+        showMsg('Something went wrong. Please email thinklensconsulting@gmail.com', false);
+      }
+    });
+  })();
+
+  /* ── Careers: application form (role preselect + résumé upload → Formspree) ── */
+  (function () {
+    const form = document.getElementById('applyForm');
+    if (!form) return;
+
+    /* ─────────────────────────────────────────────────────────────────────
+       RÉSUMÉ UPLOADS — one-time setup.
+
+       Formspree's free tier can't accept file attachments, and GitHub Pages
+       has no backend to receive one. So the file goes straight from the
+       browser to Cloudinary (free tier), and the resulting link is submitted
+       with the application — you get a clickable résumé in the same email.
+
+       To turn it on:
+         1. Create a free account at cloudinary.com
+         2. Settings → Upload → Add upload preset
+              · Signing mode:  Unsigned
+              · Folder:        resumes
+              · (recommended)  restrict formats to pdf,doc,docx and set a
+                               max file size, since unsigned presets are
+                               publicly writable by anyone with the name
+         3. Paste the two public identifiers below and re-run: node build.js
+
+       Until both are filled in, the upload box hides itself and candidates
+       use the "link to your résumé" field instead — the form still works.
+    ───────────────────────────────────────────────────────────────────────── */
+    const CV_UPLOAD = {
+      cloudName: '',    // ← e.g. 'thinklens'
+      uploadPreset: '', // ← e.g. 'resumes_unsigned'
+    };
+    const UPLOAD_READY = !!(CV_UPLOAD.cloudName && CV_UPLOAD.uploadPreset);
+
+    const MAX_BYTES = 5 * 1024 * 1024;
+    const OK_EXT = ['pdf', 'doc', 'docx'];
+
+    const FORMSPREE_ID = 'xdapybyb';
+    const cta = document.getElementById('apSubmit');
+    const msg = document.getElementById('apMsg');
+    const roleSel = document.getElementById('apRole');
+    const drop = document.getElementById('apDrop');
+    const fileIn = document.getElementById('apFile');
+    const fileRow = document.getElementById('apFileRow');
+    const fileName = document.getElementById('apFileName');
+    const fileSize = document.getElementById('apFileSize');
+    const barFill = document.getElementById('apBarFill');
+    const urlField = document.getElementById('apResumeUrl');
+    const linkWrap = document.getElementById('apLinkWrap');
+    const linkInput = document.getElementById('apResumeLink');
+
+    let uploading = false;
+
+    function showMsg(text, ok) {
+      msg.style.display = 'block';
+      msg.style.color = ok ? '' : '#ff6b6b';
+      msg.textContent = text;
+    }
+    const prettySize = (b) => b < 1024 * 1024
+      ? Math.round(b / 1024) + ' KB'
+      : (b / 1024 / 1024).toFixed(1) + ' MB';
+
+    // Without credentials there's nowhere to put the file — hide the dropzone
+    // and make the link field the primary path rather than showing a control
+    // that would silently fail.
+    if (!UPLOAD_READY) {
+      drop.hidden = true;
+      linkWrap.querySelector('label').innerHTML = 'Link to your résumé <b>*</b>';
+      linkInput.placeholder = 'Google Drive, Dropbox, or LinkedIn URL';
+    }
+
+    /* ── "Apply for this role" → preselect + scroll ── */
+    document.querySelectorAll('.job-apply').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const role = btn.getAttribute('data-role');
+        for (let i = 0; i < roleSel.options.length; i++) {
+          if (roleSel.options[i].text === role) { roleSel.selectedIndex = i; break; }
+        }
+        document.getElementById('apply').scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'
+        });
+        setTimeout(() => document.getElementById('apName').focus({ preventScroll: true }), reduceMotion ? 0 : 500);
+      });
+    });
+
+    /* ── File selection + upload ── */
+    function resetFile() {
+      fileRow.hidden = true;
+      fileRow.classList.remove('is-done', 'is-err');
+      barFill.style.width = '0';
+      urlField.value = '';
+      fileIn.value = '';
+      if (UPLOAD_READY) drop.hidden = false;
+    }
+
+    function handleFile(file) {
+      if (!file) return;
+      const ext = (file.name.split('.').pop() || '').toLowerCase();
+      if (OK_EXT.indexOf(ext) === -1) {
+        showMsg('Résumé must be a PDF, DOC, or DOCX file.', false); return;
+      }
+      if (file.size > MAX_BYTES) {
+        showMsg('That file is ' + prettySize(file.size) + '. Please keep it under 5 MB.', false); return;
+      }
+      msg.style.display = 'none';
+
+      drop.hidden = true;
+      fileRow.hidden = false;
+      fileRow.classList.remove('is-done', 'is-err');
+      fileName.textContent = file.name;
+      fileSize.textContent = prettySize(file.size);
+      barFill.style.width = '0';
+
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', CV_UPLOAD.uploadPreset);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://api.cloudinary.com/v1_1/' + CV_UPLOAD.cloudName + '/raw/upload');
+      uploading = true;
+      cta.disabled = true;
+
+      xhr.upload.addEventListener('progress', (e) => {
+        if (e.lengthComputable) barFill.style.width = Math.round((e.loaded / e.total) * 92) + '%';
+      });
+      xhr.addEventListener('load', () => {
+        uploading = false;
+        cta.disabled = false;
+        let res = null;
+        try { res = JSON.parse(xhr.responseText); } catch (err) { /* handled below */ }
+        if (xhr.status >= 200 && xhr.status < 300 && res && res.secure_url) {
+          urlField.value = res.secure_url;
+          barFill.style.width = '100%';
+          fileRow.classList.add('is-done');
+        } else {
+          fileRow.classList.add('is-err');
+          barFill.style.width = '100%';
+          showMsg("Couldn't upload that file. Please paste a link to your résumé instead.", false);
+        }
+      });
+      xhr.addEventListener('error', () => {
+        uploading = false;
+        cta.disabled = false;
+        fileRow.classList.add('is-err');
+        barFill.style.width = '100%';
+        showMsg("Couldn't upload that file. Please paste a link to your résumé instead.", false);
+      });
+      xhr.send(data);
+    }
+
+    if (UPLOAD_READY) {
+      document.getElementById('apBrowse').addEventListener('click', (e) => { e.stopPropagation(); fileIn.click(); });
+      drop.addEventListener('click', () => fileIn.click());
+      fileIn.addEventListener('change', () => handleFile(fileIn.files[0]));
+      document.getElementById('apFileRemove').addEventListener('click', resetFile);
+
+      ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => {
+        e.preventDefault(); drop.classList.add('is-over');
+      }));
+      ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => {
+        e.preventDefault(); drop.classList.remove('is-over');
+      }));
+      drop.addEventListener('drop', (e) => {
+        if (e.dataTransfer && e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+      });
+    }
+
+    /* ── Submit ── */
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      if (uploading) { showMsg('Your résumé is still uploading — one moment.', false); return; }
+      if (!urlField.value && !linkInput.value.trim()) {
+        showMsg('Please attach your résumé or paste a link to it.', false);
+        linkInput.focus();
+        return;
+      }
+
+      document.getElementById('apReplyto').value = document.getElementById('apEmail').value;
+      cta.textContent = 'Submitting…';
+      cta.disabled = true;
+      msg.style.display = 'none';
+
+      try {
+        const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+          method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
+        });
+        if (!res.ok) throw new Error('Server error');
+        if (typeof gtag === 'function') {
+          gtag('event', 'application_submitted', { role: roleSel.value });
+        }
+        cta.classList.add('ap-cta-ok');
+        cta.textContent = '✓ Application sent';
+        showMsg("Thanks — we've got your application and will reply within a week.", true);
+        form.reset();
+        resetFile();
+      } catch (err) {
+        cta.disabled = false;
+        cta.textContent = 'Submit application';
+        showMsg('Something went wrong. Please email thinklensconsulting@gmail.com', false);
+      }
+    });
+  })();
 });
