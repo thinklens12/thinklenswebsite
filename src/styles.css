@@ -183,7 +183,7 @@ body.menu-open #mobileMenu{opacity:1;visibility:visible;transform:none}
 .mm-links{list-style:none;display:flex;flex-direction:column;gap:2px;margin-bottom:36px}
 .mm-links a{
   display:flex;align-items:center;justify-content:space-between;
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:1.85rem;font-weight:800;letter-spacing:-.03em;
   color:var(--g300);padding:16px 0;
   border-bottom:1px solid var(--border);
@@ -259,89 +259,26 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* Animated SVG background layer */
 .hero-svg-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
 .hero-svg-bg svg{width:100%;height:100%;display:block}
-/* ═══ RECONCILIATION PANEL ═══ the hero's thesis. Source-to-target validation
-   is the actual craft, so the hero shows it running rather than illustrating
-   "global" with a globe. One orchestrated sequence: the panel rises, a scan
-   line sweeps down it once, and rows resolve in its wake — the mismatch row
-   landing last, in amber. Everything else in the hero stays quiet. */
-.recon{
-  position:relative;align-self:center;justify-self:end;width:100%;max-width:420px;
-  background:linear-gradient(180deg,rgba(18,21,27,.92),rgba(12,14,19,.92));
-  border:1px solid var(--border);border-radius:14px;overflow:hidden;
-  box-shadow:0 30px 80px -40px rgba(0,0,0,.9),0 0 0 1px rgba(0,122,255,.06);
-  font-family:var(--mono);font-variant-numeric:tabular-nums;
-  opacity:0;transform:translateY(14px);
-  animation:reconRise .7s var(--ease) .35s forwards;
+/* Lottie line-globe — large, right-of-centre, with a gradient fade on its LEFT
+   edge so it melts into the hero copy; glowing dots overlay the grid. */
+.hero-lottie{
+  position:absolute;top:50%;right:-80px;transform:translateY(-50%);
+  width:min(74vw,940px);aspect-ratio:1/1;z-index:0;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to right, transparent 2%, #000 40%);
+  mask-image:linear-gradient(to right, transparent 2%, #000 40%);
 }
-@keyframes reconRise{to{opacity:1;transform:none}}
+.hero-lottie svg{width:100%!important;height:100%!important;display:block}
+.hero-globe-dots{position:absolute;inset:0;z-index:2;pointer-events:none}
+.hgd circle{fill:#9fd0ff}                              /* bright on the dark globe */
+  /* vivid on the light canvas */
 
-.recon-bar{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:13px 16px;border-bottom:1px solid var(--border);
-  background:rgba(255,255,255,.02);
-}
-.recon-job{font-size:11.5px;color:var(--g300);letter-spacing:.02em}
-.recon-run{
-  display:inline-flex;align-items:center;gap:7px;
-  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
-}
-.recon-run::before{
-  content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);
-  animation:reconPulse 1.8s ease-in-out infinite;
-}
-@keyframes reconPulse{0%,100%{opacity:.35}50%{opacity:1}}
+/* ≤900px the globe sits BEHIND the copy — keep it a whisper in light too
+   (this light override otherwise out-specifies the mobile .45 rule below) */
 
-.recon-legend,.recon-row{
-  display:grid;grid-template-columns:1.25fr .85fr .85fr .8fr;
-  gap:12px;align-items:center;padding:0 16px;
-}
-.recon-legend{
-  padding-top:11px;padding-bottom:7px;
-  font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--g600);
-}
-.recon-legend span:nth-child(2),.recon-legend span:nth-child(3),
-.recon-row .rv{text-align:right}
-.recon-legend span:last-child,.recon-row .rs{text-align:right}
-
-.recon-rows{list-style:none;padding-bottom:6px}
-.recon-row{
-  padding-top:9px;padding-bottom:9px;font-size:12.5px;
-  border-top:1px solid rgba(255,255,255,.04);
-  opacity:0;animation:reconResolve .45s var(--ease) forwards;
-  animation-delay:calc(.75s + var(--i) * .16s);
-}
-.recon-row:first-child{border-top:none}
-@keyframes reconResolve{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
-.recon-row .rk{color:var(--g300);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.recon-row .rv{color:var(--g200)}
-.recon-row .rs{font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.recon-row .rs.ok{color:var(--pass)}
-.recon-row .rs.flag{color:var(--flag)}
-/* The one row that matters — it earns a tint and a left marker. */
-.recon-row.is-flag{background:var(--flag-soft);box-shadow:inset 2px 0 0 var(--flag)}
-.recon-row.is-flag .rk,.recon-row.is-flag .rv{color:#e8d5b0}
-
-.recon-foot{
-  display:flex;align-items:center;gap:9px;
-  padding:12px 16px;border-top:1px solid var(--border);
-  background:rgba(255,255,255,.015);
-  font-size:10.5px;letter-spacing:.04em;color:var(--g500);
-}
-.recon-dot{width:6px;height:6px;border-radius:50%;background:var(--flag);flex:0 0 auto}
-
-/* The sweep — a single pass, timed with the rows resolving behind it. */
-.recon-scan{
-  position:absolute;left:0;right:0;top:0;height:64px;pointer-events:none;
-  background:linear-gradient(180deg,transparent,rgba(0,122,255,.13),transparent);
-  transform:translateY(-64px);
-  animation:reconScan 1.5s var(--ease) .5s 1 forwards;
-}
-@keyframes reconScan{to{transform:translateY(420px);opacity:0}}
-
-@media(prefers-reduced-motion:reduce){
-  .recon{opacity:1;transform:none;animation:none}
-  .recon-row{opacity:1;animation:none}
-  .recon-scan,.recon-run::before{display:none}
+@media(max-width:900px){
+  .hero-lottie{top:40%;right:50%;transform:translate(50%,-50%);width:140%;max-width:none;opacity:.45;
+    -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);
+    mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);}
 }
 .hero-blob{
   position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;
@@ -370,18 +307,10 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     linear-gradient(to right, rgba(var(--bg-rgb),.85) 0%, rgba(var(--bg-rgb),.55) 55%, rgba(var(--bg-rgb),.3) 100%),
     linear-gradient(to bottom, transparent 50%, rgba(var(--bg-rgb),.95) 100%);
 }
-/* Copy left, reconciliation panel right. The panel is a real element in the
-   grid rather than a background, so it stays crisp and never sits under text. */
 .hero-content{
   position:relative;z-index:2;
   padding:0 40px;max-width:1120px;margin:0 auto;width:100%;
   padding-top:60px;
-  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,420px);
-  gap:48px;align-items:center;
-}
-@media(max-width:1000px){
-  .hero-content{grid-template-columns:1fr;gap:44px}
-  .recon{max-width:460px;justify-self:start}
 }
 .hero-overline{
   display:inline-flex;align-items:center;gap:10px;
@@ -406,16 +335,15 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .hero-h1{
   font-family:var(--display);
-  /* Sized to the copy column, not the viewport — the panel takes the other half. */
-  font-size:clamp(2.6rem,4.6vw,4.4rem);
-  font-weight:800;line-height:1.02;letter-spacing:-.035em;
-  color:var(--white);max-width:14ch;
+  font-size:clamp(3rem,7.5vw,7rem);
+  font-weight:800;line-height:1;letter-spacing:-.04em;
+  color:var(--white);max-width:800px;
   opacity:0;animation:fadeUp .9s .35s var(--ease) forwards;
 }
 .hero-h1 .accent{color:var(--accent)}
 .hero-sub{
-  margin-top:24px;font-size:1.02rem;font-weight:400;
-  line-height:1.7;color:var(--g300);max-width:46ch;
+  margin-top:28px;font-size:1.1rem;font-weight:400;
+  line-height:1.75;color:var(--g300);max-width:520px;
   opacity:0;animation:fadeUp .9s .5s var(--ease) forwards;
 }
 .hero-actions{
@@ -516,7 +444,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .marquee-section:hover .marquee-track{animation-play-state:paused}
 .marquee-item{
   display:flex;align-items:center;gap:20px;
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:.8rem;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:var(--bg);
   padding:0 40px;white-space:nowrap;
@@ -539,7 +467,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   width:20px;height:1px;background:var(--accent);
 }
 .kinetic-text{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:clamp(2rem,4.5vw,4rem);
   font-weight:800;line-height:1.15;letter-spacing:-.03em;
   color:var(--g500);
@@ -639,7 +567,8 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   display:flex;flex-direction:column;justify-content:center;
 }
 .eyebrow{
-  font-size:.7rem;font-weight:700;letter-spacing:.18em;
+  font-family:var(--mono);
+  font-size:.66rem;font-weight:500;letter-spacing:.14em;
   text-transform:uppercase;color:var(--g400);margin-bottom:20px;display:inline-flex;align-items:center;
   position:relative;padding-left:18px;
 }
@@ -649,7 +578,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   width:3px;height:13px;border-radius:2px;background:var(--accent);
 }
 .section-h2{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:clamp(2rem,3.8vw,3.2rem);font-weight:800;
   letter-spacing:-.04em;line-height:1.1;
   color:var(--white);margin-bottom:28px;
@@ -671,7 +600,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .pull-quote::before{
   content:'"';position:absolute;top:-20px;left:14px;
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:5rem;
+  font-family:var(--display);font-size:5rem;
   color:var(--accent);opacity:.25;line-height:1;font-style:normal;
 }
 
@@ -682,7 +611,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   flex-wrap:wrap;gap:24px;margin-bottom:64px;position:relative;z-index:1;
 }
 .sectors-head h2{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:clamp(2rem,4vw,3.4rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;
   color:var(--white);max-width:520px;
 }
@@ -710,7 +639,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .sector-card:hover::after{opacity:1}
 .sc-num{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:3.5rem;font-weight:800;letter-spacing:-.04em;
   color:rgba(255,255,255,.06);line-height:1;margin-bottom:24px;
   transition:color .3s;
@@ -726,7 +655,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .sector-card:hover .sc-icon-wrap{transform:scale(1.08) rotate(-4deg)}
 .sc-icon-wrap svg{width:24px;height:24px;stroke:var(--accent);stroke-width:1.8;fill:none}
 .sc-title{
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:700;
+  font-family:var(--display);font-size:1.15rem;font-weight:700;
   color:var(--white);margin-bottom:12px;letter-spacing:-.02em;
 }
 .sc-body{font-size:.88rem;color:var(--g400);line-height:1.8}
@@ -920,7 +849,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   gap:80px;align-items:end;margin-bottom:80px;
 }
 #why h2{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:clamp(2.2rem,4vw,3.6rem);font-weight:800;letter-spacing:-.04em;line-height:1.08;color:var(--white);
 }
 .why-intro{font-size:.95rem;color:var(--g400);line-height:1.85}
@@ -955,14 +884,14 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .why-card:hover .wc-icon-wrap{transform:rotate(-6deg) scale(1.06)}
 .wc-icon-wrap svg{width:26px;height:26px;stroke:var(--accent);stroke-width:1.8;fill:none}
-.wc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:12px;letter-spacing:-.02em}
+.wc-title{font-family:var(--display);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:12px;letter-spacing:-.02em}
 .wc-body{font-size:.9rem;color:var(--g400);line-height:1.82}
 
 /* ═══════════ TRUST ═══════════ */
 #trust{padding:120px 40px;background:var(--surface);position:relative;overflow:hidden}
 .trust-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:center}
 .trust-h2{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:clamp(2rem,3.5vw,3rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;
   color:var(--white);margin-bottom:16px;
 }
@@ -1030,7 +959,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .cta-content .eyebrow{padding-left:0}
 .cta-content .eyebrow::before{display:none}
 .cta-h2{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;
   letter-spacing:-.04em;line-height:1.05;
   color:var(--white);margin:14px 0 20px;
@@ -1488,7 +1417,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   list-style:none;cursor:pointer;
   padding:22px 28px;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:1.02rem;font-weight:700;letter-spacing:-.005em;
   color:var(--white);
   user-select:none;
@@ -1534,7 +1463,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .page-top{padding:160px 0 60px;position:relative}
 .page-top .wrap{max-width:980px}
 .page-h1{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;
   letter-spacing:-.045em;line-height:1.05;
   color:var(--white);margin:14px 0 24px;
@@ -1577,10 +1506,11 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .res-card:hover{border-color:var(--accent);transform:translateY(-3px);background:var(--card-hi)}
 .res-card-tag{
-  font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  font-family:var(--mono);
+  font-size:.63rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;
   color:var(--accent);
 }
-.res-card-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--white);line-height:1.3}
+.res-card-h{font-family:var(--display);font-size:1.15rem;font-weight:700;color:var(--white);line-height:1.3}
 .res-card-p{font-size:.9rem;line-height:1.65;color:var(--g400);margin:0}
 .res-card-go{margin-top:auto;font-size:.8rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
 @media(max-width:640px){.res-grid{grid-template-columns:1fr}}
@@ -1588,12 +1518,12 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* ── Long-form article prose ── */
 .article-prose{max-width:760px}
 .article-prose h2{
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:1.6rem;font-weight:800;
+  font-family:var(--display);font-size:1.6rem;font-weight:800;
   letter-spacing:-.02em;color:var(--white);line-height:1.25;
   margin:48px 0 16px;
 }
 .article-prose h3{
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:1.18rem;font-weight:700;
+  font-family:var(--display);font-size:1.18rem;font-weight:700;
   color:var(--white);margin:32px 0 12px;
 }
 .article-prose p{font-size:1.05rem;line-height:1.85;color:var(--g300);margin:0 0 18px}
@@ -1631,7 +1561,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   background:linear-gradient(135deg,rgba(0,122,255,.08),rgba(0,122,255,.02));
   display:flex;flex-direction:column;gap:14px;align-items:flex-start;
 }
-.article-cta-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white)}
+.article-cta-h{font-family:var(--display);font-size:1.3rem;font-weight:800;color:var(--white)}
 .article-cta p{font-size:.98rem;line-height:1.7;color:var(--g300);margin:0}
 
 /* ── Sub-page hero backdrop (shared/page-top-vis partial) ── */
@@ -1718,11 +1648,12 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   transform:translateY(-3px);
 }
 .exp-card-eyebrow{
-  font-size:.7rem;font-weight:700;letter-spacing:.18em;
+  font-family:var(--mono);
+  font-size:.66rem;font-weight:500;letter-spacing:.14em;
   text-transform:uppercase;color:var(--accent);margin-bottom:14px;
 }
 .exp-card-h{
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:var(--display);
   font-size:1.25rem;font-weight:700;
   letter-spacing:-.015em;line-height:1.25;
   color:var(--white);margin:0 0 12px;
@@ -1753,9 +1684,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* ═══════════ ANCHOR COMPARE (contrast effect: expensive alternative first) ═══════════ */
 .anchor-compare{display:grid;grid-template-columns:1.05fr 1fr;gap:20px;max-width:1100px;margin:0 auto}
 .ac-card{border-radius:16px;padding:34px 30px;border:1px solid var(--border);background:var(--card);box-shadow:var(--card-shadow)}
-.ac-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g400);margin-bottom:12px}
-.ac-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2rem,4vw,2.9rem);font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:14px}
-.ac-per{font-size:1rem;font-weight:600;color:var(--g400);letter-spacing:0}
+.ac-label{font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--g400);margin-bottom:12px}
+.ac-price{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;letter-spacing:-.02em;line-height:1;margin-bottom:14px}
+.ac-per{font-family:var(--mono);font-size:.85rem;font-weight:400;color:var(--g400);letter-spacing:.02em}
 .ac-p{font-size:.92rem;color:var(--g400);line-height:1.75}
 .ac-anchor .ac-price{color:var(--g300)}
 .ac-ours{border-color:rgba(0,122,255,.45);position:relative;overflow:hidden}
@@ -1977,7 +1908,7 @@ body::before{
 .job-sum:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:16px}
 .job-sum-main{min-width:0}
 .job-t{
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:1.18rem;font-weight:700;
+  font-family:var(--display);font-size:1.18rem;font-weight:700;
   letter-spacing:-.02em;color:var(--white);margin-bottom:7px;
 }
 .job-draft{
@@ -2021,7 +1952,7 @@ body::before{
   margin-top:44px;text-align:center;padding:56px 32px;
   background:var(--card);border:1px solid var(--border);border-radius:18px;
 }
-.job-empty-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:12px}
+.job-empty-h{font-family:var(--display);font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:12px}
 .job-empty-p{font-size:.98rem;line-height:1.7;color:var(--g400);max-width:52ch;margin:0 auto 26px}
 .job-empty-cta{
   display:inline-block;font-family:var(--body);font-weight:600;font-size:.94rem;
