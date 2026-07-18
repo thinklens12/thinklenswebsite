@@ -101,25 +101,11 @@
   src:url('/fonts/plusjakarta.woff2') format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
-/* Contact Section v2 — editorial type, scoped to #contact only */
+/* Utility/data face — tabular figures for counts, metrics, and status labels.
+   Display + body stay per the brand spec (Plus Jakarta Sans / Inter). */
 @font-face{
-  font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url('/fonts/spacegrotesk.woff2') format('woff2');
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-@font-face{
-  font-family:'Hanken Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url('/fonts/hankengrotesk.woff2') format('woff2');
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-@font-face{
-  font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:swap;
-  src:url('/fonts/instrumentserif.woff2') format('woff2');
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-@font-face{
-  font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;
-  src:url('/fonts/instrumentserif-italic.woff2') format('woff2');
+  font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('/fonts/jetbrainsmono.woff2') format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
@@ -150,6 +136,17 @@
   --accent2:#1f86ff;       /* hover states only */
   --accent3:#4da2ff;       /* lighter tint — glows/blobs, never solid text */
   --accent-glow:rgba(0,122,255,.20);
+  /* ── Type roles ── display and body are the brand spec; mono is the utility
+     face for counts, metrics, and status labels (tabular figures). */
+  --display:'Plus Jakarta Sans',sans-serif;
+  --body:'Inter',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* ── Validation status ── the work is pass/fail, so status earns its own
+     pair. Used ONLY for validation states and badges, never brand furniture. */
+  --pass:#2f9e5f;
+  --pass-soft:rgba(47,158,95,.12);
+  --flag:#d98a0b;
+  --flag-soft:rgba(217,138,11,.12);
   --bg-rgb:10,10,11;
   --grid-line:rgba(255,255,255,.025);
   --overlay-soft:rgba(255,255,255,.022);
@@ -354,26 +351,89 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* Animated SVG background layer */
 .hero-svg-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
 .hero-svg-bg svg{width:100%;height:100%;display:block}
-/* Lottie line-globe — large, right-of-centre, with a gradient fade on its LEFT
-   edge so it melts into the hero copy; glowing dots overlay the grid. */
-.hero-lottie{
-  position:absolute;top:50%;right:-80px;transform:translateY(-50%);
-  width:min(74vw,940px);aspect-ratio:1/1;z-index:0;pointer-events:none;
-  -webkit-mask-image:linear-gradient(to right, transparent 2%, #000 40%);
-  mask-image:linear-gradient(to right, transparent 2%, #000 40%);
+/* ═══ RECONCILIATION PANEL ═══ the hero's thesis. Source-to-target validation
+   is the actual craft, so the hero shows it running rather than illustrating
+   "global" with a globe. One orchestrated sequence: the panel rises, a scan
+   line sweeps down it once, and rows resolve in its wake — the mismatch row
+   landing last, in amber. Everything else in the hero stays quiet. */
+.recon{
+  position:relative;align-self:center;justify-self:end;width:100%;max-width:420px;
+  background:linear-gradient(180deg,rgba(18,21,27,.92),rgba(12,14,19,.92));
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 80px -40px rgba(0,0,0,.9),0 0 0 1px rgba(0,122,255,.06);
+  font-family:var(--mono);font-variant-numeric:tabular-nums;
+  opacity:0;transform:translateY(14px);
+  animation:reconRise .7s var(--ease) .35s forwards;
 }
-.hero-lottie svg{width:100%!important;height:100%!important;display:block}
-.hero-globe-dots{position:absolute;inset:0;z-index:2;pointer-events:none}
-.hgd circle{fill:#9fd0ff}                              /* bright on the dark globe */
-  /* vivid on the light canvas */
+@keyframes reconRise{to{opacity:1;transform:none}}
 
-/* ≤900px the globe sits BEHIND the copy — keep it a whisper in light too
-   (this light override otherwise out-specifies the mobile .45 rule below) */
+.recon-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:13px 16px;border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+}
+.recon-job{font-size:11.5px;color:var(--g300);letter-spacing:.02em}
+.recon-run{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+}
+.recon-run::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);
+  animation:reconPulse 1.8s ease-in-out infinite;
+}
+@keyframes reconPulse{0%,100%{opacity:.35}50%{opacity:1}}
 
-@media(max-width:900px){
-  .hero-lottie{top:40%;right:50%;transform:translate(50%,-50%);width:140%;max-width:none;opacity:.45;
-    -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);
-    mask-image:radial-gradient(circle at 50% 50%, #000 55%, transparent 78%);}
+.recon-legend,.recon-row{
+  display:grid;grid-template-columns:1.25fr .85fr .85fr .8fr;
+  gap:12px;align-items:center;padding:0 16px;
+}
+.recon-legend{
+  padding-top:11px;padding-bottom:7px;
+  font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--g600);
+}
+.recon-legend span:nth-child(2),.recon-legend span:nth-child(3),
+.recon-row .rv{text-align:right}
+.recon-legend span:last-child,.recon-row .rs{text-align:right}
+
+.recon-rows{list-style:none;padding-bottom:6px}
+.recon-row{
+  padding-top:9px;padding-bottom:9px;font-size:12.5px;
+  border-top:1px solid rgba(255,255,255,.04);
+  opacity:0;animation:reconResolve .45s var(--ease) forwards;
+  animation-delay:calc(.75s + var(--i) * .16s);
+}
+.recon-row:first-child{border-top:none}
+@keyframes reconResolve{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
+.recon-row .rk{color:var(--g300);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.recon-row .rv{color:var(--g200)}
+.recon-row .rs{font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.recon-row .rs.ok{color:var(--pass)}
+.recon-row .rs.flag{color:var(--flag)}
+/* The one row that matters — it earns a tint and a left marker. */
+.recon-row.is-flag{background:var(--flag-soft);box-shadow:inset 2px 0 0 var(--flag)}
+.recon-row.is-flag .rk,.recon-row.is-flag .rv{color:#e8d5b0}
+
+.recon-foot{
+  display:flex;align-items:center;gap:9px;
+  padding:12px 16px;border-top:1px solid var(--border);
+  background:rgba(255,255,255,.015);
+  font-size:10.5px;letter-spacing:.04em;color:var(--g500);
+}
+.recon-dot{width:6px;height:6px;border-radius:50%;background:var(--flag);flex:0 0 auto}
+
+/* The sweep — a single pass, timed with the rows resolving behind it. */
+.recon-scan{
+  position:absolute;left:0;right:0;top:0;height:64px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(0,122,255,.13),transparent);
+  transform:translateY(-64px);
+  animation:reconScan 1.5s var(--ease) .5s 1 forwards;
+}
+@keyframes reconScan{to{transform:translateY(420px);opacity:0}}
+
+@media(prefers-reduced-motion:reduce){
+  .recon{opacity:1;transform:none;animation:none}
+  .recon-row{opacity:1;animation:none}
+  .recon-scan,.recon-run::before{display:none}
 }
 .hero-blob{
   position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;
@@ -402,10 +462,18 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
     linear-gradient(to right, rgba(var(--bg-rgb),.85) 0%, rgba(var(--bg-rgb),.55) 55%, rgba(var(--bg-rgb),.3) 100%),
     linear-gradient(to bottom, transparent 50%, rgba(var(--bg-rgb),.95) 100%);
 }
+/* Copy left, reconciliation panel right. The panel is a real element in the
+   grid rather than a background, so it stays crisp and never sits under text. */
 .hero-content{
   position:relative;z-index:2;
   padding:0 40px;max-width:1120px;margin:0 auto;width:100%;
   padding-top:60px;
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,420px);
+  gap:48px;align-items:center;
+}
+@media(max-width:1000px){
+  .hero-content{grid-template-columns:1fr;gap:44px}
+  .recon{max-width:460px;justify-self:start}
 }
 .hero-overline{
   display:inline-flex;align-items:center;gap:10px;
@@ -429,16 +497,17 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   100%{transform:scale(3);opacity:0}
 }
 .hero-h1{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:clamp(3rem,7.5vw,7rem);
-  font-weight:800;line-height:1;letter-spacing:-.04em;
-  color:var(--white);max-width:800px;
+  font-family:var(--display);
+  /* Sized to the copy column, not the viewport — the panel takes the other half. */
+  font-size:clamp(2.6rem,4.6vw,4.4rem);
+  font-weight:800;line-height:1.02;letter-spacing:-.035em;
+  color:var(--white);max-width:14ch;
   opacity:0;animation:fadeUp .9s .35s var(--ease) forwards;
 }
 .hero-h1 .accent{color:var(--accent)}
 .hero-sub{
-  margin-top:28px;font-size:1.1rem;font-weight:400;
-  line-height:1.75;color:var(--g300);max-width:520px;
+  margin-top:24px;font-size:1.02rem;font-weight:400;
+  line-height:1.7;color:var(--g300);max-width:46ch;
   opacity:0;animation:fadeUp .9s .5s var(--ease) forwards;
 }
 .hero-actions{
@@ -495,12 +564,14 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   transition:transform .3s var(--ease);
 }
 .hstat:hover::before{transform:translateY(-50%) scaleY(1)}
+/* Metrics are data, so they're set in the mono with tabular figures — the
+   digits hold their box while the count-up runs instead of jittering. */
 .hstat-n{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:2.6rem;font-weight:800;letter-spacing:-.04em;
+  font-family:var(--mono);font-variant-numeric:tabular-nums;
+  font-size:2.35rem;font-weight:700;letter-spacing:-.02em;
   color:var(--white);line-height:1;
 }
-.hstat-l{font-size:.72rem;font-weight:500;color:var(--g400);margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+.hstat-l{font-family:var(--mono);font-size:.68rem;font-weight:400;color:var(--g400);margin-top:8px;letter-spacing:.1em;text-transform:uppercase}
 
 /* Scroll hint */
 .scroll-hint{
@@ -1063,19 +1134,20 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* ═══════════ CONTACT — "Contact Section v2" (imported design) ═══════════
    A self-contained dark editorial band: sticky left rail + right brief
    builder. Renders dark in BOTH themes (the design is dark-only), with its
-   own type scale (Space Grotesk / Instrument Serif / Hanken Grotesk) and
-   blues (#3b7bff / #2f6bff) — scoped entirely to #contact. */
+   type scale, now on the brand faces (Plus Jakarta Sans / Inter, with the
+   mono for labels) and the single brand blue. */
 #contact{
-  --cx-blue:#3b7bff;--cx-blue-chip:#2f6bff;--cx-link:#4c86ff;--cx-link-hi:#7aa6ff;
+  --cx-blue:var(--accent);--cx-blue-chip:var(--accent-deep);
+  --cx-link:var(--accent2);--cx-link-hi:var(--accent3);
   --cx-ink:#eef0f4;--cx-head:#f6f7f9;--cx-body:#9a9da6;
   --cx-mut:#8a8d96;--cx-mut2:#7c7f89;--cx-mut3:#5d616b;--cx-mut4:#4d505a;
   --cx-line:rgba(255,255,255,.09);--cx-line2:rgba(255,255,255,.06);
   position:relative;overflow:hidden;
   padding:0 0 96px;color:var(--cx-ink);
-  font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;
+  font-family:var(--body);
   -webkit-font-smoothing:antialiased;
   background:
-    radial-gradient(900px 600px at 85% -10%, rgba(47,107,255,.16), transparent 60%),
+    radial-gradient(900px 600px at 85% -10%, rgba(0,122,255,.16), transparent 60%),
     linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
     #0a0b0e;
@@ -1092,12 +1164,12 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .cx-eyebrow{
   display:flex;align-items:center;gap:12px;
-  font-family:'Space Grotesk',sans-serif;font:600 12px/1 'Space Grotesk',sans-serif;
+  font-family:var(--mono);font:600 12px/1 var(--mono);
   letter-spacing:.26em;text-transform:uppercase;color:var(--cx-mut);
 }
 .cx-eyebrow-line{width:26px;height:1px;background:var(--cx-blue);flex:0 0 auto}
 .cx-trust{
-  font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:1;
+  font-family:var(--mono);font-weight:500;font-size:12px;line-height:1;
   letter-spacing:.18em;text-transform:uppercase;color:var(--cx-mut3);text-align:right;
 }
 
@@ -1110,25 +1182,25 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* ── Left rail ── */
 .cx-rail{position:sticky;top:24px;display:flex;flex-direction:column;padding-top:8px}
 .cx-h{
-  margin:0 0 28px;font-family:'Space Grotesk',sans-serif;font-weight:700;
+  margin:0 0 28px;font-family:var(--display);font-weight:700;
   font-size:clamp(3rem,4.6vw,5.25rem);line-height:.94;letter-spacing:-.035em;color:var(--cx-head);
 }
-.cx-serif{
-  font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-style:italic;
-  letter-spacing:-.01em;color:var(--cx-blue);
-}
+/* Accent word — matches the site-wide `.a` pattern: same face and weight as the
+   heading, distinguished by colour alone. (Plus Jakarta ships 700–800 normal
+   only, so a lighter or italic setting here would be browser-synthesised.) */
+.cx-serif{color:var(--cx-blue)}
 .cx-deck{font-size:18px;line-height:1.6;color:var(--cx-body);margin:0 0 52px;max-width:24em}
 
 /* Reach us */
 .cx-reach{border-top:1px solid var(--cx-line);padding:26px 0 30px}
 .cx-reach-label,.cx-guides-label{
-  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;line-height:1;
+  font-family:var(--mono);font-weight:600;font-size:11px;line-height:1;
   letter-spacing:.24em;text-transform:uppercase;color:var(--cx-mut3);
 }
 .cx-reach-label{display:block;margin-bottom:16px}
 .cx-reach-row{
   display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:10px 0;
-  color:var(--cx-ink);font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:500;
+  color:var(--cx-ink);font-family:var(--body);font-size:21px;font-weight:500;
   letter-spacing:-.01em;transition:color .18s;text-decoration:none;
 }
 .cx-reach-row:hover{color:var(--cx-link)}
@@ -1145,7 +1217,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .cx-guide:hover{color:var(--cx-link)}
 .cx-guide-num{
-  flex:none;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:1;
+  flex:none;font-family:var(--mono);font-weight:500;font-size:12px;line-height:1;
   color:var(--cx-blue);letter-spacing:.08em;
 }
 .cx-guide-label{flex:1}
@@ -1164,7 +1236,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 /* The blue "thumb" that slides behind the active tab (positioned by JS) */
 .cx-tab-thumb{
   position:absolute;top:0;left:0;width:0;height:0;border-radius:10px;
-  background:var(--cx-blue-chip);box-shadow:0 8px 22px -8px rgba(47,107,255,.7);
+  background:var(--cx-blue-chip);box-shadow:0 8px 22px -8px rgba(0,122,255,.7);
   transition:transform .34s var(--spring),width .34s var(--ease),height .34s var(--ease);
   pointer-events:none;z-index:0;
 }
@@ -1173,7 +1245,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   display:flex;align-items:center;justify-content:center;gap:9px;
   padding:13px 10px;border:0;border-radius:10px;
   background:transparent;color:var(--cx-mut2);cursor:pointer;
-  font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.01em;
+  font-family:var(--body);font-size:14.5px;font-weight:600;letter-spacing:.01em;
   transition:color .22s var(--ease);
 }
 .cx-tab-ic{width:17px;height:17px;flex:0 0 auto}
@@ -1192,7 +1264,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .cx-dots span{width:26px;height:4px;border-radius:4px;background:rgba(255,255,255,.12);transition:background .25s}
 .cx-dots span.on{background:var(--cx-blue)}
 .cx-progress-label{
-  font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:1;
+  font-family:var(--mono);font-weight:500;font-size:12px;line-height:1;
   letter-spacing:.14em;text-transform:uppercase;color:var(--cx-mut2);text-align:right;
 }
 
@@ -1203,7 +1275,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .cx-step:last-of-type{padding-bottom:8px}
 .cx-step-n{
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;line-height:1.1;
+  font-family:var(--mono);font-weight:700;font-size:15px;line-height:1.1;
   color:var(--cx-blue);letter-spacing:.04em;padding-top:6px;
 }
 .cx-step-n span{
@@ -1215,14 +1287,14 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .cx-chips{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
 .cx-chips .chip{
   border-radius:10px;padding:12px 20px;
-  font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:600;letter-spacing:.01em;
+  font-family:var(--body);font-size:14.5px;font-weight:600;letter-spacing:.01em;
   background:transparent;color:var(--cx-body);border:1px solid rgba(255,255,255,.14);
   cursor:pointer;transition:all .16s;
 }
 .cx-chips .chip:hover{border-color:rgba(255,255,255,.28);color:var(--cx-ink)}
 .cx-chips .chip.on{
   background:var(--cx-blue-chip);color:#fff;border-color:var(--cx-blue-chip);
-  box-shadow:0 6px 20px -6px rgba(47,107,255,.65);
+  box-shadow:0 6px 20px -6px rgba(0,122,255,.65);
 }
 
 /* Fields */
@@ -1230,19 +1302,19 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .cx-fg{display:flex;flex-direction:column;min-width:0}
 .cx-fg-full{grid-column:1 / -1}
 .cx-fg label{
-  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;line-height:1;
+  font-family:var(--mono);font-weight:600;font-size:11px;line-height:1;
   letter-spacing:.18em;text-transform:uppercase;color:var(--cx-mut3);margin-bottom:4px;
 }
 .cx-fg input,.cx-fg select,.cx-fg textarea{
   width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.16);
   border-radius:0;padding:11px 2px 13px;
-  font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--cx-ink);
+  font-family:var(--body);font-size:17px;color:var(--cx-ink);
   outline:none;transition:border-color .16s,background .16s;appearance:none;
 }
 .cx-fg textarea{resize:vertical;min-height:84px;line-height:1.5;font-size:16px}
 .cx-fg input::placeholder,.cx-fg textarea::placeholder{color:var(--cx-mut4)}
 .cx-fg input:focus,.cx-fg select:focus,.cx-fg textarea:focus{
-  border-bottom-color:var(--cx-blue);background:rgba(59,123,255,.04);
+  border-bottom-color:var(--cx-blue);background:rgba(0,122,255,.04);
 }
 .cx-fg select{
   cursor:pointer;padding-right:30px;
@@ -1253,15 +1325,15 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 
 /* Live brief */
 .cx-brief{
-  margin-top:34px;border:1px solid rgba(59,123,255,.28);background:rgba(47,107,255,.07);
+  margin-top:34px;border:1px solid rgba(0,122,255,.28);background:rgba(0,122,255,.07);
   border-radius:16px;padding:18px 22px;display:flex;align-items:baseline;gap:14px;
 }
 .cx-brief-label{
-  flex:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:10.5px;line-height:1;
+  flex:none;font-family:var(--mono);font-weight:600;font-size:10.5px;line-height:1;
   letter-spacing:.22em;text-transform:uppercase;color:var(--cx-link);
 }
 .cx-brief-line{
-  font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;color:#c7c9d1;
+  font-family:var(--body);font-size:16px;font-weight:500;color:#c7c9d1;
   letter-spacing:-.005em;min-width:0;
 }
 
@@ -1270,7 +1342,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   position:relative;overflow:hidden;margin-top:18px;width:100%;
   border:none;border-radius:999px;padding:20px;
   background:var(--cx-head);color:#0a0b0e;
-  font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;letter-spacing:.01em;
+  font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:.01em;
   cursor:pointer;transition:transform .12s,box-shadow .2s,background .2s;
   box-shadow:0 10px 34px -12px rgba(246,247,249,.35);
 }
@@ -1315,7 +1387,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 }
 .cx-wa-avatar svg{width:62%;height:62%;display:block}
 .cx-wa-id{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
-.cx-wa-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;color:#fff}
+.cx-wa-name{font-family:var(--body);font-weight:600;font-size:15px;color:#fff}
 .cx-wa-status{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#25d366}
 .cx-wa-dot{width:7px;height:7px;border-radius:50%;background:#25d366;flex:0 0 auto;animation:cxBlink 1.6s ease-in-out infinite}
 .cx-wa-glyph{color:#25d366;flex:0 0 auto}
@@ -1327,7 +1399,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .cx-wa-bubble{
   margin:0;align-self:flex-end;max-width:84%;
   background:#005c4b;color:#e9edef;padding:11px 14px;border-radius:12px 12px 3px 12px;
-  font-family:'Hanken Grotesk',sans-serif;font-size:15px;line-height:1.5;
+  font-family:var(--body);font-size:15px;line-height:1.5;
 }
 .cx-wa-hint{margin:16px 0 0;font-size:12.5px;color:var(--cx-mut2);line-height:1.5}
 @keyframes cxBlink{0%,100%{opacity:1}50%{opacity:.35}}
@@ -1509,7 +1581,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   padding:22px 28px;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
   font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:1.02rem;font-weight:600;letter-spacing:-.005em;
+  font-size:1.02rem;font-weight:700;letter-spacing:-.005em;
   color:var(--white);
   user-select:none;
 }
@@ -1875,7 +1947,7 @@ body::before{
   --ct-line:rgba(255,255,255,.09);--ct-line2:rgba(255,255,255,.06);
   position:relative;overflow:hidden;
   padding:120px 0 110px;color:var(--ct-ink);
-  font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;
+  font-family:var(--body);
   -webkit-font-smoothing:antialiased;
   background:
     radial-gradient(900px 600px at 85% -10%, rgba(0,122,255,.16), transparent 60%),
@@ -1889,16 +1961,16 @@ body::before{
 .ct-head{margin-bottom:44px}
 .ct-eyebrow{
   display:inline-flex;align-items:center;gap:12px;
-  font:600 12px/1 'Space Grotesk',sans-serif;
+  font:600 12px/1 var(--mono);
   letter-spacing:.26em;text-transform:uppercase;color:var(--ct-mut);
 }
 .ct-eyebrow-line{width:26px;height:1px;background:var(--ct-blue);flex:0 0 auto}
 .ct-h1{
-  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-family:var(--display);font-weight:700;
   font-size:clamp(2.4rem,5vw,3.6rem);line-height:1.02;letter-spacing:-.02em;
   color:var(--ct-head);margin:18px 0 14px;
 }
-.ct-serif{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--ct-blue)}
+.ct-serif{color:var(--ct-blue)}
 .ct-deck{font-size:1rem;line-height:1.7;color:var(--ct-mut2);max-width:60ch}
 .ct-deck b{color:var(--ct-ink);font-weight:600}
 
@@ -1911,7 +1983,7 @@ body::before{
 .ct-set:last-of-type{margin-bottom:24px}
 .ct-legend{
   display:flex;align-items:center;gap:12px;width:100%;padding:0 0 18px;
-  font:600 12px/1 'Space Grotesk',sans-serif;
+  font:600 12px/1 var(--mono);
   letter-spacing:.2em;text-transform:uppercase;color:var(--ct-mut);
   border-bottom:1px solid var(--ct-line2);margin-bottom:24px;
 }
@@ -1921,7 +1993,7 @@ body::before{
 .ct-fg{display:flex;flex-direction:column;min-width:0}
 .ct-fg-full{grid-column:1 / -1}
 .ct-fg label{
-  font:600 11px/1.3 'Space Grotesk',sans-serif;
+  font:600 11px/1.3 var(--mono);
   letter-spacing:.16em;text-transform:uppercase;color:var(--ct-mut3);margin-bottom:8px;
 }
 .ct-fg label b{color:var(--ct-blue);font-weight:700}
@@ -1951,7 +2023,7 @@ body::before{
 /* Actions */
 .ct-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:6px}
 .ct-cta{
-  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:.01em;
+  font-family:var(--body);font-weight:600;font-size:15px;letter-spacing:.01em;
   color:#fff;background:var(--ct-blue-chip);border:1px solid var(--ct-blue-chip);
   border-radius:12px;padding:14px 30px;cursor:pointer;
   box-shadow:0 10px 26px -12px rgba(0,122,255,.8);
@@ -2002,7 +2074,7 @@ body::before{
 }
 .job-draft{
   display:inline-block;vertical-align:middle;margin-left:8px;
-  font-family:'Inter',sans-serif;font-size:10px;font-weight:700;
+  font-family:var(--mono);font-size:10px;font-weight:700;
   letter-spacing:.14em;text-transform:uppercase;color:#ffb020;
   background:rgba(255,176,32,.12);border:1px solid rgba(255,176,32,.35);
   border-radius:5px;padding:3px 7px;
@@ -2019,7 +2091,7 @@ body::before{
 .job-summary{font-size:1rem;line-height:1.7;color:var(--g300);margin:22px 0 26px;max-width:70ch}
 .job-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
 .job-h4{
-  font-family:'Inter',sans-serif;font-size:11px;font-weight:700;
+  font-family:var(--mono);font-size:11px;font-weight:700;
   letter-spacing:.18em;text-transform:uppercase;color:var(--g500);margin-bottom:14px;
 }
 .job-ul{list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -2029,7 +2101,7 @@ body::before{
   width:5px;height:5px;border-radius:50%;background:var(--accent);
 }
 .job-apply{
-  margin-top:28px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:.94rem;
+  margin-top:28px;font-family:var(--body);font-weight:600;font-size:.94rem;
   color:#fff;background:var(--accent-deep);border:1px solid var(--accent-deep);
   border-radius:11px;padding:13px 26px;cursor:pointer;
   transition:background .2s,transform .18s var(--ease);
@@ -2044,7 +2116,7 @@ body::before{
 .job-empty-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:12px}
 .job-empty-p{font-size:.98rem;line-height:1.7;color:var(--g400);max-width:52ch;margin:0 auto 26px}
 .job-empty-cta{
-  display:inline-block;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:.94rem;
+  display:inline-block;font-family:var(--body);font-weight:600;font-size:.94rem;
   color:#fff;background:var(--accent-deep);border-radius:11px;padding:13px 28px;
   transition:background .2s,transform .18s var(--ease);
 }
@@ -2057,7 +2129,7 @@ body::before{
 .ap-fg{display:flex;flex-direction:column;min-width:0}
 .ap-fg-full{grid-column:1 / -1;margin-top:26px}
 .ap-fg label,.ap-cv-label{
-  font-family:'Inter',sans-serif;font-size:11px;font-weight:700;
+  font-family:var(--mono);font-size:11px;font-weight:700;
   letter-spacing:.16em;text-transform:uppercase;color:var(--g500);margin-bottom:8px;
 }
 .ap-fg label b,.ap-cv-label b{color:var(--accent)}
@@ -2124,7 +2196,7 @@ body::before{
 
 .ap-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:32px}
 .ap-cta{
-  font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:1rem;
+  font-family:var(--body);font-weight:600;font-size:1rem;
   color:#fff;background:var(--accent-deep);border:1px solid var(--accent-deep);
   border-radius:12px;padding:15px 34px;cursor:pointer;
   box-shadow:0 10px 26px -12px rgba(0,122,255,.8);
@@ -2725,11 +2797,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   /* ── Count-up animation ── */
+  // The markup ships the true final value, so anything that skips this
+  // animation (no JS, reduced motion, a crawler) still reads the real number.
   function countUp(el) {
     const target = parseInt(el.dataset.count);
     const suffix = el.dataset.suffix || '';
     const mode = el.dataset.mode;
-    if (mode === 'year') { el.textContent = target; return; }
+    if (mode === 'year' || reduceMotion) { el.textContent = target + suffix; return; }
     let startTime = null;
     const duration = 1800;
     function step(ts) {
