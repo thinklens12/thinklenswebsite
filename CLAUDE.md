@@ -175,6 +175,21 @@ ripple (`[data-ripple]`) · custom cursor (fine pointers only).
   `.nav-cta`). Every call is guarded (`typeof window.gtag === 'function'`) so the site
   works with GA blocked — keep new events behind the same guard.
 - **Google Search Console** verified — keep `google5ea61d290b4d5cc5.html` in the repo root.
+- **Google Sheets sync** → `SHEET_SYNC = { endpoint, token }` at the top of `main.js`,
+  with the server half in `scripts/google-sheets-sync.gs` (an Apps Script web app bound
+  to the Sheet). `syncToSheet(sheet, form)` mirrors a submission into the `applications`
+  or `candidates` tab. **Inert until both values are filled in** — same pattern as
+  `CV_UPLOAD`. Three properties to preserve if you touch it:
+  1. It fires **after** Formspree resolves, so a dead Sheet can't fail a submission —
+     and a Formspree failure writes no phantom row.
+  2. It is **fire-and-forget** (`sendBeacon`, `fetch`+`keepalive` fallback) and wrapped
+     in try/catch. Never `await` it; never surface its errors to the candidate.
+  3. Body is **URL-encoded**, which keeps the request CORS-simple (no preflight) and
+     lands in Apps Script's `e.parameter`. Switching to JSON breaks it.
+  Column order lives in `SHEETS` in the `.gs` file, keyed by the form's `name=` attributes —
+  **add a field to a form and you must add it there too**, or it silently won't be captured.
+  The endpoint is public (it's in client-side JS); the token only deters drive-by bots.
+  Rows carry candidate PII including UAN — keep the Sheet access-restricted.
 
 ## SEO
 
