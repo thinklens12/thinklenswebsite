@@ -116,6 +116,14 @@ function doGet() {
   return reply('Thinklens form sync — POST only.');
 }
 
+/** The only thing a web app may return. Plain text keeps it readable when you
+ *  open the /exec URL in a browser to check the deployment is live. */
+function reply(message) {
+  return ContentService
+    .createTextOutput(String(message))
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
 function ensureTab(cfg) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(cfg.tab) || ss.insertSheet(cfg.tab);
