@@ -2720,6 +2720,65 @@ body::before{
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
+  /* ─────────────────────────────────────────────────────────────────────────
+     GOOGLE SHEETS SYNC — every application and candidate submission also
+     appends a row to a Google Sheet you own.
+
+     Formspree stays the source of truth: it sends the email and it is what
+     the submit button waits on. This is a fire-and-forget second copy that
+     runs AFTER Formspree has already succeeded, so a broken or slow Sheet
+     can never block, delay, or fail a real submission.
+
+     SETUP (about 5 minutes — see scripts/google-sheets-sync.gs for the code)
+       1. Create a Google Sheet. Extensions → Apps Script.
+       2. Paste in scripts/google-sheets-sync.gs and set TOKEN to a random
+          string. Run setup() once and grant the permission prompt.
+       3. Deploy → New deployment → Web app
+            Execute as:        Me
+            Who has access:    Anyone
+          Copy the /exec URL.
+       4. Paste the URL and the SAME token below, then: node build.js
+
+     Until endpoint and token are both filled in, this is inert — nothing is
+     sent and every form behaves exactly as it does today.
+
+     NOTE ON THE ENDPOINT: it is public by necessity (it lives in client-side
+     JS). The token stops drive-by bots, not a determined person who reads
+     the page source. Treat the Sheet as append-only and never the only copy
+     — the honeypot and Formspree remain the real spam gate.
+     ───────────────────────────────────────────────────────────────────────── */
+  const SHEET_SYNC = {
+    endpoint: '', // ← e.g. 'https://script.google.com/macros/s/AKfy…/exec'
+    token: '',    // ← must match TOKEN in the Apps Script
+  };
+
+  /* Mirrors a submitted form into the Sheet. Never throws, never awaited.
+     Uses URL-encoded body so the request stays CORS-"simple" (no preflight)
+     and Apps Script parses it straight into e.parameter. sendBeacon is
+     preferred because it survives the page being closed right after submit;
+     fetch+keepalive is the fallback for browsers that refuse the beacon. */
+  function syncToSheet(sheet, form) {
+    try {
+      if (!SHEET_SYNC.endpoint || !SHEET_SYNC.token) return;
+      const p = new URLSearchParams();
+      new FormData(form).forEach((v, k) => {
+        if (k === '_gotcha' || typeof v !== 'string') return; // skip honeypot + File objects
+        p.append(k, v);
+      });
+      p.append('_sheet', sheet);
+      p.append('token', SHEET_SYNC.token);
+      p.append('page', location.pathname);
+
+      const body = new Blob([p.toString()],
+        { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
+      if (!(navigator.sendBeacon && navigator.sendBeacon(SHEET_SYNC.endpoint, body))) {
+        fetch(SHEET_SYNC.endpoint, {
+          method: 'POST', body: p, mode: 'no-cors', keepalive: true,
+        }).catch(() => {});
+      }
+    } catch (err) { /* a sync failure must never surface to the candidate */ }
+  }
+
   /* ── Page transitions: fade in on arrival, fade out on internal nav ── */
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Reveal — double rAF so the opacity:0 state paints first, then transitions to 1
@@ -3297,6 +3356,7 @@ document.addEventListener('DOMContentLoaded', function() {
           headers: { 'Accept': 'application/json' }
         });
         if (!res.ok) throw new Error('Server error');
+        syncToSheet('candidates', form); // fire-and-forget, before reset() clears fields
         if (typeof gtag === 'function') {
           gtag('event', 'candidate_submitted', { form: 'candidate_tracker' });
         }
@@ -3498,6 +3558,7 @@ document.addEventListener('DOMContentLoaded', function() {
           method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
         });
         if (!res.ok) throw new Error('Server error');
+        syncToSheet('applications', form); // fire-and-forget, before reset() clears fields
         if (typeof gtag === 'function') {
           gtag('event', 'application_submitted', { role: roleSel.value });
         }
