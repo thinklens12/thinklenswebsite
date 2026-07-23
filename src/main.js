@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
      — the honeypot and Formspree remain the real spam gate.
      ───────────────────────────────────────────────────────────────────────── */
   const SHEET_SYNC = {
-    endpoint: '', // ← e.g. 'https://script.google.com/macros/s/AKfy…/exec'
-    token: '',    // ← must match TOKEN in the Apps Script
+    endpoint: 'https://script.google.com/macros/library/d/1yMeWmVy_-TQepeS9Y-kTE1qBblDgopGT6-eu1zqyl4h4r3wtTeiEOXFM/2',
+    token: 'cbdshfvhjsbf64775863478gade276gd672g29672g',
   };
 
   /* Mirrors a submitted form into the Sheet. Never throws, never awaited.
