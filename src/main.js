@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* ── Magnetic button effect ── */
   const isFinePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if (isFinePointer) {
+  if (isFinePointer && !reduceMotion) {
     document.querySelectorAll('[data-magnetic]').forEach(el => {
       el.addEventListener('mousemove', e => {
         const r = el.getBoundingClientRect();
@@ -307,6 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* ── Button ripple effect ── */
   document.querySelectorAll('[data-ripple]').forEach(el => {
     el.addEventListener('click', e => {
+      if (reduceMotion) return; // the expanding wave is pure movement — skip it
       const r = el.getBoundingClientRect();
       const size = Math.max(r.width, r.height);
       const ripple = document.createElement('span');

@@ -185,7 +185,9 @@ button{font-family:inherit}
   position:relative;overflow:hidden;
   font-size:.8rem;font-weight:600;color:var(--on-accent);
   background:var(--accent-deep);padding:10px 22px;border-radius:100px;
-  transition:transform .25s var(--spring),box-shadow .3s;
+  /* transform stays tight + non-overshoot: it drives the magnetic follow, which
+     retargets every mousemove — an overshoot spring here reads as lag/wobble. */
+  transition:transform .15s var(--slow-spring),box-shadow .3s;
 }
 .nav-cta::before{
   content:'';position:absolute;inset:0;
@@ -402,7 +404,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   display:inline-flex;align-items:center;gap:10px;
   font-size:.9rem;font-weight:600;
   padding:15px 28px;border-radius:100px;border:none;cursor:pointer;
-  transition:transform .25s var(--spring),background .25s,color .25s,border-color .25s,box-shadow .3s;
+  /* transform is tight + non-overshoot for the magnetic follow (retargets each
+     mousemove); the paint props keep their gentle ease for hover state changes. */
+  transition:transform .15s var(--slow-spring),background .25s,color .25s,border-color .25s,box-shadow .3s;
 }
 .btn .arrow{
   width:14px;height:14px;transition:transform .3s var(--ease);
@@ -412,6 +416,31 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .btn-white:hover{background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
 .btn-outline{background:transparent;color:var(--g200);border:1px solid var(--border)}
 .btn-outline:hover{border-color:var(--g400);color:var(--white);transform:translateY(-2px)}
+/* Press feedback. Every .btn is data-magnetic, which writes an inline
+   transform on mousemove — that beats any CSS :active{transform}, so a
+   button-level press scale is a dead no-op. The tell lives on the chip
+   (scale, below) plus a shadow dip on the solid CTA, neither of which the
+   magnetic transform can override. */
+.btn-white:active{box-shadow:0 6px 16px rgba(255,255,255,.1)}
+/* Button-in-button: the trailing arrow rides in its own circular chip, flush
+   with the right inner padding, and carries the hover motion so the glyph never
+   floats naked beside the label. */
+.btn-chip-host{padding-right:12px}
+.btn-chip{
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  width:30px;height:30px;margin-left:2px;border-radius:50%;
+  transition:transform .2s var(--slow-spring),background .25s var(--ease);
+}
+.btn-chip .arrow{width:13px;height:13px}
+.btn-white .btn-chip{background:rgba(10,10,11,.09)}
+.btn-outline .btn-chip{background:rgba(255,255,255,.09)}
+.btn-chip-host:hover .btn-chip{transform:translate(2px,-2px) scale(1.08)}
+.btn-chip-host:hover .btn-chip .arrow{transform:none} /* motion lives on the chip */
+.btn-chip-host:active .btn-chip{transform:scale(.94)}
+@media(prefers-reduced-motion:reduce){
+  .btn-chip{transition:none}
+  .btn-chip-host:hover .btn-chip{transform:none}
+}
 
 /* Ripple effect (added via JS) */
 .btn .ripple{
@@ -1661,7 +1690,10 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   border:1px solid var(--border);
   border-radius:16px;
   padding:32px 28px;position:relative;overflow:hidden;
-  transition:border-color .25s var(--ease),background .25s var(--ease),transform .25s var(--ease);
+  /* Double-bezel: outer border + inner hairline (concentric edges) + a top
+     highlight for the machined-hardware read, over a soft tinted ambient. */
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05), inset 0 0 0 1px rgba(255,255,255,.02), 0 6px 20px rgba(0,0,0,.22);
+  transition:border-color .25s var(--ease),background .25s var(--ease),transform .25s var(--ease),box-shadow .3s var(--ease);
 }
 /* Top-edge accent line that brightens on hover (Wibify service-card-accent) */
 .exp-card::before{
@@ -1674,6 +1706,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   border-color:var(--border-hi);
   background:var(--card-hi);
   transform:translateY(-3px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07), inset 0 0 0 1px rgba(255,255,255,.03), 0 16px 36px rgba(0,0,0,.32);
 }
 .exp-card-eyebrow{
   font-family:var(--mono);
@@ -2677,7 +2710,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* ── Magnetic button effect ── */
   const isFinePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if (isFinePointer) {
+  if (isFinePointer && !reduceMotion) {
     document.querySelectorAll('[data-magnetic]').forEach(el => {
       el.addEventListener('mousemove', e => {
         const r = el.getBoundingClientRect();
@@ -2694,6 +2727,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* ── Button ripple effect ── */
   document.querySelectorAll('[data-ripple]').forEach(el => {
     el.addEventListener('click', e => {
+      if (reduceMotion) return; // the expanding wave is pure movement — skip it
       const r = el.getBoundingClientRect();
       const size = Math.max(r.width, r.height);
       const ripple = document.createElement('span');
