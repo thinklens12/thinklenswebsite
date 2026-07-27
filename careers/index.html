@@ -884,10 +884,12 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .btn-white:hover{background:var(--g100);transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.12)}
 .btn-outline{background:transparent;color:var(--g200);border:1px solid var(--border)}
 .btn-outline:hover{border-color:var(--g400);color:var(--white);transform:translateY(-2px)}
-/* Press physics: the whole control depresses on click (after :hover so it wins) */
-.btn:active{transform:scale(.97)}
-.btn-white:active{transform:scale(.97);box-shadow:0 6px 16px rgba(255,255,255,.1)}
-.btn-outline:active{transform:scale(.97)}
+/* Press feedback. Every .btn is data-magnetic, which writes an inline
+   transform on mousemove — that beats any CSS :active{transform}, so a
+   button-level press scale is a dead no-op. The tell lives on the chip
+   (scale, below) plus a shadow dip on the solid CTA, neither of which the
+   magnetic transform can override. */
+.btn-white:active{box-shadow:0 6px 16px rgba(255,255,255,.1)}
 /* Button-in-button: the trailing arrow rides in its own circular chip, flush
    with the right inner padding, and carries the hover motion so the glyph never
    floats naked beside the label. */
@@ -895,7 +897,7 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .btn-chip{
   display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
   width:30px;height:30px;margin-left:2px;border-radius:50%;
-  transition:transform .45s var(--slow-spring),background .25s var(--ease);
+  transition:transform .2s var(--slow-spring),background .25s var(--ease);
 }
 .btn-chip .arrow{width:13px;height:13px}
 .btn-white .btn-chip{background:rgba(10,10,11,.09)}
@@ -3900,7 +3902,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* ── Magnetic button effect ── */
   const isFinePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if (isFinePointer) {
+  if (isFinePointer && !reduceMotion) {
     document.querySelectorAll('[data-magnetic]').forEach(el => {
       el.addEventListener('mousemove', e => {
         const r = el.getBoundingClientRect();
@@ -3917,6 +3919,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* ── Button ripple effect ── */
   document.querySelectorAll('[data-ripple]').forEach(el => {
     el.addEventListener('click', e => {
+      if (reduceMotion) return; // the expanding wave is pure movement — skip it
       const r = el.getBoundingClientRect();
       const size = Math.max(r.width, r.height);
       const ripple = document.createElement('span');
