@@ -185,7 +185,9 @@ button{font-family:inherit}
   position:relative;overflow:hidden;
   font-size:.8rem;font-weight:600;color:var(--on-accent);
   background:var(--accent-deep);padding:10px 22px;border-radius:100px;
-  transition:transform .25s var(--spring),box-shadow .3s;
+  /* transform stays tight + non-overshoot: it drives the magnetic follow, which
+     retargets every mousemove — an overshoot spring here reads as lag/wobble. */
+  transition:transform .15s var(--slow-spring),box-shadow .3s;
 }
 .nav-cta::before{
   content:'';position:absolute;inset:0;
@@ -402,7 +404,9 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   display:inline-flex;align-items:center;gap:10px;
   font-size:.9rem;font-weight:600;
   padding:15px 28px;border-radius:100px;border:none;cursor:pointer;
-  transition:transform .25s var(--spring),background .25s,color .25s,border-color .25s,box-shadow .3s;
+  /* transform is tight + non-overshoot for the magnetic follow (retargets each
+     mousemove); the paint props keep their gentle ease for hover state changes. */
+  transition:transform .15s var(--slow-spring),background .25s,color .25s,border-color .25s,box-shadow .3s;
 }
 .btn .arrow{
   width:14px;height:14px;transition:transform .3s var(--ease);
