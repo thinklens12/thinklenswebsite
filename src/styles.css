@@ -411,26 +411,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .hstat-l{font-family:var(--mono);font-size:.68rem;font-weight:400;color:var(--g400);margin-top:8px;letter-spacing:.1em;text-transform:uppercase}
 
 /* Scroll hint */
-.scroll-hint{
-  position:absolute;bottom:130px;right:40px;z-index:3;
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--g400);
-  opacity:0;animation:fadeIn 1s 1.5s var(--ease) forwards;
-}
-.scroll-hint .line{
-  width:1px;height:48px;background:linear-gradient(to bottom,var(--g500),transparent);
-  position:relative;overflow:hidden;
-}
-.scroll-hint .line::after{
-  content:'';position:absolute;left:0;right:0;top:-100%;height:50%;
-  background:var(--white);animation:scrollLine 2.2s ease-in-out infinite;
-}
-@keyframes scrollLine{
-  0%{top:-50%}
-  100%{top:100%}
-}
-@media(max-width:900px){.scroll-hint{display:none}}
 
 /* ═══════════ MARQUEE ═══════════ */
 .marquee-section{
@@ -1043,7 +1023,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   letter-spacing:-.01em;transition:color .18s;text-decoration:none;
 }
 .cx-reach-row:hover{color:var(--cx-link)}
-.cx-reach-arrow{font-size:17px;color:var(--cx-blue);flex:0 0 auto}
 
 /* Give-first guides */
 .cx-guides{border-top:1px solid var(--cx-line);padding:26px 0 0}
@@ -1060,7 +1039,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   color:var(--cx-blue);letter-spacing:.08em;
 }
 .cx-guide-label{flex:1}
-.cx-guide-arrow{flex:none;color:var(--cx-mut3);font-size:17px}
 
 /* ── Right: brief builder ── */
 .cx-form{display:flex;flex-direction:column;min-width:0}
