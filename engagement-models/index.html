@@ -503,26 +503,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
 .hstat-l{font-family:var(--mono);font-size:.68rem;font-weight:400;color:var(--g400);margin-top:8px;letter-spacing:.1em;text-transform:uppercase}
 
 /* Scroll hint */
-.scroll-hint{
-  position:absolute;bottom:130px;right:40px;z-index:3;
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--g400);
-  opacity:0;animation:fadeIn 1s 1.5s var(--ease) forwards;
-}
-.scroll-hint .line{
-  width:1px;height:48px;background:linear-gradient(to bottom,var(--g500),transparent);
-  position:relative;overflow:hidden;
-}
-.scroll-hint .line::after{
-  content:'';position:absolute;left:0;right:0;top:-100%;height:50%;
-  background:var(--white);animation:scrollLine 2.2s ease-in-out infinite;
-}
-@keyframes scrollLine{
-  0%{top:-50%}
-  100%{top:100%}
-}
-@media(max-width:900px){.scroll-hint{display:none}}
 
 /* ═══════════ MARQUEE ═══════════ */
 .marquee-section{
@@ -1135,7 +1115,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   letter-spacing:-.01em;transition:color .18s;text-decoration:none;
 }
 .cx-reach-row:hover{color:var(--cx-link)}
-.cx-reach-arrow{font-size:17px;color:var(--cx-blue);flex:0 0 auto}
 
 /* Give-first guides */
 .cx-guides{border-top:1px solid var(--cx-line);padding:26px 0 0}
@@ -1152,7 +1131,6 @@ body.menu-open .sticky-cta{opacity:0;visibility:hidden;transform:translateY(20px
   color:var(--cx-blue);letter-spacing:.08em;
 }
 .cx-guide-label{flex:1}
-.cx-guide-arrow{flex:none;color:var(--cx-mut3);font-size:17px}
 
 /* ── Right: brief builder ── */
 .cx-form{display:flex;flex-direction:column;min-width:0}
@@ -2270,7 +2248,6 @@ body::before{
 <section id="em-math" class="page-section">
   <div class="wrap">
     <div class="exp-head">
-      <span class="eyebrow r">The math, first</span>
       <h2 class="section-h2 r">Compare the<br><span class="a">alternative.</span></h2>
     </div>
     <div class="anchor-compare r">
@@ -2292,7 +2269,6 @@ body::before{
 <section id="em-models" class="page-section">
   <div class="wrap">
     <div class="exp-head">
-      <span class="eyebrow r">The four models</span>
       <h2 class="section-h2 r">Pick the one<br>that fits the <span class="a">client deal.</span></h2>
       <p class="exp-deck r">Each model is priced and structured differently. We'll tell you which one fits before you draft the SOW — including when none of them does and we should walk away.</p>
     </div>
@@ -2325,7 +2301,6 @@ body::before{
 <section id="em-kickoff" class="page-section alt">
   <div class="wrap">
     <div class="exp-head">
-      <span class="eyebrow r">How engagements start</span>
       <h2 class="section-h2 r">Three calls, then<br>a <span class="a">signed SOW.</span></h2>
       <p class="exp-deck r">The process is short by design. Most engagements move from first call to consultants-on-keyboard in 7-14 days.</p>
     </div>
@@ -2358,7 +2333,6 @@ body::before{
   <div class="wrap">
     <div class="trust-layout">
       <div class="r">
-        <span class="eyebrow">Why Choose Us</span>
         <h2 class="trust-h2">Compliance &amp;<br><span class="a">trust.</span></h2>
         <p class="trust-sub"><b>Fully registered in India</b> (GST, PAN, IEC). <b>Transparent contracts</b> and audit-ready processes. A <b>reliable offshore team</b> with proven delivery — the three things every overseas partner wants on day one.</p>
         <a href="#contact" class="trust-link">Request our compliance pack
@@ -2423,7 +2397,6 @@ body::before{
     <div class="grid-pulse"></div>
   </div>
   <div class="cta-content r">
-    <span class="eyebrow">Get Started</span>
     <h2 class="cta-h2">Need extra hands,<br><span class="a">on short notice?</span></h2>
     <p class="cta-sub">An unfilled seat isn't neutral — every week it stays empty is a slipped deadline or a client conversation you'd rather not have. Tell us the gap before it costs you one, and we'll line up the right senior consultant, remotely, with fast ramp-up.</p>
     <div class="cta-actions">
@@ -2458,8 +2431,8 @@ body::before{
         <!-- Reach us -->
         <div class="cx-reach">
           <div class="cx-reach-label">Reach us</div>
-          <a class="cx-reach-row" href="mailto:thinklensconsulting@gmail.com">thinklensconsulting@gmail.com<span class="cx-reach-arrow" aria-hidden="true">↗</span></a>
-          <a class="cx-reach-row" href="tel:+919676291788">+91 96762 91788<span class="cx-reach-arrow" aria-hidden="true">↗</span></a>
+          <a class="cx-reach-row" href="mailto:thinklensconsulting@gmail.com">thinklensconsulting@gmail.com</a>
+          <a class="cx-reach-row" href="tel:+919676291788">+91 96762 91788</a>
         </div>
 
         <!-- Give-first: free guides, no email wall -->
@@ -2469,17 +2442,14 @@ body::before{
           <a class="cx-guide" href="/resources/etl-testing-tools-checklist/">
             <span class="cx-guide-num">01</span>
             <span class="cx-guide-label">ETL Testing Tools Checklist</span>
-            <span class="cx-guide-arrow" aria-hidden="true">→</span>
           </a>
           <a class="cx-guide" href="/resources/power-bi-vs-tableau-vs-spotfire/">
             <span class="cx-guide-num">02</span>
             <span class="cx-guide-label">Power BI vs Tableau vs Spotfire</span>
-            <span class="cx-guide-arrow" aria-hidden="true">→</span>
           </a>
           <a class="cx-guide" href="/resources/what-is-etl-testing/">
             <span class="cx-guide-num">03</span>
             <span class="cx-guide-label">What is ETL Testing? A plain-English guide</span>
-            <span class="cx-guide-arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
@@ -2748,8 +2718,8 @@ document.addEventListener('DOMContentLoaded', function() {
      — the honeypot and Formspree remain the real spam gate.
      ───────────────────────────────────────────────────────────────────────── */
   const SHEET_SYNC = {
-    endpoint: '', // ← e.g. 'https://script.google.com/macros/s/AKfy…/exec'
-    token: '',    // ← must match TOKEN in the Apps Script
+    endpoint: 'https://script.google.com/macros/library/d/1yMeWmVy_-TQepeS9Y-kTE1qBblDgopGT6-eu1zqyl4h4r3wtTeiEOXFM/2',
+    token: 'cbdshfvhjsbf64775863478gade276gd672g29672g',
   };
 
   /* Mirrors a submitted form into the Sheet. Never throws, never awaited.
