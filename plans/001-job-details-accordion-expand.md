@@ -1,7 +1,7 @@
 # 001 — Animate the careers job-details accordion expand
 
-- **Status**: TODO
-- **Commit**: cb8a24e
+- **Status**: DONE (executed against commit 1659aa3; `src/styles.css` + rebuild)
+- **Commit**: cb8a24e (planned) / 1659aa3 (executed)
 - **Severity**: MEDIUM
 - **Category**: Missed opportunity / cohesion (a sibling accordion already animates; this one teleports)
 - **Estimated scope**: 1 file (`src/styles.css`), ~6 lines added, CSS only. Then rebuild.
