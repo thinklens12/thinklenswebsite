@@ -2023,7 +2023,7 @@ body::before{
 /* `hidden` must beat the author `display` on .ap-drop / .ap-file below —
    an attribute selector under #apply (1-1-0) outranks a bare class (0-1-0). */
 #apply [hidden]{display:none}
-.job-list{display:flex;flex-direction:column;gap:14px;margin-top:44px}
+.job-list{display:flex;flex-direction:column;gap:14px;margin-top:44px;interpolate-size:allow-keywords}
 .job{
   background:var(--card);border:1px solid var(--border);border-radius:16px;
   box-shadow:var(--card-shadow);overflow:hidden;
@@ -2058,6 +2058,13 @@ body::before{
 }
 .job[open] .job-chev{transform:rotate(-135deg) translate(-3px,-3px);border-color:var(--accent)}
 .job-body{padding:0 26px 26px;border-top:1px solid var(--border)}
+.job::details-content{
+  height:0;overflow:hidden;
+  transition:height .35s var(--ease),content-visibility .35s allow-discrete;
+  content-visibility:hidden;
+}
+.job[open]::details-content{height:auto;content-visibility:visible}
+.job[open] .job-body{animation:faqReveal .4s var(--ease) .04s both}
 .job-summary{font-size:1rem;line-height:1.7;color:var(--g300);margin:22px 0 26px;max-width:70ch}
 .job-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
 .job-h4{
@@ -2187,6 +2194,8 @@ body::before{
 @media (prefers-reduced-motion:reduce){
   .job-apply,.ap-cta,.job-empty-cta,.job-chev{transition:none}
   .job-apply:hover,.ap-cta:hover,.job-empty-cta:hover{transform:none}
+  .job::details-content{transition:none}
+  .job[open] .job-body{animation:none}
 }
 </style>
 </head>
