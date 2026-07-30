@@ -78,8 +78,15 @@ html{scroll-behavior:smooth;font-size:16px;background:var(--bg)}
 body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   background:var(--bg);color:var(--g200);
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  font-optical-sizing:auto;overflow-x:hidden;
 }
+/* ── Typographic line-breaking ── balance headings so no line is left holding a
+   lonely last word; pretty prose to kill single-word orphans and even the rag.
+   Pure progressive enhancement — older engines fall back to normal wrapping and
+   nothing shifts. Prose measure is already capped per role (520px / 70ch). */
+h1,h2,h3,h4{text-wrap:balance}
+p,.hero-sub,.cta-sub,.faq-a,.job-summary,.job-t{text-wrap:pretty}
 img,svg{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
 button{font-family:inherit}
